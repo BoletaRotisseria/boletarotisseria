@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { CartDrawer } from "@/components/CartDrawer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
 
-const isHome = () => window.location.pathname === "/";
-
 const navItems = [
   { label: "Início", path: "/" },
+  { label: "Cardápio Semanal", path: "/semana" },
+  { label: "Rotisserie", path: "/rotisserie" },
   { label: "Café", path: "/cafe" },
   { label: "Menu", path: "/menu" },
   { label: "Empório", path: "/emporio" },
@@ -28,9 +28,7 @@ export function Header() {
           <img
             src={boletaLogo}
             alt="Boleta Rotisseria"
-            className={`rounded transition-all duration-300 ${
-              location.pathname === "/" ? "h-14 md:h-20" : "h-10 md:h-14"
-            }`}
+            className="h-10 md:h-14 rounded"
           />
         </Link>
 

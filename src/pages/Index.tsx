@@ -1,40 +1,18 @@
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 
-const verticalSections = 4;
-
 const Index = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [currentVertical, setCurrentVertical] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const scrollToSection = (index: number) => {
-    const el = containerRef.current;
-    if (!el) return;
-    const target = el.children[index] as HTMLElement;
-    target?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToSlide = useCallback((index: number) => {
+  const scrollToSlide = (index: number) => {
     const el = carouselRef.current;
     if (!el) return;
     el.scrollTo({ left: index * el.clientWidth, behavior: "smooth" });
-  }, []);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const handleScroll = () => {
-      const idx = Math.round(el.scrollTop / el.clientHeight);
-      setCurrentVertical(idx);
-    };
-    el.addEventListener("scroll", handleScroll, { passive: true });
-    return () => el.removeEventListener("scroll", handleScroll);
-  }, []);
+  };
 
   useEffect(() => {
     const el = carouselRef.current;
@@ -48,12 +26,9 @@ const Index = () => {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="h-screen overflow-y-auto fullpage-snap"
-    >
-      {/* Tela 1 – Carrossel horizontal: Cardápio Semanal / Rotisserie */}
-      <section className="h-screen snap-start relative bg-foreground">
+    <>
+      {/* Capa – Carrossel horizontal */}
+      <section className="relative bg-foreground h-[70vh] md:h-[80vh]">
         <div
           ref={carouselRef}
           className="h-full w-full flex overflow-x-auto horizontal-snap"
@@ -116,7 +91,7 @@ const Index = () => {
         )}
 
         {/* Dots horizontais */}
-        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
           {[0, 1].map((i) => (
             <button
               key={i}
@@ -127,23 +102,15 @@ const Index = () => {
             />
           ))}
         </div>
-
-        {/* Seta para baixo */}
-        <button
-          onClick={() => scrollToSection(1)}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 text-background/70 hover:text-background transition-colors animate-bounce z-20"
-        >
-          <ChevronDown className="h-8 w-8" />
-        </button>
       </section>
 
-      {/* Tela 2 – Hero */}
-      <section className="h-screen snap-start relative flex items-center">
+      {/* Hero */}
+      <section className="relative min-h-[60vh] flex items-center">
         <div className="absolute inset-0">
           <img src={heroImage} alt="Pratos artesanais do Boleta" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
         </div>
-        <div className="container relative z-10">
+        <div className="container relative z-10 py-16">
           <div className="max-w-xl">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-[1.1] mb-6">
               Escolha seus pratos, aqueça e aproveite.
@@ -163,16 +130,10 @@ const Index = () => {
             </div>
           </div>
         </div>
-        <button
-          onClick={() => scrollToSection(2)}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-background/70 hover:text-background transition-colors animate-bounce z-20"
-        >
-          <ChevronDown className="h-8 w-8" />
-        </button>
       </section>
 
-      {/* Tela 3 – Diferenciais */}
-      <section className="h-screen snap-start flex items-center bg-background relative">
+      {/* Diferenciais */}
+      <section className="py-16 md:py-24">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
@@ -187,16 +148,10 @@ const Index = () => {
             ))}
           </div>
         </div>
-        <button
-          onClick={() => scrollToSection(3)}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-foreground/40 hover:text-foreground transition-colors animate-bounce z-20"
-        >
-          <ChevronDown className="h-8 w-8" />
-        </button>
       </section>
 
-      {/* Tela 4 – CTA Final */}
-      <section className="h-screen snap-start flex items-center bg-primary">
+      {/* CTA */}
+      <section className="py-16 bg-primary">
         <div className="container text-center">
           <h2 className="font-serif text-3xl md:text-5xl font-bold text-primary-foreground mb-4">
             Peça direto do Boleta
@@ -211,20 +166,7 @@ const Index = () => {
           </Link>
         </div>
       </section>
-
-      {/* Dots verticais */}
-      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
-        {Array.from({ length: verticalSections }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => scrollToSection(i)}
-            className={`w-2.5 h-2.5 rounded-full transition-all ${
-              currentVertical === i ? "bg-primary scale-125" : "bg-foreground/30 hover:bg-foreground/50"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 
