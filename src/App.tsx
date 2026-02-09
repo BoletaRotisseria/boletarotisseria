@@ -3,10 +3,38 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Layout } from "@/components/Layout";
+import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
+import MenuPage from "./pages/MenuPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import EmporioPage from "./pages/EmporioPage";
+import IndividualPage from "./pages/IndividualPage";
+import PresentearPage from "./pages/PresentearPage";
+import EventosPage from "./pages/EventosPage";
+import CafePage from "./pages/CafePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+function AppContent() {
+  useCartSync();
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Index />} />
+        <Route path="/cafe" element={<CafePage />} />
+        <Route path="/menu" element={<MenuPage />} />
+        <Route path="/emporio" element={<EmporioPage />} />
+        <Route path="/individual" element={<IndividualPage />} />
+        <Route path="/presentear" element={<PresentearPage />} />
+        <Route path="/eventos" element={<EventosPage />} />
+        <Route path="/product/:handle" element={<ProductDetailPage />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -14,11 +42,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppContent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
