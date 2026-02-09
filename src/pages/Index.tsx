@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
+import fachadaImage from "@/assets/boleta-fachada.jpeg";
 
 const Index = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ const Index = () => {
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center"
           >
             <img
-              src={heroImage}
+              src={fachadaImage}
               alt="Cardápio Semanal"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
