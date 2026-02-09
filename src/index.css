@@ -71,35 +71,16 @@
     45deg,
     transparent,
     transparent 10px,
-    hsl(var(--primary) / 0.15) 10px,
-    hsl(var(--primary) / 0.15) 11px
+    hsl(var(--secondary)) 10px,
+    hsl(var(--secondary)) 11px
   ),
   repeating-linear-gradient(
     -45deg,
     transparent,
     transparent 10px,
-    hsl(var(--primary) / 0.15) 10px,
-    hsl(var(--primary) / 0.15) 11px
+    hsl(var(--secondary)) 10px,
+    hsl(var(--secondary)) 11px
   );
-}
-
-/* Black checkered grid pattern */
-.grid-pattern {
-  background-image:
-    linear-gradient(hsl(var(--foreground) / 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--foreground) / 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* Bold yellow checkered */
-.yellow-check-pattern {
-  background-image:
-    linear-gradient(45deg, hsl(var(--primary) / 0.12) 25%, transparent 25%),
-    linear-gradient(-45deg, hsl(var(--primary) / 0.12) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, hsl(var(--primary) / 0.12) 75%),
-    linear-gradient(-45deg, transparent 75%, hsl(var(--primary) / 0.12) 75%);
-  background-size: 40px 40px;
-  background-position: 0 0, 0 20px, 20px -20px, -20px 0;
 }
 
 .cta-text {
