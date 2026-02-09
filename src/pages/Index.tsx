@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
+import checkeredPattern from "@/assets/checkered-pattern.jpg";
 
 const Index = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -39,12 +40,16 @@ const Index = () => {
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center"
           >
             <img
+              src={checkeredPattern}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <img
               src={heroImage}
               alt="Cardápio Semanal"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-500 group-hover:opacity-50"
             />
-            <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
-            <div className="absolute inset-0 grid-pattern opacity-40" />
+            <div className="absolute inset-0 bg-foreground/20" />
             <div className="relative z-10 text-center px-6">
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-3 drop-shadow-lg">
                 Cardápio Semanal
@@ -109,8 +114,9 @@ const Index = () => {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="Pratos artesanais do Boleta" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
+          <img src={checkeredPattern} alt="" className="w-full h-full object-cover" />
+          <img src={heroImage} alt="Pratos artesanais do Boleta" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-foreground/40 via-transparent to-transparent" />
         </div>
         <div className="container relative z-10 py-16">
           <div className="max-w-xl">
