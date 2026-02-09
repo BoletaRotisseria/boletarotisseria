@@ -44,6 +44,14 @@ const Index = () => {
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
+            <div className="relative z-10 text-center px-6">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">
+                Cardápio Semanal
+              </h2>
+              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">
+                Pratos frescos da semana, prontos para aquecer.
+              </p>
+            </div>
           </Link>
 
           {/* Slide 2 – Rotisserie */}
@@ -53,6 +61,14 @@ const Index = () => {
           >
             <div className="absolute inset-0 diamond-pattern opacity-30" />
             <div className="absolute inset-0 bg-primary/80 group-hover:bg-primary/70 transition-colors duration-300" />
+            <div className="relative z-10 text-center px-6">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-3 drop-shadow-lg">
+                Rotisserie
+              </h2>
+              <p className="text-primary-foreground/80 text-lg md:text-xl max-w-md mx-auto">
+                Clássicos da casa, empório e muito mais.
+              </p>
+            </div>
           </Link>
         </div>
 
