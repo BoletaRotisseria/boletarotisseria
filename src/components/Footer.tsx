@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import boletaLogo from "@/assets/boleta-rotisseria-logo.jpeg";
+import quadriculadoBg from "@/assets/quadriculado-bg.jpg";
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background">
-      <div className="diamond-pattern h-2 opacity-20" />
-      <div className="container py-12 md:py-16">
+    <footer className="relative text-background">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${quadriculadoBg})` }}
+      />
+      <div className="absolute inset-0 bg-foreground/85" />
+      <div className="container relative z-10 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <img src={boletaLogo} alt="Boleta Rotisseria" className="h-20 rounded mb-4" />
