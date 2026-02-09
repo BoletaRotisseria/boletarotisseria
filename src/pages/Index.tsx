@@ -36,14 +36,17 @@ const Index = () => {
     >
       {/* Tela 1 – Capa: Logo + Colagens */}
       <section className="h-screen snap-start flex flex-col bg-foreground relative">
-        {/* Logo grande independente */}
-        <div className="flex items-center justify-center pt-8 pb-4 md:pt-12 md:pb-6 flex-shrink-0">
+        {/* Logo grande sobrepondo o header */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[30%] z-30">
           <img
             src={boletaLogo}
             alt="Boleta Rotisseria"
-            className="h-[22vh] md:h-[25vh] rounded-lg shadow-xl"
+            className="h-[18vh] md:h-[22vh] rounded-lg shadow-xl"
           />
         </div>
+
+        {/* Spacer para o logo */}
+        <div className="h-[10vh] md:h-[12vh] flex-shrink-0" />
 
         {/* Colagens */}
         <div className="grid grid-cols-1 md:grid-cols-2 flex-1 min-h-0">
@@ -128,13 +131,13 @@ const Index = () => {
       </section>
 
       {/* Tela 3 – Diferenciais */}
-      <section className="h-screen snap-start flex items-center bg-background">
+      <section className="h-screen snap-start flex items-center bg-background relative">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
               { title: "Fresco & Artesanal", desc: "Ingredientes selecionados, receitas da casa." },
               { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
-              { title: "Sem Taxas de App", desc: "Pedido direto, mais economia pra você." },
+              { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." },
             ].map((f) => (
               <div key={f.title} className="p-6">
                 <h3 className="font-serif text-2xl mb-3">{f.title}</h3>
@@ -158,7 +161,7 @@ const Index = () => {
             Peça direto do Boleta
           </h2>
           <p className="text-primary-foreground/80 mb-8 max-w-md mx-auto">
-            Simples, seguro e sem taxas de aplicativo.
+            Praticidade e sabor direto na sua mesa.
           </p>
           <Link to="/menu">
             <Button size="lg" variant="outline" className="cta-text bg-background text-foreground hover:bg-background/90">
