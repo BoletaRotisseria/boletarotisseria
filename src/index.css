@@ -102,3 +102,16 @@
 .fullpage-snap > section {
   scroll-snap-align: start;
 }
+
+/* Horizontal snap for carousel */
+.horizontal-snap {
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.horizontal-snap::-webkit-scrollbar {
+  display: none;
+}
+.horizontal-snap > * {
+  scroll-snap-align: start;
+}
