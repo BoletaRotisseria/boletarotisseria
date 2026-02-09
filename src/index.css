@@ -89,3 +89,16 @@
   letter-spacing: 0.1em;
   font-weight: 600;
 }
+
+/* Fullpage snap scroll */
+.fullpage-snap {
+  scroll-snap-type: y mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.fullpage-snap::-webkit-scrollbar {
+  display: none;
+}
+.fullpage-snap > section {
+  scroll-snap-align: start;
+}
