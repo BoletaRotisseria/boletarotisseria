@@ -1,28 +1,55 @@
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
 
+const sections = 4;
+
 const Index = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+
+  const scrollTo = (index: number) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const target = el.children[index] as HTMLElement;
+    target?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const idx = Math.round(el.scrollTop / el.clientHeight);
+      setCurrent(idx);
+    };
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <>
-      {/* Cover – Logo + Two Collages */}
-      <section className="bg-foreground">
-        {/* Logo */}
-        <div className="flex items-center justify-center pt-10 pb-6 md:pt-14 md:pb-8">
+    <div
+      ref={containerRef}
+      className="h-screen overflow-y-auto fullpage-snap"
+    >
+      {/* Tela 1 – Capa: Logo + Colagens */}
+      <section className="h-screen snap-start flex flex-col bg-foreground relative">
+        {/* Logo grande independente */}
+        <div className="flex items-center justify-center pt-8 pb-4 md:pt-12 md:pb-6 flex-shrink-0">
           <img
             src={boletaLogo}
             alt="Boleta Rotisseria"
-            className="h-[20vh] md:h-[22vh] lg:h-[25vh] rounded-lg shadow-lg"
+            className="h-[22vh] md:h-[25vh] rounded-lg shadow-xl"
           />
         </div>
 
-        {/* Two collage links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 min-h-[50vh]">
-          {/* Left – Cardápio Semanal */}
+        {/* Colagens */}
+        <div className="grid grid-cols-1 md:grid-cols-2 flex-1 min-h-0">
           <Link
             to="/semana"
-            className="relative group overflow-hidden flex items-center justify-center min-h-[40vh] md:min-h-[50vh]"
+            className="relative group overflow-hidden flex items-center justify-center"
           >
             <img
               src={heroImage}
@@ -40,10 +67,9 @@ const Index = () => {
             </div>
           </Link>
 
-          {/* Right – Rotisserie */}
           <Link
             to="/rotisserie"
-            className="relative group overflow-hidden flex items-center justify-center min-h-[40vh] md:min-h-[50vh] border-t md:border-t-0 md:border-l border-background/10"
+            className="relative group overflow-hidden flex items-center justify-center border-t md:border-t-0 md:border-l border-background/10"
           >
             <div className="absolute inset-0 diamond-pattern opacity-30" />
             <div className="absolute inset-0 bg-primary/80 group-hover:bg-primary/70 transition-colors duration-300" />
@@ -57,15 +83,23 @@ const Index = () => {
             </div>
           </Link>
         </div>
+
+        {/* Seta */}
+        <button
+          onClick={() => scrollTo(1)}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-background/70 hover:text-background transition-colors animate-bounce z-20"
+        >
+          <ChevronDown className="h-8 w-8" />
+        </button>
       </section>
 
-      {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center">
+      {/* Tela 2 – Hero */}
+      <section className="h-screen snap-start relative flex items-center">
         <div className="absolute inset-0">
           <img src={heroImage} alt="Pratos artesanais do Boleta" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
         </div>
-        <div className="container relative z-10 py-16">
+        <div className="container relative z-10">
           <div className="max-w-xl">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-[1.1] mb-6">
               Escolha seus pratos, aqueça e aproveite.
@@ -85,10 +119,16 @@ const Index = () => {
             </div>
           </div>
         </div>
+        <button
+          onClick={() => scrollTo(2)}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-background/70 hover:text-background transition-colors animate-bounce z-20"
+        >
+          <ChevronDown className="h-8 w-8" />
+        </button>
       </section>
 
-      {/* Features */}
-      <section className="py-16 md:py-24">
+      {/* Tela 3 – Diferenciais */}
+      <section className="h-screen snap-start flex items-center bg-background">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
@@ -103,10 +143,16 @@ const Index = () => {
             ))}
           </div>
         </div>
+        <button
+          onClick={() => scrollTo(3)}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-foreground/40 hover:text-foreground transition-colors animate-bounce z-20"
+        >
+          <ChevronDown className="h-8 w-8" />
+        </button>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-primary">
+      {/* Tela 4 – CTA Final */}
+      <section className="h-screen snap-start flex items-center bg-primary">
         <div className="container text-center">
           <h2 className="font-serif text-3xl md:text-5xl font-bold text-primary-foreground mb-4">
             Peça direto do Boleta
@@ -121,7 +167,20 @@ const Index = () => {
           </Link>
         </div>
       </section>
-    </>
+
+      {/* Dots indicator */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
+        {Array.from({ length: sections }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollTo(i)}
+            className={`w-2.5 h-2.5 rounded-full transition-all ${
+              current === i ? "bg-primary scale-125" : "bg-foreground/30 hover:bg-foreground/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
