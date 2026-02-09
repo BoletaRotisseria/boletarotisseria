@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { CartDrawer } from "@/components/CartDrawer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
 
+const isHome = () => window.location.pathname === "/";
+
 const navItems = [
   { label: "Início", path: "/" },
   { label: "Café", path: "/cafe" },
@@ -23,7 +25,13 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container flex items-center justify-between h-16 md:h-20">
         <Link to="/" className="flex-shrink-0">
-          <img src={boletaLogo} alt="Boleta Rotisseria" className="h-10 md:h-14 rounded" />
+          <img
+            src={boletaLogo}
+            alt="Boleta Rotisseria"
+            className={`rounded transition-all duration-300 ${
+              location.pathname === "/" ? "h-14 md:h-20" : "h-10 md:h-14"
+            }`}
+          />
         </Link>
 
         {/* Desktop nav */}
