@@ -49,7 +49,7 @@ export function Footer() {
       </div>
 
       {/* Corpo do rodapé – 3 colunas */}
-      <div className="container relative z-10 py-12 md:py-16">
+      <div className="container relative z-10 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_2fr] gap-x-10 gap-y-10">
           {/* Coluna 1 – Logo + Sobre */}
           <div>
