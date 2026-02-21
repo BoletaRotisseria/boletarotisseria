@@ -49,7 +49,7 @@ const Index = () => {
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">
                 Cardápio Semanal
               </h2>
-              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">Pratos frescos da semana, 
+              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">Pratos frescos da semana, 
 prontos para aquecer.
               </p>
             </div>
@@ -128,10 +128,28 @@ prontos para aquecer.
         </div>
       </section>
 
-      {/* Mídia / Na Mídia */}
-      <section className="py-16 md:py-24 bg-secondary/30">
+      {/* Diferenciais */}
+      <section className="py-10 bg-secondary md:py-[40px]">
         <div className="container">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-10">Na mídia</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {[
+            { title: "Fresco & Artesanal", desc: "Ingredientes selecionados, receitas da casa." },
+            { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
+            { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
+            map((f) =>
+            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-foreground/20">
+                <h3 className="font-serif text-2xl mb-3 text-foreground">{f.title}</h3>
+                <p className="text-muted-foreground">{f.desc}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Mídia / Na Mídia */}
+      <section className="py-8 md:py-12 bg-secondary/30">
+        <div className="container">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6">Na mídia</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
             {
@@ -173,24 +191,6 @@ prontos para aquecer.
                   Vem ler tudo aqui →
                 </span>
               </a>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Diferenciais */}
-      <section className="py-10 bg-secondary md:py-[40px]">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {[
-            { title: "Fresco & Artesanal", desc: "Ingredientes selecionados, receitas da casa." },
-            { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
-            { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
-            map((f) =>
-            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-foreground/20">
-                <h3 className="font-serif text-2xl mb-3 text-foreground">{f.title}</h3>
-                <p className="text-muted-foreground">{f.desc}</p>
-              </div>
             )}
           </div>
         </div>
