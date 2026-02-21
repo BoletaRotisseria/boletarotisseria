@@ -105,31 +105,38 @@ prontos para aquecer.
         </div>
       </section>
 
-      {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center">
-        <div className="absolute inset-0">
-          <img src={heroImage} alt="Pratos artesanais do Boleta" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
-        </div>
-        <div className="container relative z-10 py-16">
-          <div className="max-w-xl">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-[1.1] mb-6">
-              Escolha seus pratos, aqueça e aproveite.
-            </h1>
-            <p className="text-background/80 text-lg md:text-xl mb-8 max-w-md">
-              Loja de comidas frescas e congeladas, comida saudável, prática e deliciosa.
+      {/* Banner duplo */}
+      <section className="grid grid-cols-1 md:grid-cols-2">
+        {/* Lado esquerdo – imagem + CTA */}
+        <div className="relative min-h-[50vh] md:min-h-[60vh] flex items-end">
+          <img src={heroImage} alt="Pratos artesanais do Boleta" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-primary/80" />
+          <div className="relative z-10 p-8 md:p-12 flex flex-col justify-end h-full">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground leading-[1.1] mb-4">
+              Peça pelo<br />nosso site!
+            </h2>
+            <p className="text-primary-foreground/80 text-base md:text-lg mb-6 max-w-sm">
+              Monte seu pedido online e receba tudo fresquinho na sua casa.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/menu">
-                <Button size="lg" className="cta-text">Ver Menu</Button>
-              </Link>
-              <Link to="/menu">
-                <Button size="lg" variant="outline" className="cta-text bg-background/10 border-background/30 text-background hover:bg-background/20">
-                  Pedir Agora
-                </Button>
-              </Link>
-            </div>
+            <Link to="/menu">
+              <Button size="lg" className="cta-text bg-foreground text-background hover:bg-foreground/90 rounded-full px-8">
+                Pedir Agora
+              </Button>
+            </Link>
           </div>
+        </div>
+
+        {/* Lado direito – texto informativo */}
+        <div className="bg-background flex flex-col justify-center p-8 md:p-12 lg:p-16">
+          <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4">
+            Agende a data da sua entrega no carrinho
+          </h2>
+          <p className="text-muted-foreground text-base md:text-lg mb-2">
+            Receba na data que for melhor pra você.
+          </p>
+          <p className="text-muted-foreground text-base md:text-lg">
+            Agende o seu pedido e garanta praticidade no seu dia a dia.
+          </p>
         </div>
       </section>
 
