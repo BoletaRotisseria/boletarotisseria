@@ -16,8 +16,8 @@ export function Footer() {
       />
 
       {/* Faixa flutuante – Inscrição WhatsApp – flutua no topo do rodapé */}
-      <div className="container relative z-10 -mb-6">
-        <div className="bg-background border border-border rounded-xl shadow-md px-8 py-8 flex flex-col md:flex-row items-center gap-6 md:gap-10 -translate-y-1/2">
+      <div className="container relative z-10 pt-8">
+        <div className="bg-background border border-border rounded-xl shadow-md px-8 py-8 flex flex-col md:flex-row items-center gap-6 md:gap-10">
           <p className="font-sans text-base md:text-lg tracking-normal shrink-0">
             Receba o nosso cardápio semanal e fique por dentro das novidades.
           </p>
