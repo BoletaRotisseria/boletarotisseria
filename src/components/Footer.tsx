@@ -122,10 +122,22 @@ export function Footer() {
 Sábado 10h às 14h
                 </span>
               </p>
-              <p className="flex items-center gap-2">
+              <div className="flex items-center gap-2 group relative">
                 <svg viewBox="0 0 24 24" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
-                <span>Rua Ferreira de Araújo, 418 – Pinheiros</span>
-              </p>
+                <span className="relative">
+                  <button className="underline underline-offset-2 decoration-foreground/30 hover:decoration-foreground transition-colors peer cursor-pointer">
+                    Rua Ferreira de Araújo, 418 – Pinheiros
+                  </button>
+                  <span className="hidden peer-focus:flex peer-hover:flex absolute bottom-full left-0 mb-2 flex-col gap-1 bg-background border border-border rounded-lg shadow-lg p-2 z-50 min-w-[160px]">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Ferreira+de+Araújo,+418+-+Pinheiros,+São+Paulo" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-foreground hover:bg-secondary transition-colors">
+                      📍 Google Maps
+                    </a>
+                    <a href="https://waze.com/ul?q=Rua+Ferreira+de+Araújo,+418+-+Pinheiros,+São+Paulo" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-foreground hover:bg-secondary transition-colors">
+                      🚗 Waze
+                    </a>
+                  </span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
