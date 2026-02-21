@@ -32,7 +32,7 @@ const navItems: NavItem[] = [
         label: "Rotisseria",
         path: "/rotisserie",
         items: [
-          { label: "Aperitivos para Compartilhar", path: "/rotisserie" },
+          { label: "Para Compartilhar", path: "/rotisserie" },
           { label: "Pratos Principais", path: "/rotisserie" },
           { label: "Massas", path: "/rotisserie" },
           { label: "Saladas", path: "/rotisserie" },

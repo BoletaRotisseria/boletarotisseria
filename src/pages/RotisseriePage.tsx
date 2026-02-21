@@ -3,7 +3,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
 
 const rotisserieCategories = [
-  "Aperitivos para Compartilhar",
+  "Para Compartilhar",
   "Pratos Principais",
   "Massas",
   "Saladas",
