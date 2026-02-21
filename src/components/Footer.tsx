@@ -43,10 +43,10 @@ export function Footer() {
           <div>
             <img src={boletaLogo} alt="Boleta Rotisseria" className="h-20 rounded mb-4" />
             <p className="text-sm text-foreground/60 leading-relaxed mb-6">
-              A Boleta oferece uma experiência gastronômica artesanal, com pratos preparados diariamente e ingredientes selecionados.
+              O Boleta oferece uma experiência gastronômica artesanal, com pratos preparados diariamente e ingredientes selecionados.
             </p>
             <p className="font-sans text-[11px] font-bold tracking-[0.14em] uppercase mb-3">
-              Siga a Boleta
+              Siga o Boleta
             </p>
             <a
               href={INSTAGRAM_URL}
@@ -109,20 +109,7 @@ export function Footer() {
             </h4>
             <div className="space-y-2.5 text-sm text-foreground/60">
               <p>
-                <span className="font-sans font-semibold text-foreground/80">Telefone:</span>{" "}
                 <a href="tel:+5511998951900" className="hover:text-foreground transition-colors">(11) 99895-1900</a>
-              </p>
-              <p>
-                <span className="font-sans font-semibold text-foreground/80">WhatsApp:</span>{" "}
-                <a href={WHATSAPP_CONTATO} target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">(11) 99895-1900</a>
-              </p>
-              <p>
-                <span className="font-sans font-semibold text-foreground/80">E-mail:</span>{" "}
-                <a href="mailto:contato@boletarotisseria.com.br" className="hover:text-foreground transition-colors">contato@boletarotisseria.com.br</a>
-              </p>
-              <p>
-                <span className="font-sans font-semibold text-foreground/80">Horário:</span>{" "}
-                Seg a Sex, 9h às 18h
               </p>
             </div>
           </div>
@@ -130,7 +117,7 @@ export function Footer() {
 
         {/* Rodapé inferior */}
         <div className="border-t border-foreground/10 mt-10 pt-6 text-center text-xs text-foreground/40">
-          © {new Date().getFullYear()} Boleta Rotisseria. Todos os direitos reservados.
+          © {new Date().getFullYear()} Boleta. Todos os direitos reservados.
         </div>
       </div>
     </footer>
