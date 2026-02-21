@@ -15,16 +15,11 @@ export function Footer() {
         style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }}
       />
 
-      {/* Thin textured strip */}
-      <div className="relative z-10 h-6">
-        <div
-          className="absolute inset-0 bg-repeat bg-center opacity-10"
-          style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }}
-        />
-      </div>
+      {/* Thin textured strip – same pattern as footer body */}
+      <div className="relative z-10 h-6" />
 
-      {/* Newsletter bar */}
-      <div className="relative z-10 border-t border-b border-border/60">
+      {/* Newsletter bar – solid background */}
+      <div className="relative z-10 border-t border-b border-border/60 bg-background">
         <div className="container py-8 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
           <h3 className="font-serif text-2xl md:text-3xl tracking-tight shrink-0">
             Cardápio Semanal
