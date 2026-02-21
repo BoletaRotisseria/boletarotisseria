@@ -3,19 +3,18 @@ import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
 
 const subcategories = [
-  "Para Compartilhar", "Pratos Principais", "Massas",
-  "Saladas", "Acompanhamentos", "Sopas", "Sobremesas",
+  "Refeições Individuais", "Pratos Completos", "Combinações Prontas", "Opções do Dia",
 ];
 
-export default function RotisseriePage() {
+export default function ToGoPage() {
   const { data: products, isLoading } = useShopifyProducts(50);
 
   return (
     <div className="container py-10 md:py-16">
       <div className="text-center mb-12">
-        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">Rotisseria</h1>
+        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">To Go</h1>
         <p className="text-muted-foreground max-w-lg mx-auto">
-          Clássicos da casa e especialidades Boleta para o seu dia a dia.
+          Refeições prontas em porções individuais para o dia a dia. Praticidade sem abrir mão do sabor.
         </p>
       </div>
 
@@ -41,7 +40,7 @@ export default function RotisseriePage() {
         <div className="text-center py-20">
           <ShoppingCart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <h3 className="font-serif text-2xl mb-2">Nenhum produto encontrado</h3>
-          <p className="text-muted-foreground">Os produtos da rotisseria serão exibidos aqui.</p>
+          <p className="text-muted-foreground">Os pratos To Go serão exibidos aqui.</p>
         </div>
       )}
     </div>
