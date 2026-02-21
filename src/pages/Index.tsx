@@ -124,22 +124,22 @@ prontos para aquecer.
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
             {
-              source: "EM BREVE",
-              title: "Matéria sobre o Boleta em breve...",
-              excerpt: "Aguarde! Em breve teremos novidades na mídia.",
-              link: "#"
+              source: "VEJA SÃO PAULO",
+              title: "Boleta — mix de empório e rotisseria em Pinheiros",
+              excerpt: "Desde 2022, o espaço une rotisseria e empório com curadoria de Roberto Eid Philipp.",
+              link: "https://vejasp.abril.com.br/estabelecimento/boleta/"
             },
             {
-              source: "EM BREVE",
-              title: "Novidades do Boleta chegando...",
-              excerpt: "Fique de olho nas nossas redes para saber mais.",
-              link: "#"
+              source: "VEJA SÃO PAULO",
+              title: "Boleta também vende pratos para viagem em Pinheiros",
+              excerpt: "No misto de empório e rotisseria, Roberto Eid Philipp assina as receitas e faz a curadoria dos itens à venda.",
+              link: "https://vejasp.abril.com.br/comer-e-beber/boleta-pinheiros-critica/"
             },
             {
-              source: "EM BREVE",
-              title: "O Boleta na imprensa...",
-              excerpt: "Em breve compartilharemos as últimas notícias.",
-              link: "#"
+              source: "VEJA SÃO PAULO",
+              title: "Roberto Eid Philipp, da Boleta, participa de evento na França",
+              excerpt: "Único paulistano a integrar o festival no Carreau du Temple, em Paris, levando cuscuz paulista e manjar de coco.",
+              link: "https://vejasp.abril.com.br/coluna/delicia-de-conta/comer-e-beber-chef-rotisseria-boleta-participa-de-evento-na-franca/"
             }].
             map((item, i) =>
             <a
