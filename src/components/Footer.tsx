@@ -16,7 +16,7 @@ export function Footer() {
       />
 
       {/* Newsletter bar */}
-      <div className="relative z-10 border-t border-b border-border/60">
+      <div className="relative z-10 border-t border-b border-border/60 bg-background">
         <div className="container py-8 flex flex-col md:flex-row items-center gap-4 md:gap-8">
           <h3 className="font-serif text-2xl md:text-3xl tracking-tight shrink-0">
             cardápio semanal
