@@ -9,7 +9,7 @@ export default function PresentearPage() {
     <div className="container py-10 md:py-16">
       <div className="text-center mb-12">
         <Gift className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">Para Presentear</h1>
+        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">Para Presentear</h1>
         <p className="text-muted-foreground max-w-lg mx-auto">
           Kits e cestas gourmet para surpreender quem você ama.
         </p>
