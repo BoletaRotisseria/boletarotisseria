@@ -133,6 +133,56 @@ prontos para aquecer.
         </div>
       </section>
 
+      {/* Mídia / Na Mídia */}
+      <section className="py-16 md:py-24 bg-secondary/30">
+        <div className="container">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-10">Na mídia</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                source: "EM BREVE",
+                title: "Matéria sobre o Boleta em breve...",
+                excerpt: "Aguarde! Em breve teremos novidades na mídia.",
+                link: "#",
+              },
+              {
+                source: "EM BREVE",
+                title: "Novidades do Boleta chegando...",
+                excerpt: "Fique de olho nas nossas redes para saber mais.",
+                link: "#",
+              },
+              {
+                source: "EM BREVE",
+                title: "O Boleta na imprensa...",
+                excerpt: "Em breve compartilharemos as últimas notícias.",
+                link: "#",
+              },
+            ].map((item, i) => (
+              <a
+                key={i}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-background rounded-lg border border-border p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
+              >
+                <div>
+                  <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
+                    {item.source}
+                  </span>
+                  <h3 className="font-serif text-xl font-bold mt-2 mb-2 group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">{item.excerpt}</p>
+                </div>
+                <span className="mt-4 text-sm font-medium italic text-foreground group-hover:text-primary transition-colors">
+                  Vem ler tudo aqui →
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Diferenciais */}
       <section className="py-16 md:py-24">
         <div className="container">
