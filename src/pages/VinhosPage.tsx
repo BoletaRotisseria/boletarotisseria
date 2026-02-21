@@ -1,30 +1,23 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
-import { Loader2, ShoppingCart } from "lucide-react";
+import { Loader2, Wine } from "lucide-react";
 
-const emporioCategories = [
-  "Queijos & Embutidos",
-  "Antepastos & Conservas",
-  "Massas & Molhos",
-  "Doces & Chocolates",
-  "Biscoitos & Snacks",
-  "Azeites, Temperos & Especiais",
-];
+const wineCategories = ["Branco", "Tinto", "Rosé", "Espumante", "Champagne"];
 
-export default function EmporioPage() {
+export default function VinhosPage() {
   const { data: products, isLoading } = useShopifyProducts(50);
 
   return (
     <div className="container py-10 md:py-16">
       <div className="text-center mb-12">
-        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">Empório</h1>
+        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">Vinhos</h1>
         <p className="text-muted-foreground max-w-lg mx-auto">
-          Produtos especiais e itens artesanais selecionados para você.
+          Nossa seleção de vinhos para acompanhar cada momento.
         </p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 mb-10">
-        {emporioCategories.map((cat) => (
+        {wineCategories.map((cat) => (
           <span key={cat} className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
             {cat}
           </span>
@@ -43,9 +36,9 @@ export default function EmporioPage() {
         </div>
       ) : (
         <div className="text-center py-20">
-          <ShoppingCart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-          <h3 className="font-serif text-2xl mb-2">Nenhum produto encontrado</h3>
-          <p className="text-muted-foreground">Os produtos do empório serão exibidos aqui.</p>
+          <Wine className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="font-serif text-2xl mb-2">Em breve</h3>
+          <p className="text-muted-foreground">Os vinhos serão exibidos aqui em breve.</p>
         </div>
       )}
     </div>
