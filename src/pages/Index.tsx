@@ -63,8 +63,9 @@ prontos para aquecer.
             <div className="absolute inset-0 diamond-pattern opacity-30" />
             <div className="absolute inset-0 bg-primary/80 group-hover:bg-primary/70 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-3 drop-shadow-lg">
-                Rotisserie
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-3 drop-shadow-lg">Rotisseria
+
+
               </h2>
               <p className="text-primary-foreground/80 text-lg md:text-xl max-w-md mx-auto">
                 Clássicos da casa, empório e muito mais.
@@ -74,8 +75,7 @@ prontos para aquecer.
         </div>
 
         {/* Setas horizontais */}
-        {currentSlide === 0 &&
-        <button
+        {currentSlide === 0 && <button
           onClick={(e) => {e.stopPropagation();scrollToSlide(1);}}
           className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
 
@@ -139,32 +139,32 @@ prontos para aquecer.
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-10">Na mídia</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              {
-                source: "EM BREVE",
-                title: "Matéria sobre o Boleta em breve...",
-                excerpt: "Aguarde! Em breve teremos novidades na mídia.",
-                link: "#",
-              },
-              {
-                source: "EM BREVE",
-                title: "Novidades do Boleta chegando...",
-                excerpt: "Fique de olho nas nossas redes para saber mais.",
-                link: "#",
-              },
-              {
-                source: "EM BREVE",
-                title: "O Boleta na imprensa...",
-                excerpt: "Em breve compartilharemos as últimas notícias.",
-                link: "#",
-              },
-            ].map((item, i) => (
-              <a
-                key={i}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-background rounded-lg border border-border p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
-              >
+            {
+              source: "EM BREVE",
+              title: "Matéria sobre o Boleta em breve...",
+              excerpt: "Aguarde! Em breve teremos novidades na mídia.",
+              link: "#"
+            },
+            {
+              source: "EM BREVE",
+              title: "Novidades do Boleta chegando...",
+              excerpt: "Fique de olho nas nossas redes para saber mais.",
+              link: "#"
+            },
+            {
+              source: "EM BREVE",
+              title: "O Boleta na imprensa...",
+              excerpt: "Em breve compartilharemos as últimas notícias.",
+              link: "#"
+            }].
+            map((item, i) =>
+            <a
+              key={i}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-background rounded-lg border border-border p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+
                 <div>
                   <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
                     {item.source}
@@ -178,7 +178,7 @@ prontos para aquecer.
                   Vem ler tudo aqui →
                 </span>
               </a>
-            ))}
+            )}
           </div>
         </div>
       </section>
