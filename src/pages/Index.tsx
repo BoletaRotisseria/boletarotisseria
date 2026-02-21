@@ -129,7 +129,7 @@ prontos para aquecer.
       </section>
 
       {/* Mídia / Na Mídia */}
-      <section className="pt-10 pb-6 md:pt-12 md:pb-8 bg-secondary/30">
+      <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-10">Na mídia</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -179,7 +179,7 @@ prontos para aquecer.
       </section>
 
       {/* Diferenciais */}
-      <section className="py-10 md:py-14 bg-primary">
+      <section className="py-10 bg-primary md:py-[40px]">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
@@ -187,9 +187,9 @@ prontos para aquecer.
             { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
             { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
             map((f) =>
-            <div key={f.title} className="p-8 border border-primary-foreground/20 rounded-lg">
-                <h3 className="font-serif text-2xl mb-3 text-primary-foreground">{f.title}</h3>
-                <p className="text-primary-foreground/70">{f.desc}</p>
+            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-secondary-foreground">
+                <h3 className="font-serif text-2xl mb-3 text-secondary-foreground">{f.title}</h3>
+                <p className="text-secondary-foreground">{f.desc}</p>
               </div>
             )}
           </div>
