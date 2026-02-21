@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      clientes: {
+        Row: {
+          atualizado_em: string
+          bairro: string
+          cep: string
+          cidade: string
+          complemento: string | null
+          cpf: string
+          criado_em: string
+          data_nascimento: string | null
+          email: string
+          estado: string
+          id: string
+          nome_completo: string
+          numero: string
+          rua: string
+          telefone: string
+        }
+        Insert: {
+          atualizado_em?: string
+          bairro?: string
+          cep?: string
+          cidade?: string
+          complemento?: string | null
+          cpf?: string
+          criado_em?: string
+          data_nascimento?: string | null
+          email?: string
+          estado?: string
+          id: string
+          nome_completo?: string
+          numero?: string
+          rua?: string
+          telefone?: string
+        }
+        Update: {
+          atualizado_em?: string
+          bairro?: string
+          cep?: string
+          cidade?: string
+          complemento?: string | null
+          cpf?: string
+          criado_em?: string
+          data_nascimento?: string | null
+          email?: string
+          estado?: string
+          id?: string
+          nome_completo?: string
+          numero?: string
+          rua?: string
+          telefone?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null
@@ -83,6 +137,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_cliente_complete: { Args: { cliente_id: string }; Returns: boolean }
       is_own_profile: { Args: { profile_user_id: string }; Returns: boolean }
     }
     Enums: {

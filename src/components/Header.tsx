@@ -160,9 +160,9 @@ export function Header() {
             <Search className="h-5 w-5" />
           </button>
           <Link
-            to={user ? "/dashboard" : "/login"}
+            to={user ? "/conta" : "/entrar"}
             className="p-2 text-foreground/60 hover:text-foreground transition-colors"
-            aria-label={user ? "Dashboard" : "Entrar"}
+            aria-label={user ? "Minha Conta" : "Entrar"}
           >
             <User className="h-5 w-5" />
           </Link>
