@@ -15,6 +15,8 @@ import EventosPage from "./pages/EventosPage";
 import CafePage from "./pages/CafePage";
 import SemanaPage from "./pages/SemanaPage";
 import RotisseriePage from "./pages/RotisseriePage";
+import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +36,8 @@ function AppContent() {
         <Route path="/semana" element={<SemanaPage />} />
         <Route path="/rotisserie" element={<RotisseriePage />} />
         <Route path="/product/:handle" element={<ProductDetailPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/perfil" element={<ProfilePage />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
