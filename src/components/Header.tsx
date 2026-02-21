@@ -83,7 +83,7 @@ export function Header() {
   };
 
   const handleLeave = () => {
-    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 150);
+    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 100);
   };
 
   return (
@@ -112,6 +112,47 @@ export function Header() {
                 {item.label}
                 {item.subCategories && <ChevronDown className="h-3 w-3" strokeWidth={2} />}
               </Link>
+
+              {/* Mega-menu rendered inside the nav item for seamless hover */}
+              {item.subCategories && openDropdown === item.label && (
+                <div className="fixed left-0 right-0 top-[56px] md:top-[64px] z-50 bg-background border-b border-border/40 shadow-md animate-fade-in">
+                  <div className="container">
+                    <div className="flex border border-border/60">
+                      {item.subCategories.map((sub) => (
+                        <Link
+                          key={sub.label}
+                          to={sub.path}
+                          className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/40 last:border-r-0 hover:bg-secondary/50 transition-colors ${
+                            sub.highlight ? "text-destructive" : "text-foreground"
+                          }`}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="flex py-4">
+                      {item.subCategories.map((sub) => (
+                        <div key={sub.label} className="flex-1 px-6">
+                          {sub.items && (
+                            <ul className="space-y-1">
+                              {sub.items.map((si) => (
+                                <li key={si.label}>
+                                  <Link
+                                    to={si.path}
+                                    className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
+                                  >
+                                    {si.label}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </nav>
@@ -173,58 +214,8 @@ export function Header() {
         </div>
       )}
 
-      {/* Desktop mega-menu dropdown */}
-      {navItems.map(
-        (item) =>
-          item.subCategories &&
-          openDropdown === item.label && (
-            <div
-              key={item.label}
-              className="hidden lg:block absolute left-0 right-0 z-50 bg-background border-b border-border/40 shadow-md animate-fade-in"
-              onMouseEnter={() => handleEnter(item.label)}
-              onMouseLeave={handleLeave}
-            >
-              {/* Sub-category titles row */}
-              <div className="container">
-                <div className="flex border border-border/60">
-                  {item.subCategories.map((sub) => (
-                    <Link
-                      key={sub.label}
-                      to={sub.path}
-                      className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/40 last:border-r-0 hover:bg-secondary/50 transition-colors ${
-                        sub.highlight ? "text-destructive" : "text-foreground"
-                      }`}
-                    >
-                      {sub.label}
-                    </Link>
-                  ))}
-                </div>
 
-                {/* Sub-items row */}
-                <div className="flex py-4">
-                  {item.subCategories.map((sub) => (
-                    <div key={sub.label} className="flex-1 px-6">
-                      {sub.items && (
-                        <ul className="space-y-1">
-                          {sub.items.map((si) => (
-                            <li key={si.label}>
-                              <Link
-                                to={si.path}
-                                className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
-                              >
-                                {si.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )
-      )}
+
 
       {/* Mobile nav */}
       {mobileOpen && (
