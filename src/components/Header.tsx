@@ -75,6 +75,8 @@ export function Header() {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mobileTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchClosedByClick = useRef(false);
+  const mobileClosedByClick = useRef(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -89,20 +91,24 @@ export function Header() {
   };
 
   const handleSearchEnter = () => {
+    if (searchClosedByClick.current) return;
     if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
     setSearchOpen(true);
   };
 
   const handleSearchLeave = () => {
+    searchClosedByClick.current = false;
     searchTimeoutRef.current = setTimeout(() => setSearchOpen(false), 100);
   };
 
   const handleMobileEnter = () => {
+    if (mobileClosedByClick.current) return;
     if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
     setMobileOpen(true);
   };
 
   const handleMobileLeave = () => {
+    mobileClosedByClick.current = false;
     mobileTimeoutRef.current = setTimeout(() => setMobileOpen(false), 100);
   };
 
@@ -197,7 +203,10 @@ export function Header() {
             onMouseLeave={handleSearchLeave}
           >
             <button
-              onClick={() => setSearchOpen(!searchOpen)}
+              onClick={() => {
+                if (searchOpen) searchClosedByClick.current = true;
+                setSearchOpen(!searchOpen);
+              }}
               className="p-2 text-foreground hover:text-foreground/70 transition-colors"
               aria-label="Pesquisar"
             >
@@ -216,7 +225,10 @@ export function Header() {
             onMouseEnter={handleMobileEnter}
             onMouseLeave={handleMobileLeave}
           >
-            <button className="lg:hidden p-2 text-foreground hover:text-foreground/70 transition-colors" onClick={() => setMobileOpen(!mobileOpen)}>
+            <button className="lg:hidden p-2 text-foreground hover:text-foreground/70 transition-colors" onClick={() => {
+              if (mobileOpen) mobileClosedByClick.current = true;
+              setMobileOpen(!mobileOpen);
+            }}>
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
@@ -250,7 +262,10 @@ export function Header() {
               />
               <button
                 type="button"
-                onClick={() => setSearchOpen(false)}
+                onClick={() => {
+                  searchClosedByClick.current = true;
+                  setSearchOpen(false);
+                }}
                 className="p-2 text-foreground/60 hover:text-foreground"
               >
                 <X className="h-4 w-4" />
