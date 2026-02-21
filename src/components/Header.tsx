@@ -125,6 +125,8 @@ export function Header() {
                   onMouseEnter={() => handleEnter(item.label)}
                   onMouseLeave={handleLeave}
                 >
+                  {/* Invisible bridge to connect nav link to mega-menu */}
+                  <div className="absolute left-0 right-0 -top-4 h-4" />
                   <div className="container">
                     <div className="flex border border-border/60">
                       {item.subCategories.map((sub) => (
