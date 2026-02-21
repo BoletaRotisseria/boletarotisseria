@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ShoppingCart, ChevronDown } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
+import { useAuth } from "@/hooks/useAuth";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
 
 interface SubItem {
@@ -103,8 +104,12 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleEnter = (label: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -147,12 +152,60 @@ export function Header() {
 
         {/* Right icons */}
         <div className="flex items-center gap-1 md:gap-2">
+          <button
+            onClick={() => setSearchOpen(!searchOpen)}
+            className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+            aria-label="Pesquisar"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+          <Link
+            to={user ? "/perfil" : "/auth"}
+            className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+            aria-label={user ? "Meu perfil" : "Entrar"}
+          >
+            <User className="h-5 w-5" />
+          </Link>
           <CartDrawer />
           <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
+
+      {/* Search bar */}
+      {searchOpen && (
+        <div className="border-t border-border/40 bg-background animate-fade-in">
+          <div className="container py-3">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) {
+                  // For now just close - can be connected to search page later
+                  setSearchOpen(false);
+                }
+              }}
+              className="flex gap-2"
+            >
+              <input
+                autoFocus
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="O que você procura?"
+                className="flex-1 bg-secondary/50 border border-border/60 rounded px-4 py-2 text-sm font-sans placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+              />
+              <button
+                type="button"
+                onClick={() => setSearchOpen(false)}
+                className="p-2 text-foreground/60 hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Desktop mega-menu dropdown */}
       {navItems.map(
