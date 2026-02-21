@@ -196,22 +196,6 @@ prontos para aquecer.
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-primary">
-        <div className="container text-center">
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-primary-foreground mb-4">
-            Peça direto do Boleta
-          </h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-md mx-auto">
-            Praticidade e sabor direto na sua mesa.
-          </p>
-          <Link to="/menu">
-            <Button size="lg" variant="outline" className="cta-text bg-background text-foreground hover:bg-background/90">
-              Ver Menu Completo
-            </Button>
-          </Link>
-        </div>
-      </section>
     </>);
 
 };
