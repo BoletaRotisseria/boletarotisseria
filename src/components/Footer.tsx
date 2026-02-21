@@ -27,7 +27,7 @@ export function Footer() {
       <div className="relative z-10 border-t border-b border-border/60 bg-background">
         <div className="container py-8 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
           <h3 className="font-serif text-2xl md:text-3xl tracking-tight shrink-0">
-            cardápio semanal
+            Cardápio Semanal
           </h3>
           <p className="text-sm text-foreground/60 shrink-0">
             Inscreva-se e fique por dentro das novidades.
