@@ -38,12 +38,10 @@ const Index = () => {
           <Link
             to="/semana"
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
-
             <img
               src={fachadaImage}
               alt="Cardápio Semanal"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-
             <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">
@@ -59,13 +57,10 @@ prontos para aquecer.
           <Link
             to="/rotisserie"
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
-
             <div className="absolute inset-0 diamond-pattern opacity-30" />
             <div className="absolute inset-0 bg-primary/80 group-hover:bg-primary/70 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-3 drop-shadow-lg">Rotisseria
-
-
               </h2>
               <p className="text-primary-foreground/80 text-lg md:text-xl max-w-md mx-auto">
                 Clássicos da casa, empório e muito mais.
@@ -78,7 +73,6 @@ prontos para aquecer.
         {currentSlide === 0 && <button
           onClick={(e) => {e.stopPropagation();scrollToSlide(1);}}
           className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
-
             <ChevronRight className="h-6 w-6" />
           </button>
         }
@@ -86,7 +80,6 @@ prontos para aquecer.
         <button
           onClick={(e) => {e.stopPropagation();scrollToSlide(0);}}
           className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
-
             <ChevronLeft className="h-6 w-6" />
           </button>
         }
@@ -100,19 +93,15 @@ prontos para aquecer.
             className={`w-2.5 h-2.5 rounded-full transition-all ${
             currentSlide === i ? "bg-background scale-125" : "bg-background/40 hover:bg-background/60"}`
             } />
-
           )}
         </div>
       </section>
 
       {/* Banner duplo */}
       <section className="grid grid-cols-1 md:grid-cols-2">
-        {/* Lado esquerdo – foto sem sobreposição */}
         <div className="min-h-[50vh] md:min-h-[60vh]">
           <img src={heroImage} alt="Pratos artesanais do Boleta" className="w-full h-full object-cover" />
         </div>
-
-        {/* Lado direito – texto com fundo amarelo */}
         <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground leading-[1.1] mb-4">
             Peça pelo<br />nosso site!
@@ -125,24 +114,6 @@ prontos para aquecer.
               Pedir Agora
             </Button>
           </Link>
-        </div>
-      </section>
-
-      {/* Diferenciais */}
-      <section className="py-10 bg-background md:py-[40px]">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {[
-            { title: "Fresco & Artesanal", desc: "Ingredientes selecionados, receitas da casa." },
-            { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
-            { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
-            map((f) =>
-            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-foreground/20">
-                <h3 className="font-serif text-2xl mb-3 text-foreground">{f.title}</h3>
-                <p className="text-muted-foreground">{f.desc}</p>
-              </div>
-            )}
-          </div>
         </div>
       </section>
 
@@ -177,7 +148,6 @@ prontos para aquecer.
               target="_blank"
               rel="noopener noreferrer"
               className="group rounded-lg border border-primary-foreground/30 p-6 flex flex-col justify-between hover:bg-primary-foreground/10 transition-colors">
-
                 <div>
                   <span className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/60">
                     {item.source}
@@ -191,6 +161,24 @@ prontos para aquecer.
                   Vem ler tudo aqui →
                 </span>
               </a>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Diferenciais */}
+      <section className="py-10 bg-background md:py-[40px]">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {[
+            { title: "Fresco & Artesanal", desc: "Ingredientes selecionados, receitas da casa." },
+            { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
+            { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
+            map((f) =>
+            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-foreground/20">
+                <h3 className="font-serif text-2xl mb-3 text-foreground">{f.title}</h3>
+                <p className="text-muted-foreground">{f.desc}</p>
+              </div>
             )}
           </div>
         </div>
