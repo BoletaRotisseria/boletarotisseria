@@ -54,13 +54,11 @@ export function Footer() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-foreground/60 hover:text-foreground transition-colors"
               aria-label="Instagram">
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-foreground/20 hover:border-foreground/40 transition-colors">
-                <svg viewBox="0 0 24 24" className="w-4.5 h-4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                  <circle cx="12" cy="12" r="5" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                </svg>
-              </span>
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
               <span className="text-sm">@boleta.rotisseria</span>
             </a>
           </div>
@@ -118,11 +116,6 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                 <span>Seg a Sex 10h às 18h 
 Sábado 10h às 14h
-                </span>
-              </p>
-              <p className="flex items-center gap-2">
-                <svg viewBox="0 0 24 24" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                <span>
                 </span>
               </p>
               <p className="flex items-center gap-2">
