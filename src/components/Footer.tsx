@@ -25,14 +25,14 @@ export function Footer() {
 
       {/* Newsletter bar */}
       <div className="relative z-10 border-t border-b border-border/60 bg-background">
-        <div className="container py-8 flex flex-col md:flex-row items-center gap-4 md:gap-8">
-          <h3 className="font-serif text-2xl md:text-3xl tracking-tight shrink-0">
+        <div className="container py-8 flex flex-col items-center gap-4 text-center">
+          <h3 className="font-serif text-2xl md:text-3xl tracking-tight">
             cardápio semanal
           </h3>
-          <p className="text-sm text-foreground/60 shrink-0">
+          <p className="text-sm text-foreground/60">
             Inscreva-se e fique por dentro das novidades.
           </p>
-          <div className="flex w-full md:w-auto md:ml-auto shrink-0">
+          <div className="flex">
             <a
               href={WHATSAPP_CARDAPIO}
               target="_blank"
