@@ -15,6 +15,14 @@ export function Footer() {
         style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }}
       />
 
+      {/* Thin textured strip */}
+      <div className="relative z-10 h-6">
+        <div
+          className="absolute inset-0 bg-repeat bg-center opacity-10"
+          style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }}
+        />
+      </div>
+
       {/* Newsletter bar */}
       <div className="relative z-10 border-t border-b border-border/60 bg-background">
         <div className="container py-8 flex flex-col md:flex-row items-center gap-4 md:gap-8">
