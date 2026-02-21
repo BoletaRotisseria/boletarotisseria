@@ -4,7 +4,7 @@ import { Loader2, ShoppingCart } from "lucide-react";
 
 const rotisserieCategories = [
   "Para Compartilhar",
-  "Pratos Principais",
+  "Carnes & Aves",
   "Massas",
   "Saladas",
   "Acompanhamentos",
