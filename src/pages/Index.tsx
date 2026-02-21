@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Leaf, Zap, Heart } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import fachadaImage from "@/assets/boleta-fachada.jpeg";
 
@@ -106,22 +106,19 @@ prontos para aquecer.
       </section>
 
       {/* Diferenciais */}
-      <section className="py-6 bg-background border-y border-border">
+      <section className="py-10 bg-primary md:py-[40px]">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
-              { icon: Leaf, title: "Fresco & Artesanal", desc: "Ingredientes selecionados." },
-              { icon: Zap, title: "Prático & Rápido", desc: "Pronto para aquecer." },
-              { icon: Heart, title: "Feito com Carinho", desc: "Preparado diariamente." },
-            ].map((f) => (
-              <div key={f.title} className="flex items-center gap-3 px-2 py-2">
-                <f.icon className="h-5 w-5 text-primary shrink-0" />
-                <div>
-                  <span className="font-semibold text-sm text-foreground">{f.title}</span>
-                  <span className="text-muted-foreground text-sm ml-1">— {f.desc}</span>
-                </div>
+            { title: "Fresco & Artesanal", desc: "Ingredientes selecionados, receitas da casa." },
+            { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
+            { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
+            map((f) =>
+            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-secondary-foreground">
+                <h3 className="font-serif text-2xl mb-3 text-secondary-foreground">{f.title}</h3>
+                <p className="text-secondary-foreground">{f.desc}</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
