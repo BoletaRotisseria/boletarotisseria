@@ -120,7 +120,8 @@ prontos para aquecer.
       {/* Mídia / Na Mídia */}
       <section className="py-8 md:py-12 bg-background">
         <div className="container">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-foreground">Na mídia</h2>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2 text-foreground">Na mídia</h2>
+          <p className="text-muted-foreground mb-6 text-sm md:text-base">★★★★ no Guia Comer & Beber da Veja São Paulo</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
             {
