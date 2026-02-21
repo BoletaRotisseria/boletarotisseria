@@ -40,9 +40,9 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Corpo do rodapé – 4 colunas */}
+      {/* Corpo do rodapé – 3 colunas */}
       <div className="container relative z-10 py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Coluna 1 – Logo + Sobre */}
           <div>
             <img src={boletaLogo} alt="Boleta Rotisseria" className="h-20 rounded mb-4" />
@@ -81,27 +81,6 @@ export function Footer() {
               </Link>
               <Link to="/menu" className="block text-foreground/60 hover:text-foreground transition-colors">
                 Nossa cozinha
-              </Link>
-            </nav>
-          </div>
-
-          {/* Coluna 3 – Informações Úteis */}
-          <div>
-            <h4 className="font-sans text-[11px] font-bold tracking-[0.14em] uppercase mb-5">
-              Informações Úteis
-            </h4>
-            <nav className="space-y-2.5 text-sm">
-              <Link to="/conta" className="block text-foreground/60 hover:text-foreground transition-colors">
-                Meus Pedidos
-              </Link>
-              <Link to="/eventos" className="block text-foreground/60 hover:text-foreground transition-colors">
-                Política de entrega
-              </Link>
-              <Link to="/eventos" className="block text-foreground/60 hover:text-foreground transition-colors">
-                Trocas e Cancelamentos
-              </Link>
-              <Link to="/eventos" className="block text-foreground/60 hover:text-foreground transition-colors">
-                Política de Privacidade
               </Link>
             </nav>
           </div>
