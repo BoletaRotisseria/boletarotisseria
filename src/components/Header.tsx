@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
@@ -83,8 +83,13 @@ export function Header() {
   };
 
   const handleLeave = () => {
-    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 100);
+    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 50);
   };
+
+  useEffect(() => {
+    setOpenDropdown(null);
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border/40">
@@ -115,13 +120,18 @@ export function Header() {
 
               {/* Mega-menu rendered inside the nav item for seamless hover */}
               {item.subCategories && openDropdown === item.label && (
-                <div className="fixed left-0 right-0 top-[56px] md:top-[64px] z-50 bg-background border-b border-border/40 shadow-md animate-fade-in">
+                <div
+                  className="fixed left-0 right-0 top-[56px] md:top-[64px] z-50 bg-background border-b border-border/40 shadow-md animate-fade-in"
+                  onMouseEnter={() => handleEnter(item.label)}
+                  onMouseLeave={handleLeave}
+                >
                   <div className="container">
                     <div className="flex border border-border/60">
                       {item.subCategories.map((sub) => (
                         <Link
                           key={sub.label}
                           to={sub.path}
+                          onClick={() => setOpenDropdown(null)}
                           className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/40 last:border-r-0 hover:bg-secondary/50 transition-colors ${
                             sub.highlight ? "text-destructive" : "text-foreground"
                           }`}
@@ -139,6 +149,7 @@ export function Header() {
                                 <li key={si.label}>
                                   <Link
                                     to={si.path}
+                                    onClick={() => setOpenDropdown(null)}
                                     className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
                                   >
                                     {si.label}
