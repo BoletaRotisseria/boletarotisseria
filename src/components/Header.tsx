@@ -198,7 +198,7 @@ export function Header() {
           >
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+              className="p-2 text-foreground hover:text-foreground/70 transition-colors"
               aria-label="Pesquisar"
             >
               <Search className="h-5 w-5" />
@@ -206,7 +206,7 @@ export function Header() {
           </div>
           <Link
             to={user ? "/conta" : "/entrar"}
-            className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+            className="p-2 text-foreground hover:text-foreground/70 transition-colors"
             aria-label={user ? "Minha Conta" : "Entrar"}
           >
             <User className="h-5 w-5" />
@@ -216,7 +216,7 @@ export function Header() {
             onMouseEnter={handleMobileEnter}
             onMouseLeave={handleMobileLeave}
           >
-            <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
+            <button className="lg:hidden p-2 text-foreground hover:text-foreground/70 transition-colors" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>

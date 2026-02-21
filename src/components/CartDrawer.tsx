@@ -28,14 +28,14 @@ export function CartDrawer() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <button className="relative p-2 text-foreground hover:text-foreground/70 transition-colors">
           <ShoppingCart className="h-5 w-5" />
           {totalItems > 0 && (
             <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
               {totalItems}
             </Badge>
           )}
-        </Button>
+        </button>
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-lg flex flex-col h-full">
         <SheetHeader className="flex-shrink-0">
