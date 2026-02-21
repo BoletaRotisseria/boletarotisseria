@@ -67,16 +67,7 @@ export const cadastroSchema = z.object({
     .string()
     .min(1, "Informe seu telefone.")
     .refine((v) => v.replace(/\D/g, "").length >= 10, "Telefone inválido. Inclua DDD + número."),
-  data_nascimento: z
-    .string()
-    .min(1, "Informe sua data de nascimento.")
-    .refine((v) => {
-      const parts = v.split("/");
-      if (parts.length !== 3) return false;
-      const [d, m, y] = parts.map(Number);
-      const date = new Date(y, m - 1, d);
-      return date.getDate() === d && date.getMonth() === m - 1 && date <= new Date();
-    }, "Data de nascimento inválida."),
+  data_nascimento: z.string().optional(),
   cep: z
     .string()
     .min(1, "Informe o CEP.")
@@ -114,16 +105,7 @@ export const completarCadastroSchema = z.object({
     .string()
     .min(1, "Informe seu telefone.")
     .refine((v) => v.replace(/\D/g, "").length >= 10, "Telefone inválido. Inclua DDD + número."),
-  data_nascimento: z
-    .string()
-    .min(1, "Informe sua data de nascimento.")
-    .refine((v) => {
-      const parts = v.split("/");
-      if (parts.length !== 3) return false;
-      const [d, m, y] = parts.map(Number);
-      const date = new Date(y, m - 1, d);
-      return date.getDate() === d && date.getMonth() === m - 1 && date <= new Date();
-    }, "Data de nascimento inválida."),
+  data_nascimento: z.string().optional(),
   cep: z
     .string()
     .min(1, "Informe o CEP.")

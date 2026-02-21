@@ -53,7 +53,7 @@ export default function ContaPage() {
           <InfoRow icon={<Mail className="h-4 w-4" />} label="E-mail" value={cliente?.email || user.email || "—"} />
           <InfoRow icon={<FileText className="h-4 w-4" />} label="CPF" value={cliente?.cpf ? cliente.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") : "—"} />
           <InfoRow icon={<Phone className="h-4 w-4" />} label="Telefone" value={cliente?.telefone || "—"} />
-          <InfoRow icon={<Calendar className="h-4 w-4" />} label="Nascimento" value={cliente?.data_nascimento ? dateIsoToBr(cliente.data_nascimento) : "—"} />
+          
           <InfoRow
             icon={<MapPin className="h-4 w-4" />}
             label="Endereço"
