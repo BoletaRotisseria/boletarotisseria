@@ -42,7 +42,7 @@ export default function ContaPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-md space-y-8 animate-[fadeIn_0.5s_ease-out]">
         <div className="text-center space-y-1">
-          <h1 className="font-sans text-3xl font-bold tracking-[-0.06em] text-foreground">Minha Conta</h1>
+          <h1 className="font-serif text-3xl font-bold tracking-[-0.02em] text-foreground">Minha Conta</h1>
           <p className="font-sans text-sm tracking-[-0.02em] text-muted-foreground">
             Olá, {cliente?.nome_completo || user.email}
           </p>

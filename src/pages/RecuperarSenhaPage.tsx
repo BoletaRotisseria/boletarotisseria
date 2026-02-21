@@ -29,7 +29,7 @@ export default function RecuperarSenhaPage() {
         </Link>
 
         <div className="space-y-1">
-          <h1 className="font-sans text-3xl font-bold tracking-[-0.06em] text-foreground">Recuperar Senha</h1>
+          <h1 className="font-serif text-3xl font-bold tracking-[-0.02em] text-foreground">Recuperar Senha</h1>
           <p className="font-sans text-sm tracking-[-0.02em] text-muted-foreground">
             Informe seu e-mail para receber o link de redefinição
           </p>
