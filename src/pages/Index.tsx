@@ -122,14 +122,14 @@ prontos para aquecer.
         <div className="container">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2 text-foreground">Na mídia</h2>
           <p className="text-muted-foreground mb-6 text-sm md:text-base">★★★★ no Guia Comer & Beber da Veja São Paulo</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
             {
               source: "VEJA SÃO PAULO",
-              title: "Boleta — mix de empório e rotisseria em Pinheiros",
-              excerpt: "Desde 2022, o espaço une rotisseria e empório com curadoria de Roberto Eid Philipp.",
-              link: "https://vejasp.abril.com.br/estabelecimento/boleta/",
-              image: "https://vejasp.abril.com.br/wp-content/uploads/2023/07/Boleta_ambiente_credito_Helson-Gomes_divulgacao.JPG.jpg?quality=70&strip=info&w=600&h=400&crop=1"
+              title: "Roberto Eid Philipp, da Boleta, participa de evento na França",
+              excerpt: "Único paulistano a integrar o festival no Carreau du Temple, em Paris, levando cuscuz paulista e manjar de coco.",
+              link: "https://vejasp.abril.com.br/coluna/delicia-de-conta/comer-e-beber-chef-rotisseria-boleta-participa-de-evento-na-franca/",
+              image: "https://vejasp.abril.com.br/wp-content/uploads/2025/09/Roberto-Eid-Phillip.jpg?quality=70&strip=info&w=600&h=400&crop=1"
             },
             {
               source: "VEJA SÃO PAULO",
@@ -137,13 +137,6 @@ prontos para aquecer.
               excerpt: "No misto de empório e rotisseria, Roberto Eid Philipp assina as receitas e faz a curadoria dos itens à venda.",
               link: "https://vejasp.abril.com.br/comer-e-beber/boleta-pinheiros-critica/",
               image: "https://vejasp.abril.com.br/wp-content/uploads/2023/07/Boleta_ambiente_credito_Helson-Gomes_divulgacao.JPG.jpg?quality=70&strip=info&w=600&h=400&crop=1"
-            },
-            {
-              source: "VEJA SÃO PAULO",
-              title: "Roberto Eid Philipp, da Boleta, participa de evento na França",
-              excerpt: "Único paulistano a integrar o festival no Carreau du Temple, em Paris, levando cuscuz paulista e manjar de coco.",
-              link: "https://vejasp.abril.com.br/coluna/delicia-de-conta/comer-e-beber-chef-rotisseria-boleta-participa-de-evento-na-franca/",
-              image: "https://vejasp.abril.com.br/wp-content/uploads/2025/09/Roberto-Eid-Phillip.jpg?quality=70&strip=info&w=600&h=400&crop=1"
             }].
             map((item, i) =>
             <a
