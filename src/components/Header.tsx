@@ -73,6 +73,8 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mobileTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -84,6 +86,24 @@ export function Header() {
 
   const handleLeave = () => {
     timeoutRef.current = setTimeout(() => setOpenDropdown(null), 50);
+  };
+
+  const handleSearchEnter = () => {
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    setSearchOpen(true);
+  };
+
+  const handleSearchLeave = () => {
+    searchTimeoutRef.current = setTimeout(() => setSearchOpen(false), 100);
+  };
+
+  const handleMobileEnter = () => {
+    if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
+    setMobileOpen(true);
+  };
+
+  const handleMobileLeave = () => {
+    mobileTimeoutRef.current = setTimeout(() => setMobileOpen(false), 100);
   };
 
   useEffect(() => {
@@ -172,13 +192,18 @@ export function Header() {
 
         {/* Right icons */}
         <div className="flex items-center gap-1 md:gap-2">
-          <button
-            onClick={() => setSearchOpen(!searchOpen)}
-            className="p-2 text-foreground/60 hover:text-foreground transition-colors"
-            aria-label="Pesquisar"
+          <div
+            onMouseEnter={handleSearchEnter}
+            onMouseLeave={handleSearchLeave}
           >
-            <Search className="h-5 w-5" />
-          </button>
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+              aria-label="Pesquisar"
+            >
+              <Search className="h-5 w-5" />
+            </button>
+          </div>
           <Link
             to={user ? "/conta" : "/entrar"}
             className="p-2 text-foreground/60 hover:text-foreground transition-colors"
@@ -187,21 +212,29 @@ export function Header() {
             <User className="h-5 w-5" />
           </Link>
           <CartDrawer />
-          <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div
+            onMouseEnter={handleMobileEnter}
+            onMouseLeave={handleMobileLeave}
+          >
+            <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Search bar */}
       {searchOpen && (
-        <div className="border-t border-border/40 bg-background animate-fade-in">
+        <div
+          className="border-t border-border/40 bg-background animate-fade-in"
+          onMouseEnter={handleSearchEnter}
+          onMouseLeave={handleSearchLeave}
+        >
           <div className="container py-3">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 if (searchQuery.trim()) {
-                  // For now just close - can be connected to search page later
                   setSearchOpen(false);
                 }
               }}
@@ -232,7 +265,11 @@ export function Header() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="lg:hidden border-t border-border/40 bg-background px-6 py-4 space-y-1 animate-fade-in max-h-[80vh] overflow-y-auto">
+        <nav
+          className="lg:hidden border-t border-border/40 bg-background px-6 py-4 space-y-1 animate-fade-in max-h-[80vh] overflow-y-auto"
+          onMouseEnter={handleMobileEnter}
+          onMouseLeave={handleMobileLeave}
+        >
           {navItems.map((item) => (
             <div key={item.label}>
               <div className="flex items-center justify-between border-b border-border/30">
