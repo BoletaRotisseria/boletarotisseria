@@ -47,8 +47,7 @@ export function useCliente() {
     query.data.cidade &&
     query.data.bairro &&
     query.data.rua &&
-    query.data.numero &&
-    query.data.data_nascimento
+    query.data.numero
   );
 
   return { ...query, cliente: query.data, isComplete };

@@ -144,27 +144,16 @@ export default function CriarContaPage() {
             <Input {...register("nome_completo")} placeholder="Seu nome completo" className="h-11 font-sans tracking-[-0.02em]" />
           </FieldWrapper>
 
-          {/* CPF + Data nascimento */}
-          <div className="grid grid-cols-2 gap-3">
-            <FieldWrapper label="CPF" error={errors.cpf?.message}>
-              <Input
-                {...register("cpf")}
-                placeholder="000.000.000-00"
-                className="h-11 font-sans tracking-[-0.02em]"
-                onChange={(e) => setValue("cpf", maskCPF(e.target.value))}
-                value={watch("cpf") || ""}
-              />
-            </FieldWrapper>
-            <FieldWrapper label="Data de nascimento" error={errors.data_nascimento?.message}>
-              <Input
-                {...register("data_nascimento")}
-                placeholder="DD/MM/AAAA"
-                className="h-11 font-sans tracking-[-0.02em]"
-                onChange={(e) => setValue("data_nascimento", maskDate(e.target.value))}
-                value={watch("data_nascimento") || ""}
-              />
-            </FieldWrapper>
-          </div>
+          {/* CPF */}
+          <FieldWrapper label="CPF" error={errors.cpf?.message}>
+            <Input
+              {...register("cpf")}
+              placeholder="000.000.000-00"
+              className="h-11 font-sans tracking-[-0.02em]"
+              onChange={(e) => setValue("cpf", maskCPF(e.target.value))}
+              value={watch("cpf") || ""}
+            />
+          </FieldWrapper>
 
           {/* Email */}
           <FieldWrapper label="E-mail" error={errors.email?.message}>
@@ -196,7 +185,7 @@ export default function CriarContaPage() {
                 value={watch("cep") || ""}
               />
             </FieldWrapper>
-            <FieldWrapper label="Estado (UF)" error={errors.estado?.message}>
+            <FieldWrapper label="Estado" error={errors.estado?.message}>
               <select
                 {...register("estado")}
                 className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-sans tracking-[-0.02em] ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
