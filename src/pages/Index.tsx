@@ -34,7 +34,22 @@ const Index = () => {
           ref={carouselRef}
           className="h-full w-full flex overflow-x-auto horizontal-snap">
 
-          {/* Slide 1 – Cardápio Semanal */}
+          {/* Slide 1 – To Go */}
+          <Link
+            to="/to-go"
+            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
+            <div className="absolute inset-0 bg-foreground/90 group-hover:bg-foreground/80 transition-colors duration-300" />
+            <div className="relative z-10 text-center px-6">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">
+                To Go
+              </h2>
+              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">
+                Pratos prontos para levar e saborear onde quiser.
+              </p>
+            </div>
+          </Link>
+
+          {/* Slide 2 – Cardápio Semanal */}
           <Link
             to="/semana"
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
@@ -53,7 +68,7 @@ prontos para aquecer.
             </div>
           </Link>
 
-          {/* Slide 2 – Rotisserie */}
+          {/* Slide 3 – Rotisserie */}
           <Link
             to="/rotisserie"
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
@@ -70,23 +85,23 @@ prontos para aquecer.
         </div>
 
         {/* Setas horizontais */}
-        {currentSlide === 0 && <button
-          onClick={(e) => {e.stopPropagation();scrollToSlide(1);}}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
-            <ChevronRight className="h-6 w-6" />
-          </button>
-        }
-        {currentSlide === 1 &&
-        <button
-          onClick={(e) => {e.stopPropagation();scrollToSlide(0);}}
+        {currentSlide > 0 && <button
+          onClick={(e) => {e.stopPropagation();scrollToSlide(currentSlide - 1);}}
           className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
             <ChevronLeft className="h-6 w-6" />
+          </button>
+        }
+        {currentSlide < 2 &&
+        <button
+          onClick={(e) => {e.stopPropagation();scrollToSlide(currentSlide + 1);}}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
+            <ChevronRight className="h-6 w-6" />
           </button>
         }
 
         {/* Dots horizontais */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-          {[0, 1].map((i) =>
+          {[0, 1, 2].map((i) =>
           <button
             key={i}
             onClick={() => scrollToSlide(i)}
