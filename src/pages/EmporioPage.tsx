@@ -2,7 +2,10 @@ import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
 
-const emporioCategories = ["Chocolates", "Geleias", "Granola", "Azeites", "Temperos"];
+const subcategories = [
+  "Queijos & Embutidos", "Antepastos & Conservas", "Massas & Molhos",
+  "Doces & Chocolates", "Biscoitos & Snacks", "Azeites, Temperos & Especiais",
+];
 
 export default function EmporioPage() {
   const { data: products, isLoading } = useShopifyProducts(50);
@@ -17,7 +20,7 @@ export default function EmporioPage() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 mb-10">
-        {emporioCategories.map((cat) => (
+        {subcategories.map((cat) => (
           <span key={cat} className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
             {cat}
           </span>
