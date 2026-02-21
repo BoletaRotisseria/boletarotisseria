@@ -61,8 +61,6 @@ const navItems: NavItem[] = [
       { label: "Marmitas", path: "/semana" },
     ],
   },
-  { label: "Chef Boleta / Luciana", path: "/cafe" },
-  { label: "Cozinha", path: "/menu" },
   {
     label: "Loja",
     path: "/emporio",
@@ -96,6 +94,8 @@ const navItems: NavItem[] = [
       { label: "Presentes", path: "/presentear" },
     ],
   },
+  { label: "Cozinha", path: "/menu" },
+  { label: "Sobre Nós", path: "/cafe" },
   { label: "Contato", path: "/eventos" },
   { label: "Mídia", path: "/eventos" },
 ];
