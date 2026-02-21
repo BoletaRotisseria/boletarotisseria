@@ -9,12 +9,12 @@ import Index from "./pages/Index";
 import MenuPage from "./pages/MenuPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import EmporioPage from "./pages/EmporioPage";
-import ToGoPage from "./pages/ToGoPage";
+import IndividualPage from "./pages/IndividualPage";
 import PresentearPage from "./pages/PresentearPage";
 import EventosPage from "./pages/EventosPage";
 import CafePage from "./pages/CafePage";
+import SemanaPage from "./pages/SemanaPage";
 import RotisseriePage from "./pages/RotisseriePage";
-import VinhosPage from "./pages/VinhosPage";
 import EntrarPage from "./pages/EntrarPage";
 import CriarContaPage from "./pages/CriarContaPage";
 import RecuperarSenhaPage from "./pages/RecuperarSenhaPage";
@@ -39,11 +39,11 @@ function AppContent() {
         <Route path="/cafe" element={<CafePage />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/emporio" element={<EmporioPage />} />
-        <Route path="/to-go" element={<ToGoPage />} />
+        <Route path="/individual" element={<IndividualPage />} />
         <Route path="/presentear" element={<PresentearPage />} />
         <Route path="/eventos" element={<EventosPage />} />
+        <Route path="/semana" element={<SemanaPage />} />
         <Route path="/rotisserie" element={<RotisseriePage />} />
-        <Route path="/vinhos" element={<VinhosPage />} />
         <Route path="/product/:handle" element={<ProductDetailPage />} />
         {/* New auth routes */}
         <Route path="/entrar" element={<EntrarPage />} />
