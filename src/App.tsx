@@ -6,11 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
+import CardapiosPage from "./pages/CardapiosPage";
 import MenuPage from "./pages/MenuPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import EmporioPage from "./pages/EmporioPage";
-import IndividualPage from "./pages/IndividualPage";
-import PresentearPage from "./pages/PresentearPage";
+import PresentesPage from "./pages/PresentesPage";
+import ToGoPage from "./pages/ToGoPage";
+import VinhosPage from "./pages/VinhosPage";
 import EventosPage from "./pages/EventosPage";
 import CafePage from "./pages/CafePage";
 import SemanaPage from "./pages/SemanaPage";
@@ -36,16 +38,18 @@ function AppContent() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Index />} />
+        <Route path="/cardapios" element={<CardapiosPage />} />
         <Route path="/cafe" element={<CafePage />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/emporio" element={<EmporioPage />} />
-        <Route path="/individual" element={<IndividualPage />} />
-        <Route path="/presentear" element={<PresentearPage />} />
+        <Route path="/presentes" element={<PresentesPage />} />
+        <Route path="/to-go" element={<ToGoPage />} />
+        <Route path="/vinhos" element={<VinhosPage />} />
         <Route path="/eventos" element={<EventosPage />} />
         <Route path="/semana" element={<SemanaPage />} />
         <Route path="/rotisserie" element={<RotisseriePage />} />
         <Route path="/product/:handle" element={<ProductDetailPage />} />
-        {/* New auth routes */}
+        {/* Auth routes */}
         <Route path="/entrar" element={<EntrarPage />} />
         <Route path="/criar-conta" element={<CriarContaPage />} />
         <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
