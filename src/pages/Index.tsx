@@ -179,7 +179,7 @@ prontos para aquecer.
       </section>
 
       {/* Diferenciais */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 bg-primary">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
@@ -188,8 +188,8 @@ prontos para aquecer.
             { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
             map((f) =>
             <div key={f.title} className="p-6">
-                <h3 className="font-serif text-2xl mb-3">{f.title}</h3>
-                <p className="text-muted-foreground">{f.desc}</p>
+                <h3 className="font-serif text-2xl mb-3 text-primary-foreground">{f.title}</h3>
+                <p className="text-primary-foreground/70">{f.desc}</p>
               </div>
             )}
           </div>
