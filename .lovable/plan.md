@@ -1,12 +1,22 @@
 
 
-## Remover linha de direitos autorais do rodape
+## Mudanca de cor da faixa de Diferenciais
 
-Vou remover o bloco inferior do rodape que contem o texto "© 2026 Boleta. Todos os direitos reservados.", incluindo o separador (border-top) acima dele.
+**Problema**: A faixa de Diferenciais (amarela) seguida do banner "Peca pelo site" (tambem amarelo) cria repeticao visual.
 
-### Detalhes tecnicos
+**Solucao**: Trocar o fundo da faixa de Diferenciais para o tom escuro (foreground/carvao), com textos claros. Isso cria um ritmo visual mais harmonioso:
 
-**Arquivo:** `src/components/Footer.tsx`
+```text
+Hero (escuro) -> Diferenciais (escuro) -> Banner foto + amarelo -> Na Midia (claro)
+```
 
-- Remover o `div` com classe `border-t border-foreground/10 mt-10 pt-6 text-center text-xs text-foreground/40` e todo seu conteudo (linhas ~120-123 aproximadamente)
+### Alteracoes tecnicas
+
+**Arquivo: `src/pages/Index.tsx`**
+
+1. Mudar o fundo da section de `bg-primary` para `bg-foreground`
+2. Mudar a cor do texto dos titulos e descricoes de `text-secondary-foreground` para `text-background`
+3. Mudar a borda dos cards de `border-secondary-foreground` para `border-background/30` (borda clara sutil)
+
+Isso mantem a identidade visual (usando cores ja definidas no tema) e quebra a repeticao do amarelo, criando mais profundidade na pagina.
 
