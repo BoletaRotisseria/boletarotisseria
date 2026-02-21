@@ -127,19 +127,22 @@ prontos para aquecer.
               source: "VEJA SÃO PAULO",
               title: "Boleta — mix de empório e rotisseria em Pinheiros",
               excerpt: "Desde 2022, o espaço une rotisseria e empório com curadoria de Roberto Eid Philipp.",
-              link: "https://vejasp.abril.com.br/estabelecimento/boleta/"
+              link: "https://vejasp.abril.com.br/estabelecimento/boleta/",
+              image: "https://vejasp.abril.com.br/wp-content/uploads/2023/07/Boleta_ambiente_credito_Helson-Gomes_divulgacao.JPG.jpg?quality=70&strip=info&w=600&h=400&crop=1"
             },
             {
               source: "VEJA SÃO PAULO",
               title: "Boleta também vende pratos para viagem em Pinheiros",
               excerpt: "No misto de empório e rotisseria, Roberto Eid Philipp assina as receitas e faz a curadoria dos itens à venda.",
-              link: "https://vejasp.abril.com.br/comer-e-beber/boleta-pinheiros-critica/"
+              link: "https://vejasp.abril.com.br/comer-e-beber/boleta-pinheiros-critica/",
+              image: "https://vejasp.abril.com.br/wp-content/uploads/2023/07/Boleta_ambiente_credito_Helson-Gomes_divulgacao.JPG.jpg?quality=70&strip=info&w=600&h=400&crop=1"
             },
             {
               source: "VEJA SÃO PAULO",
               title: "Roberto Eid Philipp, da Boleta, participa de evento na França",
               excerpt: "Único paulistano a integrar o festival no Carreau du Temple, em Paris, levando cuscuz paulista e manjar de coco.",
-              link: "https://vejasp.abril.com.br/coluna/delicia-de-conta/comer-e-beber-chef-rotisseria-boleta-participa-de-evento-na-franca/"
+              link: "https://vejasp.abril.com.br/coluna/delicia-de-conta/comer-e-beber-chef-rotisseria-boleta-participa-de-evento-na-franca/",
+              image: "https://vejasp.abril.com.br/wp-content/uploads/2025/09/Roberto-Eid-Phillip.jpg?quality=70&strip=info&w=600&h=400&crop=1"
             }].
             map((item, i) =>
             <a
@@ -147,20 +150,31 @@ prontos para aquecer.
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-background rounded-lg border border-border p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+              className="group bg-secondary/30 rounded-2xl border border-border/50 p-5 flex items-stretch gap-4 hover:shadow-md transition-shadow"
+            >
+              <div className="flex flex-col justify-between flex-1 min-w-0">
                 <div>
-                  <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
+                  <span className="text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-foreground">
                     {item.source}
                   </span>
-                  <h3 className="font-serif text-xl font-bold mt-2 mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-serif text-base md:text-lg font-bold mt-1.5 mb-1.5 leading-snug group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm">{item.excerpt}</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3 hidden md:block">{item.excerpt}</p>
                 </div>
-                <span className="mt-4 text-sm font-medium italic text-foreground group-hover:text-primary transition-colors">
+                <span className="mt-3 text-sm font-medium text-foreground group-hover:text-primary transition-colors">
                   Vem ler tudo aqui →
                 </span>
-              </a>
+              </div>
+              <div className="w-28 md:w-36 flex-shrink-0 rounded-xl overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </a>
             )}
           </div>
         </div>
