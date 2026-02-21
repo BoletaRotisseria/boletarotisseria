@@ -87,6 +87,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [mobileSubExpanded, setMobileSubExpanded] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -329,17 +330,29 @@ export function Header() {
                 <div className="pl-4 pb-2 space-y-2">
                   {item.subCategories.map((sub) => (
                     <div key={sub.label}>
-                      <Link
-                        to={sub.path}
-                        onClick={() => setMobileOpen(false)}
-                        className={`block py-2 text-[11px] font-sans font-bold tracking-[0.1em] uppercase ${
-                          sub.highlight ? "text-destructive" : "text-foreground/80"
-                        }`}
-                      >
-                        {sub.label}
-                      </Link>
-                      {sub.items && (
-                        <ul className="pl-3 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <Link
+                          to={sub.path}
+                          onClick={() => setMobileOpen(false)}
+                          className={`block py-2 text-[11px] font-sans font-bold tracking-[0.1em] uppercase ${
+                            sub.highlight ? "text-destructive" : "text-foreground/80"
+                          }`}
+                        >
+                          {sub.label}
+                        </Link>
+                        {sub.items && sub.items.length > 0 && (
+                          <button
+                            onClick={() => setMobileSubExpanded(mobileSubExpanded === sub.label ? null : sub.label)}
+                            className="p-2"
+                          >
+                            <ChevronDown
+                              className={`h-3.5 w-3.5 text-foreground/60 transition-transform ${mobileSubExpanded === sub.label ? "rotate-180" : ""}`}
+                            />
+                          </button>
+                        )}
+                      </div>
+                      {sub.items && mobileSubExpanded === sub.label && (
+                        <ul className="pl-3 space-y-1 animate-fade-in">
                           {sub.items.map((si) => (
                             <li key={si.label}>
                               <Link
