@@ -50,7 +50,7 @@ export function Footer() {
 
       {/* Corpo do rodapé – 3 colunas */}
       <div className="container relative z-10 py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-10">
           {/* Coluna 1 – Logo + Sobre */}
           <div>
             <img src={boletaLogo} alt="Boleta Rotisseria" className="h-20 rounded mb-4" />
