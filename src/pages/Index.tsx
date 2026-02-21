@@ -187,7 +187,7 @@ prontos para aquecer.
             { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
             { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
             map((f) =>
-            <div key={f.title} className="p-6">
+            <div key={f.title} className="p-8 border border-primary-foreground/20 rounded-lg">
                 <h3 className="font-serif text-2xl mb-3 text-primary-foreground">{f.title}</h3>
                 <p className="text-primary-foreground/70">{f.desc}</p>
               </div>
