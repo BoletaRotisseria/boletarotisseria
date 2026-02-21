@@ -2,7 +2,7 @@ import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, Gift } from "lucide-react";
 
-const presentesCategories = ["Cestas", "Sugestões para Presentear", "Itens de Casa"];
+const presentesCategories = ["Cestas", "Itens de Casa"];
 
 export default function PresentesPage() {
   const { data: products, isLoading } = useShopifyProducts(50);
