@@ -9,40 +9,36 @@ const INSTAGRAM_URL = "https://www.instagram.com/boleta.rotisseria?utm_source=ig
 export function Footer() {
   return (
     <footer className="relative text-foreground">
-      {/* Background texture – top area behind floating card */}
-      <div className="relative">
-        <div
-          className="absolute inset-0 bg-repeat bg-center opacity-10"
-          style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }} />
-        <div className="absolute inset-0 bg-background" style={{ zIndex: -1 }} />
+      {/* Background texture */}
+      <div
+        className="absolute inset-0 bg-repeat bg-center opacity-10"
+        style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }}
+      />
 
-        {/* Faixa flutuante – Inscrição WhatsApp */}
-        <div className="container relative z-10 py-8">
-          <div className="bg-background border border-border rounded-xl shadow-md px-8 py-8 flex flex-col md:flex-row items-center gap-6 md:gap-10">
-            <p className="font-serif text-2xl tracking-[-0.02em] shrink-0 md:text-2xl">Receba o nosso cardápio semanal e fique por dentro das novidades.</p>
-            <div className="flex w-full md:w-auto md:ml-auto shrink-0 gap-0">
-              <a
-                href={WHATSAPP_CARDAPIO}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 text-background px-8 py-3.5 font-sans text-xs font-bold tracking-[0.14em] uppercase transition-colors whitespace-nowrap bg-green-900 rounded-lg">
-                <svg viewBox="0 0 32 32" className="w-4 h-4 fill-current flex-shrink-0">
-                  <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.129 6.744 3.047 9.379L1.054 31.25l6.1-1.955a15.923 15.923 0 008.85 2.674C24.824 31.969 32 24.793 32 16.004 32 7.176 24.824 0 16.004 0zm9.32 22.609c-.39 1.1-2.288 2.1-3.15 2.168-.793.063-1.535.375-5.172-1.078-4.375-1.75-7.16-6.234-7.375-6.523-.21-.289-1.75-2.328-1.75-4.438s1.11-3.148 1.5-3.578c.39-.43.86-.54 1.148-.54.29 0 .578.003.828.016.27.012.633-.102.99.753.39.883 1.32 3.227 1.437 3.46.117.235.195.508.04.82-.157.312-.235.508-.47.78-.234.274-.492.61-.703.82-.234.234-.477.488-.205.957.274.47 1.215 2.004 2.61 3.246 1.789 1.594 3.297 2.086 3.766 2.32.469.235.742.196 1.016-.117.273-.313 1.172-1.367 1.484-1.836.313-.47.625-.39 1.055-.235.43.157 2.734 1.29 3.203 1.524.47.235.781.352.898.547.117.195.117 1.133-.273 2.234z" />
-                </svg>
-                Quero Receber
-              </a>
-            </div>
+      {/* Faixa flutuante – Inscrição WhatsApp – flutua no topo do rodapé */}
+      <div className="container relative z-10 -mb-6">
+        <div className="bg-background border border-border rounded-xl shadow-md px-8 py-8 flex flex-col md:flex-row items-center gap-6 md:gap-10 -translate-y-1/2">
+          <p className="font-sans text-base md:text-lg tracking-normal shrink-0">
+            Receba o nosso cardápio semanal e fique por dentro das novidades.
+          </p>
+          <div className="flex w-full md:w-auto md:ml-auto shrink-0 gap-0">
+            <a
+              href={WHATSAPP_CARDAPIO}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 text-background px-8 py-3.5 font-sans text-xs font-bold tracking-[0.14em] uppercase transition-colors whitespace-nowrap bg-green-900 rounded-lg"
+            >
+              <svg viewBox="0 0 32 32" className="w-4 h-4 fill-current flex-shrink-0">
+                <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.129 6.744 3.047 9.379L1.054 31.25l6.1-1.955a15.923 15.923 0 008.85 2.674C24.824 31.969 32 24.793 32 16.004 32 7.176 24.824 0 16.004 0zm9.32 22.609c-.39 1.1-2.288 2.1-3.15 2.168-.793.063-1.535.375-5.172-1.078-4.375-1.75-7.16-6.234-7.375-6.523-.21-.289-1.75-2.328-1.75-4.438s1.11-3.148 1.5-3.578c.39-.43.86-.54 1.148-.54.29 0 .578.003.828.016.27.012.633-.102.99.753.39.883 1.32 3.227 1.437 3.46.117.235.195.508.04.82-.157.312-.235.508-.47.78-.234.274-.492.61-.703.82-.234.234-.477.488-.205.957.274.47 1.215 2.004 2.61 3.246 1.789 1.594 3.297 2.086 3.766 2.32.469.235.742.196 1.016-.117.273-.313 1.172-1.367 1.484-1.836.313-.47.625-.39 1.055-.235.43.157 2.734 1.29 3.203 1.524.47.235.781.352.898.547.117.195.117 1.133-.273 2.234z" />
+              </svg>
+              Quero Receber
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Background texture – corpo do rodapé */}
-      <div
-        className="absolute inset-0 bg-repeat bg-center opacity-10"
-        style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }} />
-
       {/* Corpo do rodapé – 3 colunas */}
-      <div className="container relative z-10 py-12 md:py-16">
+      <div className="container relative z-10 pb-12 pt-6 md:pb-16 md:pt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Coluna 1 – Logo + Sobre */}
           <div>
@@ -58,7 +54,8 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-foreground/60 hover:text-foreground transition-colors"
-              aria-label="Instagram">
+              aria-label="Instagram"
+            >
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                 <circle cx="12" cy="12" r="5" />
@@ -86,7 +83,7 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Coluna 4 – Atendimento */}
+          {/* Coluna 3 – Atendimento */}
           <div>
             <h4 className="font-sans text-[11px] font-bold tracking-[0.14em] uppercase mb-5">
               Atendimento
@@ -98,9 +95,7 @@ export function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <svg viewBox="0 0 24 24" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                <span>Seg a Sex 10h às 18h 
-Sábado 10h às 14h
-                </span>
+                <span>Seg a Sex 10h às 18h – Sábado 10h às 14h</span>
               </p>
               <p className="flex items-center gap-2">
                 <svg viewBox="0 0 24 24" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
@@ -115,4 +110,6 @@ Sábado 10h às 14h
           © {new Date().getFullYear()} Boleta. Todos os direitos reservados.
         </div>
       </div>
-    </footer>);}
+    </footer>
+  );
+}
