@@ -116,10 +116,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Rodapé inferior */}
-        <div className="border-t border-foreground/10 mt-10 pt-6 text-center text-xs text-foreground/40">
-          © {new Date().getFullYear()} Boleta. Todos os direitos reservados.
-        </div>
       </div>
     </footer>
   );
