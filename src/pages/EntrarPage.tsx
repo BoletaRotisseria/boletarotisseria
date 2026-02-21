@@ -74,7 +74,7 @@ export default function EntrarPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-sm space-y-6 animate-[fadeIn_0.4s_ease-out]">
         <div className="space-y-1">
-          <h1 className="font-sans text-3xl font-bold tracking-[-0.06em] text-foreground">Entrar</h1>
+          <h1 className="font-serif text-3xl font-bold tracking-[-0.02em] text-foreground">Entrar</h1>
           <p className="font-sans text-sm tracking-[-0.02em] text-muted-foreground">
             Acesse sua conta para continuar
           </p>

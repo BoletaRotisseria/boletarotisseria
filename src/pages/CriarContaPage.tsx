@@ -104,7 +104,7 @@ export default function CriarContaPage() {
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm space-y-6 animate-[fadeIn_0.4s_ease-out] text-center">
           <CheckCircle2 className="h-12 w-12 text-accent mx-auto" />
-          <h1 className="font-sans text-2xl font-bold tracking-[-0.06em] text-foreground">Cadastro realizado!</h1>
+          <h1 className="font-serif text-2xl font-bold tracking-[-0.02em] text-foreground">Cadastro realizado!</h1>
           <p className="font-sans text-sm text-muted-foreground tracking-[-0.02em]">
             Enviamos um e-mail de confirmação para você. Verifique sua caixa de entrada para ativar sua conta.
           </p>
@@ -126,7 +126,7 @@ export default function CriarContaPage() {
         </Link>
 
         <div className="space-y-1">
-          <h1 className="font-sans text-3xl font-bold tracking-[-0.06em] text-foreground">Criar Conta</h1>
+          <h1 className="font-serif text-3xl font-bold tracking-[-0.02em] text-foreground">Criar Conta</h1>
           <p className="font-sans text-sm tracking-[-0.02em] text-muted-foreground">
             Preencha seus dados para começar
           </p>

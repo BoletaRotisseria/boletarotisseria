@@ -113,7 +113,7 @@ export default function CompletarCadastroPage() {
     <div className="min-h-screen flex items-start justify-center px-4 py-8">
       <div className="w-full max-w-lg space-y-6 animate-[fadeIn_0.4s_ease-out]">
         <div className="space-y-1">
-          <h1 className="font-sans text-3xl font-bold tracking-[-0.06em] text-foreground">Completar Cadastro</h1>
+          <h1 className="font-serif text-3xl font-bold tracking-[-0.02em] text-foreground">Completar Cadastro</h1>
           <p className="font-sans text-sm tracking-[-0.02em] text-muted-foreground">
             Precisamos de alguns dados para continuar
           </p>

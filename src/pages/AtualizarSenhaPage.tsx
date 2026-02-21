@@ -46,7 +46,7 @@ export default function AtualizarSenhaPage() {
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm space-y-4 animate-[fadeIn_0.4s_ease-out] text-center">
           <AlertCircle className="h-10 w-10 text-destructive mx-auto" />
-          <h1 className="font-sans text-2xl font-bold tracking-[-0.06em] text-foreground">Link inválido ou expirado</h1>
+          <h1 className="font-serif text-2xl font-bold tracking-[-0.02em] text-foreground">Link inválido ou expirado</h1>
           <p className="font-sans text-sm text-muted-foreground tracking-[-0.02em]">
             Solicite uma nova redefinição de senha.
           </p>
@@ -63,7 +63,7 @@ export default function AtualizarSenhaPage() {
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm space-y-4 animate-[fadeIn_0.4s_ease-out] text-center">
           <CheckCircle2 className="h-10 w-10 text-accent mx-auto" />
-          <h1 className="font-sans text-2xl font-bold tracking-[-0.06em] text-foreground">Senha atualizada!</h1>
+          <h1 className="font-serif text-2xl font-bold tracking-[-0.02em] text-foreground">Senha atualizada!</h1>
           <p className="font-sans text-sm text-muted-foreground tracking-[-0.02em]">
             Sua senha foi atualizada com sucesso. Redirecionando para login...
           </p>
@@ -76,7 +76,7 @@ export default function AtualizarSenhaPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-sm space-y-6 animate-[fadeIn_0.4s_ease-out]">
         <div className="space-y-1">
-          <h1 className="font-sans text-3xl font-bold tracking-[-0.06em] text-foreground">Nova Senha</h1>
+          <h1 className="font-serif text-3xl font-bold tracking-[-0.02em] text-foreground">Nova Senha</h1>
           <p className="font-sans text-sm tracking-[-0.02em] text-muted-foreground">
             Defina sua nova senha de acesso
           </p>
