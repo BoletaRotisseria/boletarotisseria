@@ -118,9 +118,9 @@ prontos para aquecer.
       </section>
 
       {/* Mídia / Na Mídia */}
-      <section className="py-8 md:py-12 bg-primary">
+      <section className="py-8 md:py-12 bg-background">
         <div className="container">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-primary-foreground">Na mídia</h2>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-foreground">Na mídia</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
             {
@@ -147,17 +147,17 @@ prontos para aquecer.
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-lg border border-primary-foreground/30 p-6 flex flex-col justify-between hover:bg-primary-foreground/10 transition-colors">
+              className="group bg-background rounded-lg border border-border p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div>
-                  <span className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/60">
+                  <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
                     {item.source}
                   </span>
-                  <h3 className="font-serif text-xl font-bold mt-2 mb-2 text-primary-foreground">
+                  <h3 className="font-serif text-xl font-bold mt-2 mb-2 group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-primary-foreground/70 text-sm">{item.excerpt}</p>
+                  <p className="text-muted-foreground text-sm">{item.excerpt}</p>
                 </div>
-                <span className="mt-4 text-sm font-medium italic text-primary-foreground/80">
+                <span className="mt-4 text-sm font-medium italic text-foreground group-hover:text-primary transition-colors">
                   Vem ler tudo aqui →
                 </span>
               </a>
@@ -167,7 +167,7 @@ prontos para aquecer.
       </section>
 
       {/* Diferenciais */}
-      <section className="py-10 bg-background md:py-[40px]">
+      <section className="py-10 bg-primary md:py-[40px]">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
@@ -175,9 +175,9 @@ prontos para aquecer.
             { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
             { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
             map((f) =>
-            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-foreground/20">
-                <h3 className="font-serif text-2xl mb-3 text-foreground">{f.title}</h3>
-                <p className="text-muted-foreground">{f.desc}</p>
+            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-primary-foreground/30">
+                <h3 className="font-serif text-2xl mb-3 text-primary-foreground">{f.title}</h3>
+                <p className="text-primary-foreground/80">{f.desc}</p>
               </div>
             )}
           </div>
