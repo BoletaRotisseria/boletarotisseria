@@ -114,7 +114,7 @@ export function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <svg viewBox="0 0 24 24" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                <span>Seg a Sex 10h às 18h
+                <span>Seg a Sex 10h às 18h 
 Sábado 10h às 14h
                 </span>
               </p>
