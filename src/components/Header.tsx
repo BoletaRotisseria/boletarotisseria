@@ -1,65 +1,152 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, User, Heart, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart, ChevronDown } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
 
-const navItems = [
-  { label: "Início", path: "/" },
-  { label: "Cardápio Semanal", path: "/semana" },
-  { label: "Rotisserie", path: "/rotisserie" },
-  { label: "Café", path: "/cafe" },
-  { label: "Menu", path: "/menu" },
-  { label: "Empório", path: "/emporio" },
-  { label: "Individual", path: "/individual" },
-  { label: "Presentear", path: "/presentear" },
-  { label: "Eventos", path: "/eventos" },
+interface SubItem {
+  label: string;
+  path: string;
+}
+
+interface SubCategory {
+  label: string;
+  path: string;
+  highlight?: boolean;
+  items?: SubItem[];
+}
+
+interface NavItem {
+  label: string;
+  path: string;
+  subCategories?: SubCategory[];
+}
+
+const navItems: NavItem[] = [
+  {
+    label: "Cardápios",
+    path: "/semana",
+    subCategories: [
+      {
+        label: "Congelados",
+        path: "/rotisserie",
+        items: [
+          { label: "Aperitivos", path: "/rotisserie" },
+          { label: "Terrines", path: "/rotisserie" },
+          { label: "Empanadas", path: "/rotisserie" },
+          { label: "Saladas", path: "/rotisserie" },
+          { label: "Carnes", path: "/rotisserie" },
+          { label: "Peixes", path: "/rotisserie" },
+          { label: "Frango", path: "/rotisserie" },
+          { label: "Acompanhamentos", path: "/rotisserie" },
+          { label: "Massas", path: "/rotisserie" },
+          { label: "Vegetariano", path: "/rotisserie" },
+          { label: "Pizza", path: "/rotisserie" },
+          { label: "Quiches e Tortas", path: "/rotisserie" },
+          { label: "Sobremesas", path: "/rotisserie" },
+        ],
+      },
+      {
+        label: "Frescos",
+        path: "/rotisserie",
+        items: [
+          { label: "Antipastos", path: "/rotisserie" },
+          { label: "Aperitivos", path: "/rotisserie" },
+          { label: "Patês", path: "/rotisserie" },
+          { label: "Molhos", path: "/rotisserie" },
+        ],
+      },
+      { label: "Páscoa", path: "/rotisserie", highlight: true },
+      { label: "Marmitas", path: "/semana" },
+    ],
+  },
+  { label: "Chef Boleta / Luciana", path: "/cafe" },
+  { label: "Cozinha", path: "/menu" },
+  {
+    label: "Loja",
+    path: "/emporio",
+    subCategories: [
+      {
+        label: "Mercearia",
+        path: "/emporio",
+        items: [
+          { label: "Tábua de Frios", path: "/emporio" },
+          { label: "Tábua de Queijos", path: "/emporio" },
+          { label: "Pães", path: "/emporio" },
+          { label: "Torradas", path: "/emporio" },
+          { label: "Chocolates", path: "/emporio" },
+          { label: "Biscoitos", path: "/emporio" },
+        ],
+      },
+      {
+        label: "Empório",
+        path: "/emporio",
+        items: [
+          { label: "Cestas", path: "/presentear" },
+          { label: "Tábua de Madeira", path: "/presentear" },
+          { label: "Travessas", path: "/presentear" },
+          { label: "Chaleira", path: "/presentear" },
+          { label: "Prato Aperitivo", path: "/presentear" },
+          { label: "Cartão de Visita", path: "/presentear" },
+          { label: "Talher", path: "/presentear" },
+          { label: "Guardanapos", path: "/presentear" },
+        ],
+      },
+      { label: "Presentes", path: "/presentear" },
+    ],
+  },
+  { label: "Contato", path: "/eventos" },
+  { label: "Mídia", path: "/eventos" },
 ];
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
+
+  const handleEnter = (label: string) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setOpenDropdown(label);
+  };
+
+  const handleLeave = () => {
+    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 150);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border/40">
+      {/* Main bar */}
       <div className="container flex items-center justify-between h-14 md:h-16">
-        {/* Logo */}
         <Link to="/" className="flex-shrink-0">
-          <img
-            src={boletaLogo}
-            alt="Boleta"
-            className="h-9 md:h-11 rounded"
-          />
+          <img src={boletaLogo} alt="Boleta" className="h-9 md:h-11 rounded" />
         </Link>
 
-        {/* Desktop nav – centered uppercase links */}
-        <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center gap-0 flex-1 justify-center">
           {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`px-3 py-2 text-[11px] font-sans font-medium tracking-[0.12em] uppercase transition-colors hover:text-foreground ${
-                location.pathname === item.path
-                  ? "text-foreground"
-                  : "text-foreground/60"
-              }`}
+            <div
+              key={item.label}
+              className="relative"
+              onMouseEnter={() => item.subCategories && handleEnter(item.label)}
+              onMouseLeave={handleLeave}
             >
-              {item.label}
-            </Link>
+              <Link
+                to={item.path}
+                className={`flex items-center gap-1 px-4 py-2 text-[11px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+                  location.pathname === item.path ? "text-foreground" : "text-foreground/60"
+                }`}
+              >
+                {item.label}
+                {item.subCategories && <ChevronDown className="h-3 w-3" strokeWidth={2} />}
+              </Link>
+            </div>
           ))}
         </nav>
 
         {/* Right icons */}
         <div className="flex items-center gap-1 md:gap-2">
-          <button className="hidden md:inline-flex p-2 text-foreground/60 hover:text-foreground transition-colors">
-            <Search className="h-[18px] w-[18px]" strokeWidth={1.5} />
-          </button>
-          <button className="hidden md:inline-flex p-2 text-foreground/60 hover:text-foreground transition-colors">
-            <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
-          </button>
-          <button className="hidden md:inline-flex p-2 text-foreground/60 hover:text-foreground transition-colors">
-            <Heart className="h-[18px] w-[18px]" strokeWidth={1.5} />
-          </button>
           <CartDrawer />
           <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -67,20 +154,118 @@ export function Header() {
         </div>
       </div>
 
+      {/* Desktop mega-menu dropdown */}
+      {navItems.map(
+        (item) =>
+          item.subCategories &&
+          openDropdown === item.label && (
+            <div
+              key={item.label}
+              className="hidden lg:block absolute left-0 right-0 z-50 bg-background border-b border-border/40 shadow-md animate-fade-in"
+              onMouseEnter={() => handleEnter(item.label)}
+              onMouseLeave={handleLeave}
+            >
+              {/* Sub-category titles row */}
+              <div className="container">
+                <div className="flex border border-border/60">
+                  {item.subCategories.map((sub) => (
+                    <Link
+                      key={sub.label}
+                      to={sub.path}
+                      className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/40 last:border-r-0 hover:bg-secondary/50 transition-colors ${
+                        sub.highlight ? "text-destructive" : "text-foreground"
+                      }`}
+                    >
+                      {sub.label}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Sub-items row */}
+                <div className="flex py-4">
+                  {item.subCategories.map((sub) => (
+                    <div key={sub.label} className="flex-1 px-6">
+                      {sub.items && (
+                        <ul className="space-y-1">
+                          {sub.items.map((si) => (
+                            <li key={si.label}>
+                              <Link
+                                to={si.path}
+                                className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
+                              >
+                                {si.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )
+      )}
+
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="lg:hidden border-t border-border/40 bg-background px-6 py-4 space-y-1 animate-fade-in">
+        <nav className="lg:hidden border-t border-border/40 bg-background px-6 py-4 space-y-1 animate-fade-in max-h-[80vh] overflow-y-auto">
           {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onClick={() => setMobileOpen(false)}
-              className={`block py-3 text-xs font-sans font-medium tracking-[0.12em] uppercase border-b border-border/30 ${
-                location.pathname === item.path ? "text-foreground" : "text-foreground/60"
-              }`}
-            >
-              {item.label}
-            </Link>
+            <div key={item.label}>
+              <div className="flex items-center justify-between border-b border-border/30">
+                <Link
+                  to={item.path}
+                  onClick={() => !item.subCategories && setMobileOpen(false)}
+                  className={`block py-3 text-xs font-sans font-medium tracking-[0.12em] uppercase ${
+                    location.pathname === item.path ? "text-foreground" : "text-foreground/60"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+                {item.subCategories && (
+                  <button
+                    onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
+                    className="p-2"
+                  >
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform ${mobileExpanded === item.label ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                )}
+              </div>
+              {item.subCategories && mobileExpanded === item.label && (
+                <div className="pl-4 pb-2 space-y-2">
+                  {item.subCategories.map((sub) => (
+                    <div key={sub.label}>
+                      <Link
+                        to={sub.path}
+                        onClick={() => setMobileOpen(false)}
+                        className={`block py-2 text-[11px] font-sans font-bold tracking-[0.1em] uppercase ${
+                          sub.highlight ? "text-destructive" : "text-foreground/80"
+                        }`}
+                      >
+                        {sub.label}
+                      </Link>
+                      {sub.items && (
+                        <ul className="pl-3 space-y-1">
+                          {sub.items.map((si) => (
+                            <li key={si.label}>
+                              <Link
+                                to={si.path}
+                                onClick={() => setMobileOpen(false)}
+                                className="block py-1 text-[10px] font-sans tracking-[0.08em] uppercase text-foreground/60 hover:text-foreground"
+                              >
+                                {si.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
       )}
