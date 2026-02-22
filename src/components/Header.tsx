@@ -276,6 +276,8 @@ export function Header() {
                 e.preventDefault();
                 if (searchQuery.trim()) {
                   setSearchOpen(false);
+                  navigate(`/busca?q=${encodeURIComponent(searchQuery.trim())}`);
+                  setSearchQuery("");
                 }
               }}
               className="flex gap-2"
