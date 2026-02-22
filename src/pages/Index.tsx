@@ -160,7 +160,7 @@ const Index = () => {
 
       {/* Dicas de Preparo */}
       <section className="relative bg-secondary/20" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="absolute inset-0 bg-background/80" />
+        <div className="absolute inset-0 bg-background/70" />
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh]">
           {/* Texto à esquerda */}
           <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
