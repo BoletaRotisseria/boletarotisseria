@@ -158,40 +158,31 @@ const Index = () => {
       </section>
 
       {/* Dicas de Preparo */}
-      <section className="py-12 md:py-16 bg-secondary/30">
-        <div className="container">
-          <div className="text-center mb-10">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">Preparo fácil e rápido</h2>
-            <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
-              Nossos pratos chegam prontos ou semiprontos. Veja como é simples preparar em casa.
+      <section className="bg-secondary/20">
+        <div className="grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh]">
+          {/* Texto à esquerda */}
+          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
+            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
+              Preparo fácil e rápido
+            </span>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-[1.1] mb-4">
+              SIMPLES<br />de preparar
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base max-w-sm mb-6 leading-relaxed">
+              Todas as instruções de preparo estão especificadas no verso da embalagem. Assista ao vídeo ao lado para um passo a passo completo.
             </p>
+            <Link to="/menu" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors group">
+              Veja nossos pratos <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Snowflake,
-                title: "Retire do freezer",
-                desc: "Tire o prato do congelador e deixe descongelar na geladeira por algumas horas ou de um dia para o outro.",
-              },
-              {
-                icon: Flame,
-                title: "Aqueça",
-                desc: "Leve ao forno pré-aquecido (180°C) por 15–20 min ou ao micro-ondas por 3–5 min. Simples assim.",
-              },
-              {
-                icon: Clock,
-                title: "Sirva e aproveite",
-                desc: "Em poucos minutos você tem um prato artesanal e saboroso na mesa, como se fosse feito na hora.",
-              },
-            ].map((tip) => (
-              <div key={tip.title} className="bg-background rounded-2xl border border-border/50 p-6 md:p-8 text-center">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
-                  <tip.icon className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="font-serif text-xl font-bold mb-2 text-foreground">{tip.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{tip.desc}</p>
+          {/* Vídeo à direita (placeholder) */}
+          <div className="min-h-[40vh] md:min-h-0 bg-muted flex items-center justify-center">
+            <div className="text-center text-muted-foreground p-8">
+              <div className="w-16 h-16 rounded-full border-2 border-muted-foreground/30 flex items-center justify-center mx-auto mb-3">
+                <span className="text-2xl ml-1">▶</span>
               </div>
-            ))}
+              <p className="text-sm">Vídeo em breve</p>
+            </div>
           </div>
         </div>
       </section>
