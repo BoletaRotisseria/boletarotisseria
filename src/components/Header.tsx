@@ -140,7 +140,7 @@ export function Header() {
       {/* Main bar */}
       <div className="container flex items-center justify-between h-14 md:h-16">
         <Link to="/" className="flex-shrink-0">
-          <img src={boletaLogo} alt="Boleta" className="h-9 md:h-11 rounded" />
+          <img src={boletaLogo} alt="Boleta" className="h-14 md:h-[72px] rounded -my-2" />
         </Link>
 
         {/* Desktop nav */}
