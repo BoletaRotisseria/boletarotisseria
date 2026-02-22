@@ -198,7 +198,7 @@ const Index = () => {
       </section>
 
       {/* Na Mídia */}
-      <section id="na-midia" className="relative py-12 md:py-16 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center bg-background scroll-mt-20">
+      <section id="na-midia" className="relative py-10 md:py-14 bg-background scroll-mt-20">
         <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'repeat', opacity: 0.9 }} />
         
         <div className="relative z-10 container">
