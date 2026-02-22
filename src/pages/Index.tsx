@@ -190,7 +190,7 @@ const Index = () => {
 
       {/* Na Mídia */}
       <section className="relative py-8 md:py-12 bg-background">
-        <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: 'cover', backgroundPosition: 'left center', opacity: 0.37 }} />
+        <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: '150%', backgroundPosition: 'left center', backgroundRepeat: 'no-repeat', opacity: 0.37 }} />
         
         <div className="relative z-10 container">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2 text-foreground">Na mídia</h2>
