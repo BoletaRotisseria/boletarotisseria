@@ -6,6 +6,7 @@ import heroImage from "@/assets/boleta-cestas.jpg";
 import togoBg from "@/assets/togo-bg.jpg";
 import semanaBg from "@/assets/semana-bg.jpg";
 import rotisseriaBg from "@/assets/rotisseria-bg.jpg";
+import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 
 const SLIDE_COUNT = 3;
 const AUTO_PLAY_INTERVAL = 5000;
@@ -158,8 +159,9 @@ const Index = () => {
       </section>
 
       {/* Dicas de Preparo */}
-      <section className="bg-secondary/20">
-        <div className="grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh]">
+      <section className="relative bg-secondary/20" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="absolute inset-0 bg-background/80" />
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh]">
           {/* Texto à esquerda */}
           <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
