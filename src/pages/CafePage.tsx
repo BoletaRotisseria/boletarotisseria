@@ -1,28 +1,34 @@
-import { Coffee } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-
 export default function CafePage() {
   return (
     <div className="container py-10 md:py-16">
-      <div className="text-center mb-12">
-        <Coffee className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">Café</h1>
-        <p className="text-muted-foreground max-w-lg mx-auto">
-          Opções rápidas para o seu dia. Visite nosso espaço ou peça para levar.
-        </p>
-      </div>
+      <div className="max-w-3xl mx-auto">
+        {/* Nossa História */}
+        <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">Nossa História</h1>
 
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-secondary/50 rounded-lg p-8 md:p-12 text-center">
-          <h2 className="font-serif text-2xl md:text-3xl mb-4">Visite Nosso Espaço</h2>
-          <p className="text-muted-foreground mb-6">
-            Café coado na hora, pães artesanais, sanduíches e doces frescos. 
-            Um ambiente acolhedor para seu café da manhã ou lanche da tarde.
+        <div className="space-y-5 text-foreground/80 text-sm md:text-base leading-relaxed">
+          <p>
+            No início da pandemia, em 2020, resolvemos cozinhar em casa, em família. Todos se envolveram: além de mim - chef Roberto Eid Philipp -, minha esposa Luciana e nossos filhos Manu e Dudu. Desenvolvemos cardápios semanais que imediatamente - e felizmente - caíram no gosto dos amigos. Logo o negócio foi batizado de Boleta em homenagem ao meu apelido!
           </p>
-          <Link to="/menu">
-            <Button className="cta-text">Ver Opções de Café</Button>
-          </Link>
+          <p>
+            Dois anos depois, a rotisseria ganhou endereço próprio: uma casinha charmosa na concorrida Rua Ferreira de Araújo, próxima aos outros dois empreendimentos da família: a Galeria Estação, de arte popular brasileira, e a Estação São Paulo, espaço de festas e eventos. A loja fica perto também do nosso antigo buffet Balsâmico.
+          </p>
+          <p>
+            São aperitivos, terrines, assados, massas frescas e doces prontos para levar para casa, fáceis de aquecer e servir. Entre os carros-chefes estão a clássica Terrine de pato com pistache, a delicada Lasanha de alcachofra e a Cocada cremosa de forno. Um menu da semana traz sempre novidades. E na entrada do Boleta, temos um empório com vinhos, queijos, geleias e outros produtos artesanais que estou sempre pesquisando, ótimas opções para acompanhar e presentear.
+          </p>
+          <p>
+            Cosmopolita como São Paulo, nosso repertório reúne inspirações de diversas partes do mundo e também minhas memórias de família - árabe de um lado, judaico-alemã de outro. Ainda temos influências do tempo em que morei em Paris, quando estudei na Le Cordon Bleu e trabalhei em cozinhas prestigiadas como Fauchon, Taillevent e George V. E dos anos em que chefiei o buffet da banqueteira Neka Menna Barreto, que me introduziu no universo dos eventos e festas.
+          </p>
+          <p className="font-serif text-lg md:text-xl font-bold text-foreground">
+            Vamos Boletar?!
+          </p>
+        </div>
+
+        {/* Sobre o Boleta */}
+        <div className="mt-16">
+          <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">Sobre o Boleta</h2>
+          <p className="text-foreground/80 text-sm md:text-base leading-relaxed">
+            Rotisseria e empório com a assinatura do chef Roberto Eid Philipp, o Boleta. Aperitivos, terrines, massas frescas, assados e doces prontos para levar para casa, além de produtos artesanais para acompanhar ou presentear.
+          </p>
         </div>
       </div>
     </div>
