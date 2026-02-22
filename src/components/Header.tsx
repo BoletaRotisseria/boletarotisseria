@@ -62,7 +62,7 @@ const navItems: NavItem[] = [
         label: "Presentes",
         path: "/presentes",
         items: [
-          { label: "Cestas", path: "/presentes" },
+          { label: "Monte sua Cesta", path: "/presentes" },
           { label: "Itens de Casa", path: "/presentes" },
         ],
       },
