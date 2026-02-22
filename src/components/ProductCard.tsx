@@ -37,7 +37,7 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Link to={`/product/${node.handle}`} className="group block">
+    <Link to={`/product/${node.handle}`} className="group flex flex-col h-full">
       <div className="overflow-hidden rounded-md bg-secondary/30 aspect-square mb-3">
         {image ? (
           <img
@@ -53,10 +53,10 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
       <h3 className="font-serif text-lg leading-tight mb-1">{node.title}</h3>
-      {node.description && (
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{node.description}</p>
-      )}
-      <div className="flex items-center justify-between gap-2">
+      <p className="text-sm text-muted-foreground line-clamp-2 mb-2 flex-1">
+        {node.description || "\u00A0"}
+      </p>
+      <div className="flex items-center justify-between gap-2 mt-auto">
         <span className="font-semibold">{formatPrice(price)}</span>
         <Button size="sm" className="cta-text text-xs" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale}>
           {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
