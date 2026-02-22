@@ -153,15 +153,24 @@ export function Header() {
               onMouseEnter={() => item.subCategories && handleEnter(item.label)}
               onMouseLeave={handleLeave}
             >
-              <Link
-                to={item.path}
-                className={`flex items-center gap-1 px-4 py-2 text-[11px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
-                  location.pathname === item.path ? "text-foreground" : "text-foreground/60"
-                }`}
-              >
-                {item.label}
-                {item.subCategories && <ChevronDown className="h-3 w-3" strokeWidth={2} />}
-              </Link>
+              {item.path.includes('#') ? (
+                <a
+                  href={item.path}
+                  className={`flex items-center gap-1 px-4 py-2 text-[11px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground text-foreground/60`}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  to={item.path}
+                  className={`flex items-center gap-1 px-4 py-2 text-[11px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+                    location.pathname === item.path ? "text-foreground" : "text-foreground/60"
+                  }`}
+                >
+                  {item.label}
+                  {item.subCategories && <ChevronDown className="h-3 w-3" strokeWidth={2} />}
+                </Link>
+              )}
 
               {/* Mega-menu rendered inside the nav item for seamless hover */}
               {item.subCategories && openDropdown === item.label && (
