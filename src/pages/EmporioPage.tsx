@@ -5,24 +5,12 @@ import { useState } from "react";
 
 const emporioCategories = [
   { label: "Todos", tag: "" },
-  { label: "Biscoitos", tag: "biscoitos" },
-  { label: "Chocolates", tag: "chocolates" },
-  { label: "Geleias", tag: "geleias" },
-  { label: "Granola", tag: "granola" },
-  { label: "Doces", tag: "doces" },
-  { label: "Mel", tag: "mel" },
-  { label: "Chás", tag: "chas" },
-  { label: "Antipastos", tag: "antipastos" },
-  { label: "Torradas & Snacks", tag: "torradas e snacks" },
-  { label: "Nuts", tag: "nuts" },
-  { label: "Salames & Embutidos", tag: "salames e embutidos" },
-  { label: "Queijos", tag: "queijos" },
-  { label: "Escargots", tag: "escargots" },
-  { label: "Temperos", tag: "temperos" },
-  { label: "Azeites & Vinagres", tag: "azeites e vinagres" },
-  { label: "Trufados", tag: "trufados" },
-  { label: "Massas Secas", tag: "massas secas" },
-  { label: "Molhos", tag: "molhos" },
+  { label: "Queijos & Embutidos", tag: "queijos e embutidos" },
+  { label: "Antepastos & Conservas", tag: "antepastos e conservas" },
+  { label: "Massas & Molhos", tag: "massas e molhos" },
+  { label: "Doces & Chocolates", tag: "doces e chocolates" },
+  { label: "Biscoitos & Snacks", tag: "biscoitos e snacks" },
+  { label: "Azeites, Temperos & Especiais", tag: "azeites temperos e especiais" },
 ];
 
 export default function EmporioPage() {
