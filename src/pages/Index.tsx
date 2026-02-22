@@ -124,7 +124,7 @@ prontos para aquecer.
 
       {/* Banner duplo */}
       <section className="grid grid-cols-1 md:grid-cols-2">
-        <div className="min-h-[50vh] md:min-h-[60vh]">
+        <div className="min-h-[30vh] md:min-h-[35vh]">
           <img src={heroImage} alt="Pratos artesanais do Boleta" className="w-full h-full object-cover" />
         </div>
         <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16">
@@ -199,23 +199,6 @@ prontos para aquecer.
         </div>
       </section>
 
-      {/* Diferenciais */}
-      <section className="py-10 bg-primary md:py-[40px]">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {[
-            { title: "Fresco & Artesanal", desc: "Ingredientes selecionados, receitas da casa." },
-            { title: "Prático & Rápido", desc: "Peça e receba em casa, pronto para aquecer." },
-            { title: "Feito com Carinho", desc: "Cada prato preparado com dedicação e sabor." }].
-            map((f) =>
-            <div key={f.title} className="p-8 rounded-lg border-solid py-[20px] px-[20px] pr-[20px] border border-primary-foreground/30">
-                <h3 className="font-serif text-2xl mb-3 text-primary-foreground">{f.title}</h3>
-                <p className="text-primary-foreground/80">{f.desc}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
 
     </>);
 
