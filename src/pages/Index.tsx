@@ -162,9 +162,9 @@ const Index = () => {
       {/* Dicas de Preparo */}
       <section className="relative bg-secondary/20" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="absolute inset-0 bg-background/70" />
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh] items-center">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh]">
           {/* Texto à esquerda */}
-          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
+          <div className="flex flex-col items-center justify-center text-center p-8 md:p-12 lg:p-16">
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Preparo fácil e rápido
             </span>
@@ -176,7 +176,7 @@ const Index = () => {
             </p>
           </div>
           {/* Vídeo à direita (placeholder) */}
-          <div className="min-h-[40vh] md:min-h-0 bg-muted flex items-center justify-center">
+          <div className="min-h-[40vh] md:min-h-full bg-muted flex items-center justify-center">
             <div className="text-center text-muted-foreground p-8">
               <div className="w-16 h-16 rounded-full border-2 border-muted-foreground/30 flex items-center justify-center mx-auto mb-3">
                 <span className="text-2xl ml-1">▶</span>
@@ -189,7 +189,7 @@ const Index = () => {
 
       {/* Na Mídia */}
       <section className="relative py-8 md:py-12" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="absolute inset-0 bg-background/90" />
+        <div className="absolute inset-0 bg-background/75" />
         <div className="relative z-10 container">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2 text-foreground">Na mídia</h2>
           <p className="text-muted-foreground mb-6 text-sm md:text-base">
@@ -217,7 +217,7 @@ const Index = () => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-secondary/30 rounded-2xl border border-border/50 p-5 flex items-stretch gap-4 hover:shadow-md transition-shadow"
+                className="group bg-background rounded-2xl border border-border/50 p-5 flex items-stretch gap-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex flex-col justify-between flex-1 min-w-0">
                   <div>
