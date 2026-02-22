@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/vamos-boletar.jpg";
 import fachadaImage from "@/assets/boleta-fachada.jpeg";
 import togoBg from "@/assets/togo-bg.jpg";
 import semanaBg from "@/assets/semana-bg.jpg";
