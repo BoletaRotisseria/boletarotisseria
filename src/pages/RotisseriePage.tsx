@@ -1,7 +1,7 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import rotisseriaBg from "@/assets/rotisseria-bg.jpg";
 
 const rotisserieCategories = [
@@ -16,7 +16,17 @@ const rotisserieCategories = [
 ];
 
 export default function RotisseriePage() {
-  const [activeTag, setActiveTag] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTag = searchParams.get("categoria") || "";
+  
+  const setActiveTag = (tag: string) => {
+    if (tag) {
+      setSearchParams({ categoria: tag });
+    } else {
+      setSearchParams({});
+    }
+  };
+
   const query = activeTag
     ? `product_type:Rotisseria AND tag:${activeTag}`
     : "product_type:Rotisseria";
@@ -24,7 +34,6 @@ export default function RotisseriePage() {
 
   return (
     <div>
-      {/* Hero banner */}
       <div
         className="relative h-[50vh] md:h-[60vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: `url(${rotisseriaBg})` }}

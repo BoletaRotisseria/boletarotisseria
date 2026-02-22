@@ -1,10 +1,29 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, Wine } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 
-const wineCategories = ["Branco", "Tinto", "Rosé", "Espumante", "Champagne"];
+const wineCategories = [
+  { label: "Todos", tag: "" },
+  { label: "Branco", tag: "branco" },
+  { label: "Tinto", tag: "tinto" },
+  { label: "Rosé", tag: "rose" },
+  { label: "Espumante", tag: "espumante" },
+  { label: "Champagne", tag: "champagne" },
+];
 
 export default function VinhosPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTag = searchParams.get("categoria") || "";
+
+  const setActiveTag = (tag: string) => {
+    if (tag) {
+      setSearchParams({ categoria: tag });
+    } else {
+      setSearchParams({});
+    }
+  };
+
   const { data: products, isLoading } = useShopifyProducts(50);
 
   return (
@@ -18,9 +37,17 @@ export default function VinhosPage() {
 
       <div className="flex flex-wrap justify-center gap-2 mb-10">
         {wineCategories.map((cat) => (
-          <span key={cat} className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
-            {cat}
-          </span>
+          <button
+            key={cat.tag}
+            onClick={() => setActiveTag(cat.tag)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              activeTag === cat.tag
+                ? "bg-primary text-primary-foreground"
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            }`}
+          >
+            {cat.label}
+          </button>
         ))}
       </div>
 
