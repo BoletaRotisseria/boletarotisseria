@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { storefrontApiRequest, STOREFRONT_PRODUCTS_QUERY, ShopifyProduct } from '@/lib/shopify';
 
-export function useShopifyProducts(count = 50, searchQuery?: string) {
+export function useShopifyProducts(count = 250, searchQuery?: string) {
   return useQuery<ShopifyProduct[]>({
     queryKey: ['shopify-products', count, searchQuery],
     queryFn: async () => {
