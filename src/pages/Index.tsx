@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import fachadaImage from "@/assets/boleta-fachada.jpeg";
+import togoBg from "@/assets/togo-bg.jpg";
 
 const Index = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,11 @@ const Index = () => {
           <Link
             to="/to-go"
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
-            <div className="absolute inset-0 bg-foreground/90 group-hover:bg-foreground/80 transition-colors duration-300" />
+            <img
+              src={togoBg}
+              alt="To Go"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">
                 To Go
