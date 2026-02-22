@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Flame, Clock, Snowflake } from "lucide-react";
@@ -13,8 +14,16 @@ const SLIDE_COUNT = 3;
 const AUTO_PLAY_INTERVAL = 5000;
 
 const Index = () => {
+  const location = useLocation();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location.hash]);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const scrollToSlide = useCallback((index: number) => {
@@ -189,7 +198,7 @@ const Index = () => {
       </section>
 
       {/* Na Mídia */}
-      <section className="relative py-8 md:py-12 bg-background">
+      <section id="na-midia" className="relative py-8 md:py-12 bg-background">
         <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: '150%', backgroundPosition: 'left center', backgroundRepeat: 'repeat', opacity: 0.6 }} />
         
         <div className="relative z-10 container">
