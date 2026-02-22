@@ -8,6 +8,7 @@ import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
 import CardapiosPage from "./pages/CardapiosPage";
 import MenuPage from "./pages/MenuPage";
+import BuscaPage from "./pages/BuscaPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import EmporioPage from "./pages/EmporioPage";
 import PresentesPage from "./pages/PresentesPage";
@@ -49,6 +50,7 @@ function AppContent() {
         <Route path="/semana" element={<SemanaPage />} />
         <Route path="/rotisserie" element={<RotisseriePage />} />
         <Route path="/product/:handle" element={<ProductDetailPage />} />
+        <Route path="/busca" element={<BuscaPage />} />
         {/* Auth routes */}
         <Route path="/entrar" element={<EntrarPage />} />
         <Route path="/criar-conta" element={<CriarContaPage />} />
