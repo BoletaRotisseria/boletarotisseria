@@ -76,7 +76,7 @@ const Index = () => {
   return (
     <>
       {/* Capa – Carrossel horizontal */}
-      <section className="relative bg-foreground h-[70vh] md:h-[80vh]">
+      <section className="relative bg-foreground h-[85vh] md:h-[90vh]">
         <div
           ref={carouselRef}
           className="h-full w-full flex overflow-x-auto horizontal-snap">
@@ -149,7 +149,7 @@ const Index = () => {
       </section>
 
       {/* Banner duplo – Peça pelo nosso site */}
-      <section className="grid grid-cols-1 md:grid-cols-2 h-[70vh] md:h-[80vh]">
+      <section className="grid grid-cols-1 md:grid-cols-2 h-[85vh] md:h-[90vh]">
         <div className="h-full overflow-hidden">
           <img src={heroImage} alt="Sacolas Boleta" className="w-full h-full object-cover" />
         </div>
@@ -172,7 +172,7 @@ const Index = () => {
       <section className="relative bg-background">
         <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.37 }} />
         <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.37 }} />
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh]">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[85vh] md:min-h-[90vh]">
           {/* Texto à esquerda */}
           <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
@@ -198,7 +198,7 @@ const Index = () => {
       </section>
 
       {/* Na Mídia */}
-      <section id="na-midia" className="relative py-8 md:py-12 bg-background scroll-mt-20">
+      <section id="na-midia" className="relative py-12 md:py-16 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center bg-background scroll-mt-20">
         <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'repeat', opacity: 0.9 }} />
         
         <div className="relative z-10 container">
