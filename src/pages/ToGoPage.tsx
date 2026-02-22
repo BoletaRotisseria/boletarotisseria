@@ -1,18 +1,27 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
+import togoBg from "@/assets/togo-bg.jpg";
 
 export default function ToGoPage() {
   const { data: products, isLoading } = useShopifyProducts(50);
 
   return (
-    <div className="container py-10 md:py-16">
-      <div className="text-center mb-12">
-        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">To Go</h1>
-        <p className="text-muted-foreground max-w-lg mx-auto">
-          Refeições prontas para levar. Praticidade sem abrir mão do sabor.
-        </p>
+    <div>
+      <div
+        className="relative h-[40vh] md:h-[50vh] bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: `url(${togoBg})` }}
+      >
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative z-10 text-center text-white">
+          <h1 className="font-serif text-3xl md:text-5xl font-bold mb-3">To Go</h1>
+          <p className="text-white/80 max-w-lg mx-auto text-sm md:text-base">
+            Refeições prontas para levar. Praticidade sem abrir mão do sabor.
+          </p>
+        </div>
       </div>
+
+      <div className="container py-10 md:py-16">
 
       {isLoading ? (
         <div className="flex justify-center py-20">
@@ -31,6 +40,7 @@ export default function ToGoPage() {
           <p className="text-muted-foreground">Os pratos To Go serão exibidos aqui em breve.</p>
         </div>
       )}
+      </div>
     </div>
   );
 }
