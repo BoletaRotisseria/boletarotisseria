@@ -138,8 +138,8 @@ const Index = () => {
       </section>
 
       {/* Banner duplo – Peça pelo nosso site */}
-      <section className="grid grid-cols-1 md:grid-cols-2 min-h-[60vh] md:min-h-[70vh]">
-        <div className="min-h-[40vh] md:min-h-0">
+      <section className="grid grid-cols-1 md:grid-cols-2 h-[70vh] md:h-[80vh]">
+        <div className="h-full overflow-hidden">
           <img src={heroImage} alt="Sacolas Boleta" className="w-full h-full object-cover" />
         </div>
         <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16">
