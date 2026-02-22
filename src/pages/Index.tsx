@@ -21,14 +21,22 @@ const Index = () => {
     el.scrollTo({ left: index * el.clientWidth, behavior: "smooth" });
   }, []);
 
-  // Auto-rotate
+  // Auto-rotate — continuous right direction
   const resetAutoPlay = useCallback(() => {
     if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     autoPlayRef.current = setInterval(() => {
       setCurrentSlide((prev) => {
-        const next = (prev + 1) % SLIDE_COUNT;
-        scrollToSlide(next);
-        return next;
+        const next = prev + 1;
+        if (next < SLIDE_COUNT) {
+          scrollToSlide(next);
+          return next;
+        }
+        // At last slide: snap instantly to start, then smooth to slide 1
+        const el = carouselRef.current;
+        if (el) {
+          el.scrollTo({ left: 0, behavior: "instant" as ScrollBehavior });
+        }
+        return 0;
       });
     }, AUTO_PLAY_INTERVAL);
   }, [scrollToSlide]);
