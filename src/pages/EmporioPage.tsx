@@ -1,18 +1,36 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
+import { useState } from "react";
 
 const emporioCategories = [
-  "Queijos & Embutidos",
-  "Antepastos & Conservas",
-  "Massas & Molhos",
-  "Doces & Chocolates",
-  "Biscoitos & Snacks",
-  "Azeites, Temperos & Especiais",
+  { label: "Todos", tag: "" },
+  { label: "Biscoitos", tag: "biscoitos" },
+  { label: "Chocolates", tag: "chocolates" },
+  { label: "Geleias", tag: "geleias" },
+  { label: "Granola", tag: "granola" },
+  { label: "Doces", tag: "doces" },
+  { label: "Mel", tag: "mel" },
+  { label: "Chás", tag: "chas" },
+  { label: "Antipastos", tag: "antipastos" },
+  { label: "Torradas & Snacks", tag: "torradas e snacks" },
+  { label: "Nuts", tag: "nuts" },
+  { label: "Salames & Embutidos", tag: "salames e embutidos" },
+  { label: "Queijos", tag: "queijos" },
+  { label: "Escargots", tag: "escargots" },
+  { label: "Temperos", tag: "temperos" },
+  { label: "Azeites & Vinagres", tag: "azeites e vinagres" },
+  { label: "Trufados", tag: "trufados" },
+  { label: "Massas Secas", tag: "massas secas" },
+  { label: "Molhos", tag: "molhos" },
 ];
 
 export default function EmporioPage() {
-  const { data: products, isLoading } = useShopifyProducts(50);
+  const [activeTag, setActiveTag] = useState("");
+  const query = activeTag
+    ? `product_type:Emporio AND tag:${activeTag}`
+    : "product_type:Emporio";
+  const { data: products, isLoading } = useShopifyProducts(250, query);
 
   return (
     <div className="container py-10 md:py-16">
@@ -25,9 +43,17 @@ export default function EmporioPage() {
 
       <div className="flex flex-wrap justify-center gap-2 mb-10">
         {emporioCategories.map((cat) => (
-          <span key={cat} className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
-            {cat}
-          </span>
+          <button
+            key={cat.tag}
+            onClick={() => setActiveTag(cat.tag)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              activeTag === cat.tag
+                ? "bg-primary text-primary-foreground"
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            }`}
+          >
+            {cat.label}
+          </button>
         ))}
       </div>
 
@@ -36,7 +62,7 @@ export default function EmporioPage() {
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : products && products.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products.map((product) => (
             <ProductCard key={product.node.id} product={product} />
           ))}

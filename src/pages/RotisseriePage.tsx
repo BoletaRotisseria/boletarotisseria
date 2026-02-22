@@ -1,19 +1,32 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
+import { useState } from "react";
 
 const rotisserieCategories = [
-  "Para Compartilhar",
-  "Carnes & Aves",
-  "Massas",
-  "Saladas",
-  "Acompanhamentos",
-  "Sopas",
-  "Sobremesas",
+  { label: "Todos", tag: "" },
+  { label: "Antipastos", tag: "antipastos" },
+  { label: "Para Compartilhar", tag: "para compartilhar" },
+  { label: "Patês e Terrines", tag: "pates e terrines" },
+  { label: "Pães e Torradas", tag: "paes e torradas" },
+  { label: "Saladas", tag: "saladas" },
+  { label: "Arroz", tag: "arroz" },
+  { label: "Quiches", tag: "quiches" },
+  { label: "Massas", tag: "massas" },
+  { label: "Molhos", tag: "molhos" },
+  { label: "Carnes & Aves", tag: "carnes" },
+  { label: "Acompanhamentos", tag: "acompanhamentos" },
+  { label: "Sopas", tag: "sopas" },
+  { label: "Sobremesas", tag: "sobremesas" },
+  { label: "Tábuas", tag: "tabuas" },
 ];
 
 export default function RotisseriePage() {
-  const { data: products, isLoading } = useShopifyProducts(50);
+  const [activeTag, setActiveTag] = useState("");
+  const query = activeTag
+    ? `product_type:Rotisseria AND tag:${activeTag}`
+    : "product_type:Rotisseria";
+  const { data: products, isLoading } = useShopifyProducts(250, query);
 
   return (
     <div className="container py-10 md:py-16">
@@ -26,9 +39,17 @@ export default function RotisseriePage() {
 
       <div className="flex flex-wrap justify-center gap-2 mb-10">
         {rotisserieCategories.map((cat) => (
-          <span key={cat} className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
-            {cat}
-          </span>
+          <button
+            key={cat.tag}
+            onClick={() => setActiveTag(cat.tag)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              activeTag === cat.tag
+                ? "bg-primary text-primary-foreground"
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            }`}
+          >
+            {cat.label}
+          </button>
         ))}
       </div>
 
