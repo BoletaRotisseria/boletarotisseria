@@ -47,6 +47,7 @@ const navItems: NavItem[] = [
         items: [
           { label: "Queijos & Embutidos", path: "/emporio" },
           { label: "Antepastos & Conservas", path: "/emporio" },
+          { label: "Tábuas de Frios", path: "/emporio" },
           { label: "Massas & Molhos", path: "/emporio" },
           { label: "Doces & Chocolates", path: "/emporio" },
           { label: "Biscoitos & Snacks", path: "/emporio" },
@@ -136,7 +137,7 @@ export function Header() {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-50 bg-background border-b border-border/40">
+    <header className="sticky top-0 z-50 bg-background border-b border-border/40" style={{ zIndex: 50 }}>
       {/* Main bar */}
       <div className="container flex items-center justify-between h-14 md:h-16">
         <Link to="/" className="flex-shrink-0">
@@ -165,7 +166,7 @@ export function Header() {
               {/* Mega-menu rendered inside the nav item for seamless hover */}
               {item.subCategories && openDropdown === item.label && (
                 <div
-                  className="fixed left-0 right-0 top-[56px] md:top-[64px] z-50 bg-background border-b border-border/40 shadow-md animate-fade-in"
+                  className="fixed left-0 right-0 top-[56px] md:top-[64px] z-40 bg-background border-b border-border/40 shadow-md animate-fade-in"
                   onMouseEnter={() => handleEnter(item.label)}
                   onMouseLeave={handleLeave}
                 >
