@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import fachadaImage from "@/assets/boleta-fachada.jpeg";
 import togoBg from "@/assets/togo-bg.jpg";
+import semanaBg from "@/assets/semana-bg.jpg";
 
 const Index = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -57,11 +58,11 @@ const Index = () => {
           {/* Slide 2 – Cardápio Semanal */}
           <Link
             to="/semana"
-            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
+            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center overflow-hidden">
             <img
-              src={fachadaImage}
+              src={semanaBg}
               alt="Cardápio Semanal"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              className="absolute inset-0 w-full h-full object-cover scale-110 transition-transform duration-500 group-hover:scale-120" />
             <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">
