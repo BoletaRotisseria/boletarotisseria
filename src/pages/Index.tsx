@@ -168,12 +168,9 @@ const Index = () => {
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-[1.1] mb-4">
               SIMPLES<br />de preparar
             </h2>
-            <p className="text-muted-foreground text-sm md:text-base max-w-sm mb-6 leading-relaxed">
+            <p className="text-muted-foreground text-sm md:text-base max-w-sm leading-relaxed">
               Todas as instruções de preparo estão especificadas no verso da embalagem. Assista ao vídeo ao lado para um passo a passo completo.
             </p>
-            <Link to="/menu" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors group">
-              Veja nossos pratos <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
           </div>
           {/* Vídeo à direita (placeholder) */}
           <div className="min-h-[40vh] md:min-h-0 bg-muted flex items-center justify-center">
