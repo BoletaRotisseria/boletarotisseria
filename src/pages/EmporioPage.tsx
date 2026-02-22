@@ -1,12 +1,13 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const emporioCategories = [
   { label: "Todos", tag: "" },
   { label: "Queijos & Embutidos", tag: "queijos e embutidos" },
   { label: "Antepastos & Conservas", tag: "antepastos e conservas" },
+  { label: "Tábuas de Frios", tag: "tabuas de frios" },
   { label: "Massas & Molhos", tag: "massas e molhos" },
   { label: "Doces & Chocolates", tag: "doces e chocolates" },
   { label: "Biscoitos & Snacks", tag: "biscoitos e snacks" },
@@ -14,7 +15,17 @@ const emporioCategories = [
 ];
 
 export default function EmporioPage() {
-  const [activeTag, setActiveTag] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTag = searchParams.get("categoria") || "";
+
+  const setActiveTag = (tag: string) => {
+    if (tag) {
+      setSearchParams({ categoria: tag });
+    } else {
+      setSearchParams({});
+    }
+  };
+
   const query = activeTag
     ? `product_type:Emporio AND tag:${activeTag}`
     : "product_type:Emporio";
