@@ -5,20 +5,13 @@ import { useState } from "react";
 
 const rotisserieCategories = [
   { label: "Todos", tag: "" },
-  { label: "Antipastos", tag: "antipastos" },
   { label: "Para Compartilhar", tag: "para compartilhar" },
-  { label: "Patês e Terrines", tag: "pates e terrines" },
-  { label: "Pães e Torradas", tag: "paes e torradas" },
-  { label: "Saladas", tag: "saladas" },
-  { label: "Arroz", tag: "arroz" },
-  { label: "Quiches", tag: "quiches" },
-  { label: "Massas", tag: "massas" },
-  { label: "Molhos", tag: "molhos" },
   { label: "Carnes & Aves", tag: "carnes" },
+  { label: "Massas", tag: "massas" },
+  { label: "Saladas", tag: "saladas" },
   { label: "Acompanhamentos", tag: "acompanhamentos" },
   { label: "Sopas", tag: "sopas" },
   { label: "Sobremesas", tag: "sobremesas" },
-  { label: "Tábuas", tag: "tabuas" },
 ];
 
 export default function RotisseriePage() {
