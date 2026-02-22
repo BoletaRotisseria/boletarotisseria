@@ -173,13 +173,13 @@ export function Header() {
                   {/* Invisible bridge to connect nav link to mega-menu */}
                   <div className="absolute left-0 right-0 -top-4 h-4" />
                   <div className="container">
-                    <div className="flex border border-border/60">
+                    <div className="flex">
                       {item.subCategories.map((sub) => (
                         <Link
                           key={sub.label}
                           to={sub.path}
                           onClick={() => setOpenDropdown(null)}
-                          className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/40 last:border-r-0 hover:bg-secondary/50 transition-colors ${
+                          className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/20 last:border-r-0 hover:bg-secondary/50 transition-colors ${
                             sub.highlight ? "text-destructive" : "text-foreground"
                           }`}
                         >
