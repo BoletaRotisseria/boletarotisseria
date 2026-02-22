@@ -6,6 +6,7 @@ import heroImage from "@/assets/hero-image.jpg";
 import fachadaImage from "@/assets/boleta-fachada.jpeg";
 import togoBg from "@/assets/togo-bg.jpg";
 import semanaBg from "@/assets/semana-bg.jpg";
+import rotisseriaBg from "@/assets/rotisseria-bg.jpg";
 
 const Index = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -77,13 +78,16 @@ prontos para aquecer.
           {/* Slide 3 – Rotisserie */}
           <Link
             to="/rotisserie"
-            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
-            <div className="absolute inset-0 diamond-pattern opacity-30" />
-            <div className="absolute inset-0 bg-primary/80 group-hover:bg-primary/70 transition-colors duration-300" />
+            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center overflow-hidden">
+            <img
+              src={rotisseriaBg}
+              alt="Rotisseria"
+              className="absolute inset-0 w-full h-full object-cover scale-110 transition-transform duration-500 group-hover:scale-120" />
+            <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-3 drop-shadow-lg">Rotisseria
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">Rotisseria
               </h2>
-              <p className="text-primary-foreground/80 text-lg md:text-xl max-w-md mx-auto">
+              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">
                 Clássicos da casa, empório e muito mais.
               </p>
             </div>
