@@ -160,11 +160,13 @@ const Index = () => {
       </section>
 
       {/* Dicas de Preparo */}
-      <section className="relative bg-secondary/20" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="absolute inset-0 bg-background/70" />
+      <section className="relative bg-secondary/20">
+        <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div className="absolute inset-0 bg-background/90" />
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[50vh] md:min-h-[60vh]">
           {/* Texto à esquerda */}
-          <div className="flex flex-col items-center justify-center text-center p-8 md:p-12 lg:p-16">
+          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Preparo fácil e rápido
             </span>
@@ -189,7 +191,7 @@ const Index = () => {
 
       {/* Na Mídia */}
       <section className="relative py-8 md:py-12" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="absolute inset-0 bg-background/75" />
+        <div className="absolute inset-0 bg-background/90" />
         <div className="relative z-10 container">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2 text-foreground">Na mídia</h2>
           <p className="text-muted-foreground mb-6 text-sm md:text-base">
