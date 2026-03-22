@@ -208,8 +208,16 @@ const Index = () => {
               <span className="text-destructive">★★★★</span> no Guia Comer & Beber da Veja São Paulo
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
+              {
+                source: "VEJA SÃO PAULO",
+                title: "Rua Ferreira de Araújo: 19 restaurantes e bares para ir em Pinheiros",
+                excerpt: "Boleta é destaque como uma das melhores rotisserias da cidade, com receitas do chef Roberto Eid Philipp.",
+                link: "https://vejasp.abril.com.br/coluna/arnaldo-lorencato/comer-e-beber-rua-ferreira-de-araujo-pinheiros-onde-ir/",
+                image: "https://vejasp.abril.com.br/wp-content/uploads/2026/03/Moma-_.-Modern-Mamma-Osteria-2-1.jpg.jpg?quality=70&strip=info&w=600&h=400&crop=1",
+                isNew: true,
+              },
               {
                 source: "VEJA SÃO PAULO",
                 title: "Roberto Eid Philipp, da Boleta, participa de evento na França",
@@ -230,24 +238,31 @@ const Index = () => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-background rounded-2xl border border-border/50 p-5 flex items-stretch gap-4 hover:shadow-md transition-shadow"
+                className="group bg-background rounded-2xl border border-border/50 p-5 flex flex-col gap-3 hover:shadow-md transition-shadow"
               >
+                <div className="w-full h-40 rounded-xl overflow-hidden">
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+                </div>
                 <div className="flex flex-col justify-between flex-1 min-w-0">
                   <div>
-                    <span className="text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-foreground">
-                      {item.source}
-                    </span>
-                    <h3 className="font-serif text-base md:text-lg font-bold mt-1.5 mb-1.5 leading-snug group-hover:text-primary transition-colors">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-foreground">
+                        {item.source}
+                      </span>
+                      {"isNew" in item && item.isNew && (
+                        <span className="text-[9px] font-bold tracking-wider uppercase bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded-full">
+                          Novo
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-serif text-base font-bold mb-1.5 leading-snug group-hover:text-primary transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3 hidden md:block">{item.excerpt}</p>
+                    <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3">{item.excerpt}</p>
                   </div>
                   <span className="mt-3 text-sm font-medium text-foreground group-hover:text-primary transition-colors">
                     Vem ler tudo aqui →
                   </span>
-                </div>
-                <div className="w-28 md:w-36 flex-shrink-0 rounded-xl overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
                 </div>
               </a>
             ))}
