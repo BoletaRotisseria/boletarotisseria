@@ -208,16 +208,8 @@ const Index = () => {
               <span className="text-destructive">★★★★</span> no Guia Comer & Beber da Veja São Paulo
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              {
-                source: "VEJA SÃO PAULO",
-                title: "Rua Ferreira de Araújo: 19 restaurantes e bares para ir em Pinheiros",
-                excerpt: "Boleta é destaque como uma das melhores rotisserias da cidade, com receitas do chef Roberto Eid Philipp.",
-                link: "https://vejasp.abril.com.br/coluna/arnaldo-lorencato/comer-e-beber-rua-ferreira-de-araujo-pinheiros-onde-ir/",
-                image: "https://vejasp.abril.com.br/wp-content/uploads/2026/03/Moma-_.-Modern-Mamma-Osteria-2-1.jpg.jpg?quality=70&strip=info&w=600&h=400&crop=1",
-                isNew: true,
-              },
               {
                 source: "VEJA SÃO PAULO",
                 title: "Roberto Eid Philipp, da Boleta, participa de evento na França",
