@@ -208,7 +208,7 @@ const Index = () => {
               <span className="text-destructive">★★★★</span> no Guia Comer & Beber da Veja São Paulo
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
                 source: "VEJA SÃO PAULO",
