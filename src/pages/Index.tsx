@@ -185,14 +185,16 @@ const Index = () => {
               Todas as instruções de preparo estão especificadas no verso da embalagem. Assista ao vídeo ao lado para um passo a passo completo.
             </p>
           </div>
-          {/* Vídeo à direita (placeholder) */}
-          <div className="min-h-[40vh] md:min-h-full bg-muted flex items-center justify-center">
-            <div className="text-center text-muted-foreground p-8">
-              <div className="w-16 h-16 rounded-full border-2 border-muted-foreground/30 flex items-center justify-center mx-auto mb-3">
-                <span className="text-2xl ml-1">▶</span>
-              </div>
-              <p className="text-sm">Vídeo em breve</p>
-            </div>
+          {/* Vídeo à direita */}
+          <div className="min-h-[40vh] md:min-h-full bg-muted flex items-center justify-center overflow-hidden">
+            <video
+              src="/videos/preparo.mp4"
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
           </div>
         </div>
       </section>
