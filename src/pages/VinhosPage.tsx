@@ -24,7 +24,10 @@ export default function VinhosPage() {
     }
   };
 
-  const { data: products, isLoading } = useShopifyProducts(50);
+  const query = activeTag
+    ? `product_type:Vinhos AND tag:${activeTag}`
+    : "product_type:Vinhos";
+  const { data: products, isLoading } = useShopifyProducts(50, query);
 
   return (
     <div className="container py-10 md:py-16">

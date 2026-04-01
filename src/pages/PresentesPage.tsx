@@ -53,7 +53,10 @@ export default function PresentesPage() {
 }
 
 function PresentesProducts({ activeTag }: { activeTag: string }) {
-  const { data: products, isLoading } = useShopifyProducts(50);
+  const query = activeTag
+    ? `product_type:Presentes AND tag:'${activeTag}'`
+    : "product_type:Presentes";
+  const { data: products, isLoading } = useShopifyProducts(50, query);
 
   if (isLoading) {
     return (
