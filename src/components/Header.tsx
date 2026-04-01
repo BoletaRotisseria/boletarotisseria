@@ -139,9 +139,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border/40" style={{ zIndex: 50 }}>
       {/* Main bar */}
-      <div className={`container flex items-center justify-between transition-all ${location.pathname === "/" ? "h-14 md:h-16" : "h-11 md:h-12"}`}>
+      <div className="container flex items-center justify-between transition-all h-14 md:h-16">
         <Link to="/" className="flex-shrink-0">
-          <img src={boletaLogo} alt="Boleta" className={`rounded relative z-50 transition-all ${location.pathname === "/" ? "h-20 md:h-24 -mb-10 mt-3" : "h-12 md:h-14 -mb-5 mt-1.5"}`} />
+          <img src={boletaLogo} alt="Boleta" className="rounded relative z-50 transition-all h-20 md:h-24 -mb-10 mt-3" />
         </Link>
 
         {/* Desktop nav */}
