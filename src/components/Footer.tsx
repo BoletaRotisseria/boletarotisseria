@@ -32,7 +32,7 @@ export function Footer() {
               href={WHATSAPP_CARDAPIO}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 bg-foreground text-background px-6 md:px-8 py-3 font-sans text-xs font-bold tracking-[0.14em] uppercase transition-colors whitespace-nowrap hover:bg-foreground/90 w-full md:w-auto"
+              className="inline-flex items-center justify-center gap-2.5 bg-foreground text-background px-6 lg:px-8 py-3 font-sans text-xs font-bold tracking-[0.14em] uppercase transition-colors whitespace-nowrap hover:bg-foreground/90 w-full sm:w-auto"
             >
               <svg viewBox="0 0 32 32" className="w-4 h-4 fill-current flex-shrink-0">
                 <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.129 6.744 3.047 9.379L1.054 31.25l6.1-1.955a15.923 15.923 0 008.85 2.674C24.824 31.969 32 24.793 32 16.004 32 7.176 24.824 0 16.004 0zm9.32 22.609c-.39 1.1-2.288 2.1-3.15 2.168-.793.063-1.535.375-5.172-1.078-4.375-1.75-7.16-6.234-7.375-6.523-.21-.289-1.75-2.328-1.75-4.438s1.11-3.148 1.5-3.578c.39-.43.86-.54 1.148-.54.29 0 .578.003.828.016.27.012.633-.102.99.753.39.883 1.32 3.227 1.437 3.46.117.235.195.508.04.82-.157.312-.235.508-.47.78-.234.274-.492.61-.703.82-.234.234-.477.488-.205.957.274.47 1.215 2.004 2.61 3.246 1.789 1.594 3.297 2.086 3.766 2.32.469.235.742.196 1.016-.117.273-.313 1.172-1.367 1.484-1.836.313-.47.625-.39 1.055-.235.43.157 2.734 1.29 3.203 1.524.47.235.781.352.898.547.117.195.117 1.133-.273 2.234z" />
