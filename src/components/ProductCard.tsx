@@ -57,7 +57,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {node.description || "\u00A0"}
       </p>
       <div className="flex items-center justify-between gap-2 mt-auto">
-        <span className="font-semibold">{formatPrice(price)}</span>
+        <span className="font-normal">{formatPrice(price)}</span>
         <Button size="sm" className="cta-text text-xs" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale}>
           {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
         </Button>
