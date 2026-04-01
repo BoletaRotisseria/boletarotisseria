@@ -139,9 +139,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border/40" style={{ zIndex: 50 }}>
       {/* Main bar */}
-      <div className={`container flex items-center justify-between transition-all ${location.pathname === "/" ? "h-14 md:h-16" : "h-11 md:h-12"}`}>
+      <div className="container flex items-center justify-between transition-all h-14 md:h-16">
         <Link to="/" className="flex-shrink-0">
-          <img src={boletaLogo} alt="Boleta" className={`rounded relative z-50 transition-all ${location.pathname === "/" ? "h-20 md:h-24 -mb-10 mt-3" : "h-12 md:h-14 -mb-5 mt-1.5"}`} />
+          <img src={boletaLogo} alt="Boleta" className="rounded relative z-50 transition-all h-20 md:h-24 -mb-10 mt-3" />
         </Link>
 
         {/* Desktop nav */}
@@ -175,7 +175,7 @@ export function Header() {
               {/* Mega-menu rendered inside the nav item for seamless hover */}
               {item.subCategories && openDropdown === item.label && (
                 <div
-                  className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in ${location.pathname === "/" ? "top-[56px] md:top-[64px]" : "top-[44px] md:top-[48px]"}`}
+                  className="fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in top-[56px] md:top-[64px]"
                   onMouseEnter={() => handleEnter(item.label)}
                   onMouseLeave={handleLeave}
                 >
