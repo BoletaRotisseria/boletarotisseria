@@ -20,14 +20,14 @@ export function Footer() {
 
       {/* Newsletter bar – solid background */}
       <div className="relative z-10 border-t border-b border-border/60 bg-background">
-        <div className="container py-8 flex flex-col items-center justify-center gap-4 md:flex-row md:gap-8 px-4">
-          <h3 className="font-serif text-xl md:text-3xl tracking-tight shrink-0 text-center">
+        <div className="container py-8 flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-8 px-4">
+          <h3 className="font-serif text-xl lg:text-3xl tracking-tight shrink-0 text-center">
             Cardápio Semanal
           </h3>
           <p className="text-sm text-foreground/60 shrink-0 text-center">
             Inscreva-se e fique por dentro das novidades.
           </p>
-          <div className="flex shrink-0 w-full md:w-auto">
+          <div className="flex shrink-0 w-full sm:w-auto">
             <a
               href={WHATSAPP_CARDAPIO}
               target="_blank"
