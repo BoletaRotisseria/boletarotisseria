@@ -141,7 +141,7 @@ export function Header() {
       {/* Main bar */}
       <div className={`container flex items-center justify-between transition-all ${location.pathname === "/" ? "h-14 md:h-16" : "h-11 md:h-12"}`}>
         <Link to="/" className="flex-shrink-0">
-          <img src={boletaLogo} alt="Boleta" className={`rounded relative z-50 transition-all ${location.pathname === "/" ? "h-16 md:h-20 -mb-8 mt-1" : "h-10 md:h-12 -mb-4 mt-0.5"}`} />
+          <img src={boletaLogo} alt="Boleta" className={`rounded relative z-50 transition-all ${location.pathname === "/" ? "h-20 md:h-24 -mb-10 mt-1" : "h-12 md:h-14 -mb-5 mt-0.5"}`} />
         </Link>
 
         {/* Desktop nav */}

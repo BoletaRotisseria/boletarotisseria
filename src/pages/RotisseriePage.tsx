@@ -6,7 +6,7 @@ import rotisseriaBg from "@/assets/rotisseria-bg.jpg";
 
 const rotisserieCategories = [
   { label: "Todos", tag: "" },
-  { label: "Para Compartilhar", tag: "para compartilhar" },
+  { label: "Aperitivos", tag: "aperitivos" },
   { label: "Carnes & Aves", tag: "carnes" },
   { label: "Massas", tag: "massas" },
   { label: "Saladas", tag: "saladas" },
