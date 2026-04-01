@@ -11,9 +11,9 @@ const rotisserieCategories = [
   { label: "Massas", tag: "massas" },
   { label: "Saladas", tag: "saladas" },
   { label: "Acompanhamentos", tag: "acompanhamentos" },
+  { label: "Pizza", tag: "pizza" },
   { label: "Sopas", tag: "sopas" },
   { label: "Sobremesas", tag: "sobremesas" },
-  { label: "Pizza", tag: "pizza" },
 ];
 
 export default function RotisseriePage() {
