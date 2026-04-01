@@ -218,6 +218,7 @@ const Index = () => {
                 excerpt: "Único paulistano a integrar o festival no Carreau du Temple, em Paris, levando cuscuz paulista e manjar de coco.",
                 link: "https://vejasp.abril.com.br/coluna/delicia-de-conta/comer-e-beber-chef-rotisseria-boleta-participa-de-evento-na-franca/",
                 image: "https://vejasp.abril.com.br/wp-content/uploads/2025/09/Roberto-Eid-Phillip.jpg?quality=70&strip=info&w=600&h=400&crop=1",
+                imagePosition: "center top",
               },
               {
                 source: "VEJA SÃO PAULO",
@@ -235,7 +236,7 @@ const Index = () => {
                 className="group bg-background rounded-2xl border border-border/50 p-5 flex flex-col gap-3 hover:shadow-md transition-shadow"
               >
                 <div className="w-full h-40 rounded-xl overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" style={"imagePosition" in item ? { objectPosition: item.imagePosition as string } : undefined} loading="lazy" />
                 </div>
                 <div className="flex flex-col justify-between flex-1 min-w-0">
                   <div>
