@@ -141,7 +141,7 @@ export function Header() {
       {/* Main bar */}
       <div className="container flex items-center justify-between transition-all h-14 md:h-16">
         <Link to="/" className="flex-shrink-0">
-          <img src={boletaLogo} alt="Boleta" className="rounded relative z-50 transition-all h-20 md:h-24 -mb-10 mt-3" />
+          <img src={boletaLogo} alt="Boleta" className="rounded relative z-50 transition-all h-16 md:h-20 -mb-8 mt-2" />
         </Link>
 
         {/* Desktop nav */}
