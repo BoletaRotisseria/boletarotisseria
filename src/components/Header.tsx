@@ -270,7 +270,7 @@ export function Header() {
           onMouseEnter={handleSearchEnter}
           onMouseLeave={handleSearchLeave}
         >
-          <div className="container py-3">
+          <div className="container py-[15px]">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
