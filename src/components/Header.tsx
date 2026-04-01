@@ -311,7 +311,7 @@ export function Header() {
       {/* Mobile nav */}
       {mobileOpen && (
         <nav
-          className="lg:hidden border-t border-border/40 bg-background px-6 py-4 space-y-1 animate-fade-in max-h-[80vh] overflow-y-auto"
+          className="lg:hidden border-t border-border/40 bg-background px-6 py-1 space-y-1 animate-fade-in max-h-[80vh] overflow-y-auto"
           onMouseEnter={handleMobileEnter}
           onMouseLeave={handleMobileLeave}
         >
