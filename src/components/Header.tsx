@@ -37,6 +37,7 @@ const navItems: NavItem[] = [
           { label: "Massas", path: "/rotisserie?categoria=massas" },
           { label: "Saladas", path: "/rotisserie?categoria=saladas" },
           { label: "Acompanhamentos", path: "/rotisserie?categoria=acompanhamentos" },
+          { label: "Pizza", path: "/rotisserie?categoria=pizza" },
           { label: "Sopas", path: "/rotisserie?categoria=sopas" },
           { label: "Sobremesas", path: "/rotisserie?categoria=sobremesas" },
         ],
