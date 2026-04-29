@@ -17,6 +17,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const variant = node.variants.edges[0]?.node;
   const price = parseFloat(node.priceRange.minVariantPrice.amount);
   const currency = node.priceRange.minVariantPrice.currencyCode;
+  const variantPrices = node.variants.edges.map(v => parseFloat(v.node.price.amount));
+  const hasMultiplePrices = variantPrices.length > 1 && new Set(variantPrices).size > 1;
 
   const formatPrice = (v: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency }).format(v);
@@ -57,7 +59,9 @@ export function ProductCard({ product }: ProductCardProps) {
         {node.description || "\u00A0"}
       </p>
       <div className="flex items-center justify-between gap-2 mt-auto">
-        <span className="font-normal">{formatPrice(price)}</span>
+        <span className="font-normal">
+          {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
+        </span>
         <Button size="sm" className="cta-text text-xs" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale}>
           {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
         </Button>
