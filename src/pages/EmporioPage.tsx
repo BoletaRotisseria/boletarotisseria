@@ -5,13 +5,12 @@ import { useSearchParams } from "react-router-dom";
 
 const emporioCategories = [
   { label: "Todos", tag: "" },
-  { label: "Queijos & Embutidos", tag: "queijos e embutidos" },
-  { label: "Antepastos & Conservas", tag: "antepastos e conservas" },
-  { label: "Tábuas de Frios", tag: "tabuas de frios" },
-  { label: "Massas & Molhos", tag: "massas e molhos" },
-  { label: "Doces & Chocolates", tag: "doces e chocolates" },
-  { label: "Biscoitos & Snacks", tag: "biscoitos e snacks" },
-  { label: "Azeites, Temperos & Especiais", tag: "azeites temperos e especiais" },
+  { label: "Queijos & Embutidos", tag: "queijos-embutidos" },
+  { label: "Antepastos & Conservas", tag: "antepastos-conservas" },
+  { label: "Massas & Molhos", tag: "massas-molhos" },
+  { label: "Doces & Chocolates", tag: "doces-chocolates" },
+  { label: "Biscoitos & Snacks", tag: "biscoitos-snacks" },
+  { label: "Azeites, Temperos & Especiais", tag: "azeites-temperos-especiais" },
 ];
 
 export default function EmporioPage() {
