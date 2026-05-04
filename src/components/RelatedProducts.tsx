@@ -13,12 +13,14 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
 
   // No mapping for this category — render nothing
   const query = rule ? rule.tags.map(t => `tag:${t}`).join(" OR ") : null;
+  const includesMolhos = !!rule?.tags.includes("molhos");
 
-  const { data: products, isLoading } = useShopifyProducts(8, query || undefined);
+  const { data: products, isLoading } = useShopifyProducts(includesMolhos ? 50 : 8, query || undefined);
 
   if (!rule) return null;
 
-  const filtered = (products || []).filter(p => p.node.id !== currentProductId).slice(0, 4);
+  const all = (products || []).filter(p => p.node.id !== currentProductId);
+  const filtered = includesMolhos ? all : all.slice(0, 4);
 
   // Recommendations rely on categories that aren't live yet, and nothing matched.
   // Keep the section structurally prepared but hidden.
