@@ -11,8 +11,10 @@ interface RelatedProductsProps {
 export function RelatedProducts({ productTags, currentProductId }: RelatedProductsProps) {
   const rule = findRecommendationRule(productTags || []);
 
-  // No mapping for this category — render nothing
-  const query = rule ? rule.tags.map(t => `tag:${t}`).join(" OR ") : null;
+  // No mapping for this category — render nothing.
+  // Scope to Rotisseria so we never recommend empório items (e.g. Paccheri Rigati).
+  const tagQuery = rule ? rule.tags.map(t => `tag:${t}`).join(" OR ") : null;
+  const query = tagQuery ? `product_type:Rotisseria AND (${tagQuery})` : null;
   const includesMolhos = !!rule?.tags.includes("molhos");
 
   const { data: products, isLoading } = useShopifyProducts(includesMolhos ? 50 : 8, query || undefined);
