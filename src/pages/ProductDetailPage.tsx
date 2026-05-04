@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 export default function ProductDetailPage() {
   const { handle } = useParams<{ handle: string }>();
@@ -84,6 +85,8 @@ export default function ProductDetailPage() {
           </Button>
         </div>
       </div>
+
+      <RelatedProducts productTags={product.tags || []} currentProductId={product.id} />
     </div>
   );
 }
