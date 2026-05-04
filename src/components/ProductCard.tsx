@@ -54,12 +54,8 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
       </div>
-      <h3 className="font-serif text-xl leading-tight mb-1 font-bold">{node.title}</h3>
-      <p className="text-sm text-muted-foreground line-clamp-2 mb-2 flex-1">
-        {node.description && node.description.trim().replace(/\.$/, "").toLowerCase() !== "item do empório"
-          ? node.description
-          : "\u00A0"}
-      </p>
+      <h3 className="font-serif text-xl leading-tight mb-2 font-bold">{node.title}</h3>
+      <div className="flex-1" />
       <div className="flex items-center justify-between gap-2 mt-auto">
         <span className="font-normal">
           {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
