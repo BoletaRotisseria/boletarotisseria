@@ -5,8 +5,8 @@ import { useSearchParams } from "react-router-dom";
 
 const presentesCategories = [
   { label: "Todos", tag: "" },
-  { label: "Monte sua Cesta", tag: "monte sua cesta" },
-  { label: "Itens de Casa", tag: "itens de casa" },
+  { label: "Monte sua Cesta", tag: "monte-sua-cesta" },
+  { label: "Itens de Casa", tag: "itens-de-casa" },
 ];
 
 export default function PresentesPage() {
