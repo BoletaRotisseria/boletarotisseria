@@ -54,8 +54,8 @@ export default function PresentesPage() {
 
 function PresentesProducts({ activeTag }: { activeTag: string }) {
   const query = activeTag
-    ? `product_type:Presentes AND tag:'${activeTag}'`
-    : "product_type:Presentes";
+    ? `tag:'${activeTag}'`
+    : "tag:presentes OR product_type:Presentes";
   const { data: products, isLoading } = useShopifyProducts(50, query);
 
   if (isLoading) {
