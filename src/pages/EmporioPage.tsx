@@ -26,8 +26,8 @@ export default function EmporioPage() {
   };
 
   const query = activeTag
-    ? `product_type:Emporio AND tag:${activeTag}`
-    : "product_type:Emporio";
+    ? `tag:emporio AND tag:${activeTag}`
+    : "tag:emporio";
   const { data: products, isLoading } = useShopifyProducts(250, query);
 
   return (
