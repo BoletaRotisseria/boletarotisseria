@@ -56,7 +56,9 @@ export default function ProductDetailPage() {
         </div>
         <div className="flex flex-col justify-center">
           <h1 className="font-serif text-3xl md:text-4xl font-bold mb-4">{product.title}</h1>
-          <p className="text-muted-foreground mb-6">{product.description}</p>
+          {product.description && product.description.trim().toLowerCase() !== "item do empório" && (
+            <p className="text-muted-foreground mb-6">{product.description}</p>
+          )}
           <p className="text-3xl font-bold mb-6">{formatPrice(price)}</p>
 
           {product.variants.edges.length > 1 && (
