@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </div>
       <h3 className="font-serif text-xl leading-tight mb-1 font-bold">{node.title}</h3>
       <p className="text-sm text-muted-foreground line-clamp-2 mb-2 flex-1">
-        {node.description && node.description.trim().toLowerCase() !== "item do empório"
+        {node.description && node.description.trim().replace(/\.$/, "").toLowerCase() !== "item do empório"
           ? node.description
           : "\u00A0"}
       </p>
