@@ -1,21 +1,15 @@
 // Curated cross-sell mapping for "COMBINE COM..." section.
 // Keys/values are real Shopify tags (lowercase, no accents).
+// Scope: only rotisseria-to-rotisseria combinations. Empório/pães-e-torradas
+// recommendations will be added later.
 
 export interface RecommendationRule {
   tags: string[];
   title: string;
 }
 
-// Categories that aren't fully launched on the website yet.
-// Recommendations referencing only these tags stay hidden until products exist.
-export const PENDING_CATEGORIES = ["paes-e-torradas", "emporio"];
-
-// Order matters: more specific tags first so they win over broad ones (e.g. aperitivos).
+// Order matters: more specific tags first so they win over broad ones.
 export const RECOMMENDATIONS: Record<string, RecommendationRule> = {
-  "pates-e-terrines": {
-    tags: ["paes-e-torradas"],
-    title: "Combine com pães e torradas",
-  },
   "quiches-e-tortas": {
     tags: ["saladas"],
     title: "Combine com saladas",
@@ -29,10 +23,6 @@ export const RECOMMENDATIONS: Record<string, RecommendationRule> = {
     tags: ["acompanhamentos", "massas", "molhos"],
     title: "Combine com acompanhamentos, massas e molhos",
   },
-  pizza: {
-    tags: ["molhos", "emporio"],
-    title: "Combine com molhos e empório",
-  },
   vegetariano: {
     tags: ["saladas"],
     title: "Combine com saladas",
@@ -45,20 +35,8 @@ export const RECOMMENDATIONS: Record<string, RecommendationRule> = {
     tags: ["molhos"],
     title: "Combine com molhos",
   },
-  tabuas: {
-    tags: ["paes-e-torradas"],
-    title: "Combine com pães e torradas",
-  },
-  sanduiches: {
-    tags: ["emporio"],
-    title: "Combine com mostardas e complementos do empório",
-  },
-  antipastos: {
-    tags: ["paes-e-torradas"],
-    title: "Combine com pães e torradas",
-  },
   // Explicitly no recommendations: aperitivos, sobremesas, sopas, molhos,
-  // paes-e-torradas, acompanhamentos, emporio (target-only categories).
+  // acompanhamentos, pizza, tabuas, sanduiches, antipastos, pates-e-terrines.
 };
 
 /**
