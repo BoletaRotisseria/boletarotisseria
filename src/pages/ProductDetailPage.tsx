@@ -85,6 +85,8 @@ export default function ProductDetailPage() {
           </Button>
         </div>
       </div>
+
+      <RelatedProducts productTags={product.tags || []} currentProductId={product.id} />
     </div>
   );
 }
