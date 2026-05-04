@@ -8,7 +8,7 @@ const rotisserieCategories = [
   { label: "Todos", tag: "" },
   { label: "Aperitivos", tag: "aperitivos" },
   { label: "Carnes & Aves", tag: "carnes" },
-  { label: "Massas", tag: "massas" },
+  { label: "Massas & Molhos", tag: "massas" },
   { label: "Saladas", tag: "saladas" },
   { label: "Acompanhamentos", tag: "acompanhamentos" },
   { label: "Pizza", tag: "pizza" },
