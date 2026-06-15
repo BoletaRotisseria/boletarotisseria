@@ -46,7 +46,6 @@ const navItems: NavItem[] = [
         label: "Empório",
         path: "/emporio",
         items: [
-          { label: "Queijos & Embutidos", path: "/emporio?categoria=queijos+e+embutidos" },
           { label: "Antepastos & Conservas", path: "/emporio?categoria=antepastos+e+conservas" },
           { label: "Tábuas de Frios", path: "/emporio?categoria=tabuas+de+frios" },
           { label: "Massas & Molhos", path: "/emporio?categoria=massas+e+molhos" },
