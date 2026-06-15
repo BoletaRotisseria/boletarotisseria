@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router-dom";
 
 const presentesCategories = [
   { label: "Todos", tag: "" },
-  { label: "Monte sua Cesta", tag: "monte-sua-cesta" },
   { label: "Itens de Casa", tag: "itens-de-casa" },
 ];
 
@@ -54,8 +53,8 @@ export default function PresentesPage() {
 
 function PresentesProducts({ activeTag }: { activeTag: string }) {
   const query = activeTag
-    ? `tag:'${activeTag}'`
-    : "tag:presentes OR product_type:Presentes";
+    ? `tag:'${activeTag}' AND -tag:oculto`
+    : "(tag:presentes OR product_type:Presentes) AND -tag:oculto";
   const { data: products, isLoading } = useShopifyProducts(50, query);
 
   if (isLoading) {

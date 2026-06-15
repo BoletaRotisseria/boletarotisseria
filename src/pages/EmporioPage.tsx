@@ -26,8 +26,8 @@ export default function EmporioPage() {
   };
 
   const query = activeTag
-    ? `tag:emporio AND tag:${activeTag} AND -tag:queijos-embutidos`
-    : "tag:emporio AND -tag:queijos-embutidos";
+    ? `tag:emporio AND tag:${activeTag} AND -tag:queijos-embutidos AND -tag:oculto`
+    : "tag:emporio AND -tag:queijos-embutidos AND -tag:oculto";
   const { data: products, isLoading } = useShopifyProducts(250, query);
 
   return (
