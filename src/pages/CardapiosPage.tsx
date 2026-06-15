@@ -9,7 +9,7 @@ const categories = [
   },
   {
     title: "Empório",
-    description: "Queijos, embutidos, antepastos, doces, azeites e temperos especiais.",
+    description: "Antepastos, doces, azeites, temperos e produtos especiais.",
     path: "/emporio",
   },
   {
