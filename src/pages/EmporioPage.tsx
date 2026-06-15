@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 
 const emporioCategories = [
   { label: "Todos", tag: "" },
-  { label: "Queijos & Embutidos", tag: "queijos-embutidos" },
+  
   { label: "Antepastos & Conservas", tag: "antepastos-conservas" },
   { label: "Massas & Molhos", tag: "massas-molhos" },
   { label: "Doces & Chocolates", tag: "doces-chocolates" },
