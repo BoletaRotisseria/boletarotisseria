@@ -29,8 +29,8 @@ export default function RotisseriePage() {
   };
 
   const query = activeTag
-    ? `product_type:Rotisseria AND tag:${activeTag}`
-    : "product_type:Rotisseria";
+    ? `product_type:Rotisseria AND tag:${activeTag} AND -tag:oculto`
+    : "product_type:Rotisseria AND -tag:oculto";
   const { data: products, isLoading } = useShopifyProducts(250, query);
 
   return (

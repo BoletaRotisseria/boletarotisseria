@@ -54,7 +54,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
 
   // Tag-based fallback
   const tagQuery = rule ? rule.tags.map(t => `tag:${t}`).join(" OR ") : null;
-  const query = tagQuery ? `product_type:Rotisseria AND (${tagQuery})` : null;
+  const query = tagQuery ? `product_type:Rotisseria AND (${tagQuery}) AND -tag:oculto` : null;
   const includesMolhos = !!rule?.tags.includes("molhos");
   const { data: tagProducts, isLoading: isLoadingTag } = useShopifyProducts(
     includesMolhos ? 50 : 8,
