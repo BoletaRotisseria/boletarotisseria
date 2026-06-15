@@ -25,8 +25,8 @@ export default function VinhosPage() {
   };
 
   const query = activeTag
-    ? `product_type:Vinhos AND tag:${activeTag}`
-    : "product_type:Vinhos";
+    ? `product_type:Vinhos AND tag:${activeTag} AND -tag:oculto`
+    : "product_type:Vinhos AND -tag:oculto";
   const { data: products, isLoading } = useShopifyProducts(50, query);
 
   return (

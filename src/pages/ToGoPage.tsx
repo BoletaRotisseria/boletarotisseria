@@ -4,7 +4,7 @@ import { Loader2, ShoppingCart } from "lucide-react";
 import togoBg from "@/assets/togo-bg.jpg";
 
 export default function ToGoPage() {
-  const { data: products, isLoading } = useShopifyProducts(50, "product_type:'To Go'");
+  const { data: products, isLoading } = useShopifyProducts(50, "product_type:'To Go' AND -tag:oculto");
 
   return (
     <div>
