@@ -18,6 +18,7 @@ interface CartStore {
   items: CartItem[];
   cartId: string | null;
   checkoutUrl: string | null;
+  deliveryDate: string | null;
   isLoading: boolean;
   isSyncing: boolean;
   addItem: (item: Omit<CartItem, 'lineId'>) => Promise<void>;
@@ -25,6 +26,7 @@ interface CartStore {
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
+  setDeliveryDate: (date: string) => Promise<void>;
   getCheckoutUrl: () => string | null;
 }
 
