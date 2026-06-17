@@ -79,7 +79,7 @@ const navItems: NavItem[] = [
     ],
   },
   { label: "Sobre Nós", path: "/cafe" },
-  { label: "Contato", path: "/eventos" },
+  { label: "Eventos", path: "/eventos" },
   { label: "Mídia", path: "/#na-midia" },
 ];
 
