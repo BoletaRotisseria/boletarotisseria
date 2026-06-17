@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, ArrowLeft, Check } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, ArrowLeft, Check, CalendarIcon } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_OPTIONS, GIFT_WRAP_VARIANT_IDS, buildGiftWrapCartItem, type GiftWrapOption } from "@/lib/giftWrap";
+import { format, addDays, startOfDay } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { cn } from "@/lib/utils";
 
-type Step = "cart" | "gift-question" | "gift-select";
+type Step = "cart" | "delivery-date" | "gift-question" | "gift-select";
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
