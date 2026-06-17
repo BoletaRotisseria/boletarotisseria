@@ -1,14 +1,51 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, CalendarIcon, MapPin, Store } from "lucide-react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_VARIANT_IDS } from "@/lib/giftWrap";
 
+const WEEKDAY_SLOTS = ["11h às 13h", "13h às 17h30"];
+const SATURDAY_SLOTS = ["11h às 13h"];
+
+function slotsForDate(date: Date | null): string[] {
+  if (!date) return [];
+  const dow = date.getDay(); // 0 Sun, 6 Sat
+  if (dow === 0) return [];
+  if (dow === 6) return SATURDAY_SLOTS;
+  return WEEKDAY_SLOTS;
+}
+
+function parseISODate(s: string | null): Date | null {
+  if (!s) return null;
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function toISODate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
-  const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } = useCartStore();
+  const {
+    items, isLoading, isSyncing,
+    updateQuantity, removeItem, getCheckoutUrl, syncCart,
+    fulfillmentMethod, fulfillmentDate, fulfillmentTime,
+    setFulfillmentMethod, setFulfillmentDate, setFulfillmentTime,
+    submitFulfillmentAttributes,
+  } = useCartStore();
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -18,10 +55,38 @@ export function CartDrawer() {
 
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
 
+  const { minDate, maxDate } = useMemo(() => {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const max = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 21);
+    return { minDate: tomorrow, maxDate: max };
+  }, []);
+
+  const selectedDate = parseISODate(fulfillmentDate);
+  const availableSlots = slotsForDate(selectedDate);
+
+  const isDateDisabled = (d: Date) => {
+    const day = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    if (day < minDate) return true;
+    if (day > maxDate) return true;
+    if (day.getDay() === 0) return true; // Sunday
+    return false;
+  };
+
+  const canCheckout =
+    visibleItems.length > 0 &&
+    !!fulfillmentMethod &&
+    !!fulfillmentDate &&
+    !!fulfillmentTime &&
+    !isLoading &&
+    !isSyncing;
+
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
 
-  const goToCheckout = () => {
+  const goToCheckout = async () => {
+    if (!canCheckout) return;
+    await submitFulfillmentAttributes();
     const checkoutUrl = getCheckoutUrl();
     if (!checkoutUrl) return;
     try {
@@ -111,7 +176,111 @@ export function CartDrawer() {
                     </Button>
                   </div>
                 )}
+
+                {/* Fulfillment selection */}
+                <div className="space-y-4 pt-4 border-t mt-4">
+                  <div className="space-y-2">
+                    <Label className="font-serif text-base">Método de recebimento</Label>
+                    <RadioGroup
+                      value={fulfillmentMethod ?? ""}
+                      onValueChange={(v) => setFulfillmentMethod(v as "entrega" | "retirada")}
+                      className="grid grid-cols-2 gap-2"
+                    >
+                      <Label
+                        htmlFor="fm-entrega"
+                        className={cn(
+                          "flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors",
+                          fulfillmentMethod === "entrega" ? "border-primary bg-primary/5" : "border-border"
+                        )}
+                      >
+                        <RadioGroupItem value="entrega" id="fm-entrega" />
+                        <MapPin className="h-4 w-4" />
+                        <span className="text-sm">Entrega</span>
+                      </Label>
+                      <Label
+                        htmlFor="fm-retirada"
+                        className={cn(
+                          "flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors",
+                          fulfillmentMethod === "retirada" ? "border-primary bg-primary/5" : "border-border"
+                        )}
+                      >
+                        <RadioGroupItem value="retirada" id="fm-retirada" />
+                        <Store className="h-4 w-4" />
+                        <span className="text-sm">Retirada</span>
+                      </Label>
+                    </RadioGroup>
+                    {fulfillmentMethod && (
+                      <p className="text-xs text-muted-foreground">
+                        {fulfillmentMethod === "retirada"
+                          ? "Retirada na Boleta Rotisseria"
+                          : "Entrega no endereço informado no checkout"}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="font-serif text-base">Data</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !selectedDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {selectedDate
+                            ? format(selectedDate, "EEEE, dd 'de' MMMM", { locale: ptBR })
+                            : "Escolha uma data"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          locale={ptBR}
+                          selected={selectedDate ?? undefined}
+                          onSelect={(d) => d && setFulfillmentDate(toISODate(d))}
+                          disabled={isDateDisabled}
+                          defaultMonth={selectedDate ?? minDate}
+                          fromDate={minDate}
+                          toDate={maxDate}
+                          initialFocus
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <p className="text-xs text-muted-foreground">
+                      A partir de amanhã, até 21 dias. Domingo indisponível.
+                    </p>
+                  </div>
+
+                  {selectedDate && (
+                    <div className="space-y-2">
+                      <Label className="font-serif text-base">Horário</Label>
+                      {availableSlots.length === 0 ? (
+                        <p className="text-xs text-muted-foreground">Sem horários disponíveis nesta data.</p>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-2">
+                          {availableSlots.map((slot) => (
+                            <Button
+                              key={slot}
+                              type="button"
+                              variant={fulfillmentTime === slot ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => setFulfillmentTime(slot)}
+                              className="text-xs"
+                            >
+                              {slot}
+                            </Button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
+
               <div className="flex-shrink-0 space-y-4 pt-4 border-t mt-4">
                 <div className="flex justify-between items-center">
                   <span className="font-serif text-lg">Total</span>
@@ -120,9 +289,21 @@ export function CartDrawer() {
                 <p className="text-xs text-muted-foreground text-center">
                   Pedido direto com o Boleta, simples e seguro, sem taxas de aplicativo.
                 </p>
-                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={visibleItems.length === 0 || isLoading || isSyncing}>
-                  {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><ExternalLink className="w-4 h-4 mr-2" />Finalizar Pedido</>}
+                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout}>
+                  {isLoading || isSyncing ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Finalizar Pedido
+                    </>
+                  )}
                 </Button>
+                {!canCheckout && visibleItems.length > 0 && (
+                  <p className="text-xs text-center text-muted-foreground">
+                    Selecione método, data e horário para continuar.
+                  </p>
+                )}
               </div>
             </>
           )}

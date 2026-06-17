@@ -14,11 +14,15 @@ import {
 
 export type { CartItem } from '@/lib/shopify';
 
+export type FulfillmentMethod = 'entrega' | 'retirada';
+
 interface CartStore {
   items: CartItem[];
   cartId: string | null;
   checkoutUrl: string | null;
-  deliveryDate: string | null;
+  fulfillmentMethod: FulfillmentMethod | null;
+  fulfillmentDate: string | null; // yyyy-MM-dd
+  fulfillmentTime: string | null;
   isLoading: boolean;
   isSyncing: boolean;
   addItem: (item: Omit<CartItem, 'lineId'>) => Promise<void>;
@@ -26,7 +30,10 @@ interface CartStore {
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
-  setDeliveryDate: (date: string) => Promise<void>;
+  setFulfillmentMethod: (m: FulfillmentMethod | null) => void;
+  setFulfillmentDate: (d: string | null) => void;
+  setFulfillmentTime: (t: string | null) => void;
+  submitFulfillmentAttributes: () => Promise<void>;
   getCheckoutUrl: () => string | null;
 }
 
@@ -36,7 +43,9 @@ export const useCartStore = create<CartStore>()(
       items: [],
       cartId: null,
       checkoutUrl: null,
-      deliveryDate: null,
+      fulfillmentMethod: null,
+      fulfillmentDate: null,
+      fulfillmentTime: null,
       isLoading: false,
       isSyncing: false,
 
@@ -100,21 +109,40 @@ export const useCartStore = create<CartStore>()(
         finally { set({ isLoading: false }); }
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null, deliveryDate: null }),
+      clearCart: () => set({
+        items: [], cartId: null, checkoutUrl: null,
+        fulfillmentMethod: null, fulfillmentDate: null, fulfillmentTime: null,
+      }),
       getCheckoutUrl: () => get().checkoutUrl,
 
-      setDeliveryDate: async (date) => {
-        const { cartId, clearCart } = get();
-        set({ deliveryDate: date });
-        if (!cartId) return;
+      setFulfillmentMethod: (m) => set({ fulfillmentMethod: m, fulfillmentTime: null }),
+      setFulfillmentDate: (d) => set({ fulfillmentDate: d, fulfillmentTime: null }),
+      setFulfillmentTime: (t) => set({ fulfillmentTime: t }),
+
+      submitFulfillmentAttributes: async () => {
+        const { cartId, fulfillmentMethod, fulfillmentDate, fulfillmentTime, clearCart } = get();
+        if (!cartId || !fulfillmentMethod || !fulfillmentDate || !fulfillmentTime) return;
+        const methodLabel = fulfillmentMethod === 'retirada' ? 'Retirada' : 'Entrega';
+        const [y, m, d] = fulfillmentDate.split('-');
+        const dateLabel = `${d}/${m}/${y}`;
+        const locationLabel = fulfillmentMethod === 'retirada'
+          ? 'Retirada na Boleta Rotisseria'
+          : 'Entrega no endereço informado no checkout';
+        const attributes = [
+          { key: 'Método de Recebimento', value: methodLabel },
+          { key: 'Data de Entrega/Retirada', value: dateLabel },
+          { key: 'Horário de Entrega/Retirada', value: fulfillmentTime },
+          { key: 'Local', value: locationLabel },
+        ];
+        const note = `Método de Recebimento: ${methodLabel}\nData de Entrega/Retirada: ${dateLabel}\nHorário de Entrega/Retirada: ${fulfillmentTime}\n${locationLabel}`;
         try {
           const [attrRes, noteRes] = await Promise.all([
-            updateShopifyCartAttributes(cartId, [{ key: 'Data de Entrega', value: date }]),
-            updateShopifyCartNote(cartId, `Data de entrega solicitada: ${date}`),
+            updateShopifyCartAttributes(cartId, attributes),
+            updateShopifyCartNote(cartId, note),
           ]);
           if (attrRes.cartNotFound || noteRes.cartNotFound) clearCart();
         } catch (error) {
-          console.error('Failed to set delivery date:', error);
+          console.error('Failed to submit fulfillment attributes:', error);
         }
       },
 
@@ -134,7 +162,14 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'boleta-cart',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ items: state.items, cartId: state.cartId, checkoutUrl: state.checkoutUrl, deliveryDate: state.deliveryDate }),
+      partialize: (state) => ({
+        items: state.items,
+        cartId: state.cartId,
+        checkoutUrl: state.checkoutUrl,
+        fulfillmentMethod: state.fulfillmentMethod,
+        fulfillmentDate: state.fulfillmentDate,
+        fulfillmentTime: state.fulfillmentTime,
+      }),
     }
   )
 );
