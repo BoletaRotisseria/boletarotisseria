@@ -28,8 +28,14 @@ export default function RotisseriePage() {
     }
   };
 
-  const query = activeTag
-    ? `product_type:Rotisseria AND tag:${activeTag} AND -tag:oculto`
+  const tagFilter =
+    activeTag === "massas"
+      ? "(tag:massas OR tag:molhos)"
+      : activeTag
+      ? `tag:${activeTag}`
+      : null;
+  const query = tagFilter
+    ? `product_type:Rotisseria AND ${tagFilter} AND -tag:oculto`
     : "product_type:Rotisseria AND -tag:oculto";
   const { data: products, isLoading } = useShopifyProducts(250, query);
 
