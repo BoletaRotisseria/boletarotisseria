@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2, ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
@@ -11,7 +12,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore(state => state.addItem);
-  const isLoading = useCartStore(state => state.isLoading);
+  const [isAdding, setIsAdding] = useState(false);
   const { node } = product;
   const image = node.images.edges[0]?.node;
   const variant = node.variants.edges[0]?.node;
@@ -27,15 +28,20 @@ export function ProductCard({ product }: ProductCardProps) {
     e.preventDefault();
     e.stopPropagation();
     if (!variant) return;
-    await addItem({
-      product,
-      variantId: variant.id,
-      variantTitle: variant.title,
-      price: variant.price,
-      quantity: 1,
-      selectedOptions: variant.selectedOptions || [],
-    });
-    toast.success("Adicionado ao carrinho", { description: node.title });
+    setIsAdding(true);
+    try {
+      await addItem({
+        product,
+        variantId: variant.id,
+        variantTitle: variant.title,
+        price: variant.price,
+        quantity: 1,
+        selectedOptions: variant.selectedOptions || [],
+      });
+      toast.success("Adicionado ao carrinho", { description: node.title });
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   return (
@@ -59,8 +65,8 @@ export function ProductCard({ product }: ProductCardProps) {
         <span className="font-normal">
           {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
         </span>
-        <Button size="sm" className="cta-text text-xs" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale}>
-          {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
+        <Button size="sm" className="cta-text text-xs" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
+          {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
         </Button>
       </div>
     </Link>
