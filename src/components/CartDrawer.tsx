@@ -192,6 +192,49 @@ export function CartDrawer() {
             )
           )}
 
+          {step === "delivery-date" && (
+            <div className="flex flex-col flex-1 min-h-0">
+              <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+                <div className="flex items-center justify-center">
+                  <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                    <CalendarIcon className="h-8 w-8 text-primary" />
+                  </div>
+                </div>
+                <p className="text-center text-sm text-muted-foreground px-2">
+                  Selecione o dia em que deseja receber o seu pedido. Disponível a partir de amanhã, até 21 dias à frente.
+                </p>
+                <div className="flex justify-center">
+                  <Calendar
+                    mode="single"
+                    selected={pickedDate}
+                    onSelect={setPickedDate}
+                    locale={ptBR}
+                    disabled={(date) => date < minDate || date > maxDate}
+                    fromDate={minDate}
+                    toDate={maxDate}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto rounded-md border")}
+                  />
+                </div>
+                {pickedDate && (
+                  <p className="text-center text-sm">
+                    Entrega em <span className="font-semibold">{format(pickedDate, "EEEE, dd 'de' MMMM", { locale: ptBR })}</span>
+                  </p>
+                )}
+              </div>
+              <div className="flex-shrink-0 pt-4 border-t mt-4">
+                <Button
+                  size="lg"
+                  className="w-full cta-text"
+                  disabled={!pickedDate || isLoading || isSyncing}
+                  onClick={handleConfirmDate}
+                >
+                  {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirmar data"}
+                </Button>
+              </div>
+            </div>
+          )}
+
           {step === "gift-question" && (
             <div className="flex-1 flex flex-col justify-center gap-4 px-2">
               <div className="flex items-center justify-center mb-4">
