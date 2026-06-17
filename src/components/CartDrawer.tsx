@@ -16,7 +16,9 @@ export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<Step>("cart");
   const [selectedGift, setSelectedGift] = useState<string | null>(null);
-  const { items, isLoading, isSyncing, updateQuantity, removeItem, addItem, getCheckoutUrl, syncCart } = useCartStore();
+  const { items, isLoading, isSyncing, updateQuantity, removeItem, addItem, getCheckoutUrl, syncCart, deliveryDate, setDeliveryDate } = useCartStore();
+  const initialDate = deliveryDate ? new Date(deliveryDate + "T12:00:00") : undefined;
+  const [pickedDate, setPickedDate] = useState<Date | undefined>(initialDate);
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -24,13 +26,30 @@ export function CartDrawer() {
   const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
   const currencyCode = items[0]?.price.currencyCode || "BRL";
 
+  const today = startOfDay(new Date());
+  const minDate = addDays(today, 1);
+  const maxDate = addDays(today, 21);
+
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
-  useEffect(() => { if (!isOpen) { setStep("cart"); setSelectedGift(null); } }, [isOpen]);
+  useEffect(() => {
+    if (!isOpen) {
+      setStep("cart");
+      setSelectedGift(null);
+      setPickedDate(deliveryDate ? new Date(deliveryDate + "T12:00:00") : undefined);
+    }
+  }, [isOpen, deliveryDate]);
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
 
   const handleStartCheckout = () => {
+    setStep("delivery-date");
+  };
+
+  const handleConfirmDate = async () => {
+    if (!pickedDate) return;
+    const iso = format(pickedDate, "yyyy-MM-dd");
+    await setDeliveryDate(iso);
     setSelectedGift(giftItem ? GIFT_WRAP_OPTIONS.find(o => o.variantId === giftItem.variantId)?.id ?? null : null);
     setStep("gift-question");
   };
