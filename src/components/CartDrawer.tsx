@@ -56,9 +56,19 @@ export function CartDrawer() {
 
   const goToCheckout = () => {
     const checkoutUrl = getCheckoutUrl();
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl;
+    if (!checkoutUrl) return;
+    try {
+      // Escape iframe (Lovable preview) so Shopify checkout can load fullscreen
+      if (window.top && window.top !== window.self) {
+        window.top.location.href = checkoutUrl;
+        return;
+      }
+    } catch {
+      // Cross-origin: fallback to opening in new tab
+      window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+      return;
     }
+    window.location.href = checkoutUrl;
   };
 
   const handleNoGift = async () => {
