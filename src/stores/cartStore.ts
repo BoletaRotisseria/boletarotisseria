@@ -7,6 +7,8 @@ import {
   updateShopifyCartLine,
   removeLineFromShopifyCart,
   storefrontApiRequest,
+  updateShopifyCartAttributes,
+  updateShopifyCartNote,
   CART_QUERY,
 } from '@/lib/shopify';
 
