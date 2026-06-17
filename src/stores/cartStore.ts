@@ -36,6 +36,7 @@ export const useCartStore = create<CartStore>()(
       items: [],
       cartId: null,
       checkoutUrl: null,
+      deliveryDate: null,
       isLoading: false,
       isSyncing: false,
 
