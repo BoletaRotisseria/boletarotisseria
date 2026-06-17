@@ -218,6 +218,24 @@ const CART_LINES_REMOVE_MUTATION = `
   }
 `;
 
+const CART_ATTRIBUTES_UPDATE_MUTATION = `
+  mutation cartAttributesUpdate($cartId: ID!, $attributes: [AttributeInput!]!) {
+    cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+      cart { id }
+      userErrors { field message }
+    }
+  }
+`;
+
+const CART_NOTE_UPDATE_MUTATION = `
+  mutation cartNoteUpdate($cartId: ID!, $note: String!) {
+    cartNoteUpdate(cartId: $cartId, note: $note) {
+      cart { id }
+      userErrors { field message }
+    }
+  }
+`;
+
 export const CART_QUERY = `
   query cart($id: ID!) {
     cart(id: $id) { id totalQuantity }
