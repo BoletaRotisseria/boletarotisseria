@@ -306,3 +306,25 @@ export async function removeLineFromShopifyCart(cartId: string, lineId: string):
   if (userErrors.length > 0) return { success: false };
   return { success: true };
 }
+
+export async function updateShopifyCartAttributes(
+  cartId: string,
+  attributes: Array<{ key: string; value: string }>
+): Promise<{ success: boolean; cartNotFound?: boolean }> {
+  const data = await storefrontApiRequest(CART_ATTRIBUTES_UPDATE_MUTATION, { cartId, attributes });
+  const userErrors = data?.data?.cartAttributesUpdate?.userErrors || [];
+  if (isCartNotFoundError(userErrors)) return { success: false, cartNotFound: true };
+  if (userErrors.length > 0) return { success: false };
+  return { success: true };
+}
+
+export async function updateShopifyCartNote(
+  cartId: string,
+  note: string
+): Promise<{ success: boolean; cartNotFound?: boolean }> {
+  const data = await storefrontApiRequest(CART_NOTE_UPDATE_MUTATION, { cartId, note });
+  const userErrors = data?.data?.cartNoteUpdate?.userErrors || [];
+  if (isCartNotFoundError(userErrors)) return { success: false, cartNotFound: true };
+  if (userErrors.length > 0) return { success: false };
+  return { success: true };
+}
