@@ -44,10 +44,13 @@ export const SPECIFIC_RECOMMENDATIONS: Record<string, SpecificRecommendation> = 
     productIds: ["gid://shopify/Product/8404952678445"],
     title: "Combine com Creme Anglaise",
   },
-  // Dadinho de Tapioca → Melaço de Cana
+  // Dadinho de Tapioca → Geleia de Pimenta + Melaço de Cana
   "gid://shopify/Product/8404949467181": {
-    productIds: ["gid://shopify/Product/8404949893165"],
-    title: "Combine com Melaço de Cana",
+    productIds: [
+      "gid://shopify/Product/8404953792557",
+      "gid://shopify/Product/8404949893165",
+    ],
+    title: "Combine com Geleia de Pimenta ou Melaço de Cana",
   },
 };
 
