@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, ArrowLeft, Check } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, ArrowLeft, Check, CalendarIcon } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_OPTIONS, GIFT_WRAP_VARIANT_IDS, buildGiftWrapCartItem, type GiftWrapOption } from "@/lib/giftWrap";
+import { format, addDays, startOfDay } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { cn } from "@/lib/utils";
 
-type Step = "cart" | "gift-question" | "gift-select";
+type Step = "cart" | "delivery-date" | "gift-question" | "gift-select";
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<Step>("cart");
   const [selectedGift, setSelectedGift] = useState<string | null>(null);
-  const { items, isLoading, isSyncing, updateQuantity, removeItem, addItem, getCheckoutUrl, syncCart } = useCartStore();
+  const { items, isLoading, isSyncing, updateQuantity, removeItem, addItem, getCheckoutUrl, syncCart, deliveryDate, setDeliveryDate } = useCartStore();
+  const initialDate = deliveryDate ? new Date(deliveryDate + "T12:00:00") : undefined;
+  const [pickedDate, setPickedDate] = useState<Date | undefined>(initialDate);
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -20,13 +26,30 @@ export function CartDrawer() {
   const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
   const currencyCode = items[0]?.price.currencyCode || "BRL";
 
+  const today = startOfDay(new Date());
+  const minDate = addDays(today, 1);
+  const maxDate = addDays(today, 21);
+
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
-  useEffect(() => { if (!isOpen) { setStep("cart"); setSelectedGift(null); } }, [isOpen]);
+  useEffect(() => {
+    if (!isOpen) {
+      setStep("cart");
+      setSelectedGift(null);
+      setPickedDate(deliveryDate ? new Date(deliveryDate + "T12:00:00") : undefined);
+    }
+  }, [isOpen, deliveryDate]);
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
 
   const handleStartCheckout = () => {
+    setStep("delivery-date");
+  };
+
+  const handleConfirmDate = async () => {
+    if (!pickedDate) return;
+    const iso = format(pickedDate, "yyyy-MM-dd");
+    await setDeliveryDate(iso);
     setSelectedGift(giftItem ? GIFT_WRAP_OPTIONS.find(o => o.variantId === giftItem.variantId)?.id ?? null : null);
     setStep("gift-question");
   };
@@ -73,7 +96,11 @@ export function CartDrawer() {
         <SheetHeader className="flex-shrink-0">
           {step !== "cart" && (
             <button
-              onClick={() => setStep(step === "gift-select" ? "gift-question" : "cart")}
+              onClick={() => {
+                if (step === "gift-select") setStep("gift-question");
+                else if (step === "gift-question") setStep("delivery-date");
+                else setStep("cart");
+              }}
               className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground self-start mb-1"
             >
               <ArrowLeft className="h-4 w-4" /> Voltar
@@ -81,6 +108,7 @@ export function CartDrawer() {
           )}
           <SheetTitle className="font-serif text-2xl">
             {step === "cart" && "Seu Carrinho"}
+            {step === "delivery-date" && "Quando deseja receber?"}
             {step === "gift-question" && "Este pedido é um presente?"}
             {step === "gift-select" && "Escolha a embalagem"}
           </SheetTitle>
@@ -162,6 +190,49 @@ export function CartDrawer() {
                 </div>
               </>
             )
+          )}
+
+          {step === "delivery-date" && (
+            <div className="flex flex-col flex-1 min-h-0">
+              <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+                <div className="flex items-center justify-center">
+                  <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                    <CalendarIcon className="h-8 w-8 text-primary" />
+                  </div>
+                </div>
+                <p className="text-center text-sm text-muted-foreground px-2">
+                  Selecione o dia em que deseja receber o seu pedido. Disponível a partir de amanhã, até 21 dias à frente.
+                </p>
+                <div className="flex justify-center">
+                  <Calendar
+                    mode="single"
+                    selected={pickedDate}
+                    onSelect={setPickedDate}
+                    locale={ptBR}
+                    disabled={(date) => date < minDate || date > maxDate}
+                    fromDate={minDate}
+                    toDate={maxDate}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto rounded-md border")}
+                  />
+                </div>
+                {pickedDate && (
+                  <p className="text-center text-sm">
+                    Entrega em <span className="font-semibold">{format(pickedDate, "EEEE, dd 'de' MMMM", { locale: ptBR })}</span>
+                  </p>
+                )}
+              </div>
+              <div className="flex-shrink-0 pt-4 border-t mt-4">
+                <Button
+                  size="lg"
+                  className="w-full cta-text"
+                  disabled={!pickedDate || isLoading || isSyncing}
+                  onClick={handleConfirmDate}
+                >
+                  {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirmar data"}
+                </Button>
+              </div>
+            </div>
           )}
 
           {step === "gift-question" && (

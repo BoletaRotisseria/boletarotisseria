@@ -7,6 +7,8 @@ import {
   updateShopifyCartLine,
   removeLineFromShopifyCart,
   storefrontApiRequest,
+  updateShopifyCartAttributes,
+  updateShopifyCartNote,
   CART_QUERY,
 } from '@/lib/shopify';
 
@@ -16,6 +18,7 @@ interface CartStore {
   items: CartItem[];
   cartId: string | null;
   checkoutUrl: string | null;
+  deliveryDate: string | null;
   isLoading: boolean;
   isSyncing: boolean;
   addItem: (item: Omit<CartItem, 'lineId'>) => Promise<void>;
@@ -23,6 +26,7 @@ interface CartStore {
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
+  setDeliveryDate: (date: string) => Promise<void>;
   getCheckoutUrl: () => string | null;
 }
 
@@ -32,6 +36,7 @@ export const useCartStore = create<CartStore>()(
       items: [],
       cartId: null,
       checkoutUrl: null,
+      deliveryDate: null,
       isLoading: false,
       isSyncing: false,
 
@@ -95,8 +100,23 @@ export const useCartStore = create<CartStore>()(
         finally { set({ isLoading: false }); }
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
+      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null, deliveryDate: null }),
       getCheckoutUrl: () => get().checkoutUrl,
+
+      setDeliveryDate: async (date) => {
+        const { cartId, clearCart } = get();
+        set({ deliveryDate: date });
+        if (!cartId) return;
+        try {
+          const [attrRes, noteRes] = await Promise.all([
+            updateShopifyCartAttributes(cartId, [{ key: 'Data de Entrega', value: date }]),
+            updateShopifyCartNote(cartId, `Data de entrega solicitada: ${date}`),
+          ]);
+          if (attrRes.cartNotFound || noteRes.cartNotFound) clearCart();
+        } catch (error) {
+          console.error('Failed to set delivery date:', error);
+        }
+      },
 
       syncCart: async () => {
         const { cartId, isSyncing, clearCart } = get();
@@ -114,7 +134,7 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'boleta-cart',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ items: state.items, cartId: state.cartId, checkoutUrl: state.checkoutUrl }),
+      partialize: (state) => ({ items: state.items, cartId: state.cartId, checkoutUrl: state.checkoutUrl, deliveryDate: state.deliveryDate }),
     }
   )
 );
