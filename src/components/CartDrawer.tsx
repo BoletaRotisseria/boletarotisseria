@@ -286,9 +286,6 @@ export function CartDrawer() {
                   <span className="font-serif text-lg">Total</span>
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
                 </div>
-                <p className="text-xs text-muted-foreground text-center">
-                  Pedido direto com o Boleta, simples e seguro, sem taxas de aplicativo.
-                </p>
                 <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout}>
                   {isLoading || isSyncing ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
