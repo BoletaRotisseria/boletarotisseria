@@ -96,7 +96,11 @@ export function CartDrawer() {
         <SheetHeader className="flex-shrink-0">
           {step !== "cart" && (
             <button
-              onClick={() => setStep(step === "gift-select" ? "gift-question" : "cart")}
+              onClick={() => {
+                if (step === "gift-select") setStep("gift-question");
+                else if (step === "gift-question") setStep("delivery-date");
+                else setStep("cart");
+              }}
               className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground self-start mb-1"
             >
               <ArrowLeft className="h-4 w-4" /> Voltar
@@ -104,6 +108,7 @@ export function CartDrawer() {
           )}
           <SheetTitle className="font-serif text-2xl">
             {step === "cart" && "Seu Carrinho"}
+            {step === "delivery-date" && "Quando deseja receber?"}
             {step === "gift-question" && "Este pedido é um presente?"}
             {step === "gift-select" && "Escolha a embalagem"}
           </SheetTitle>
