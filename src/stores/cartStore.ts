@@ -100,8 +100,23 @@ export const useCartStore = create<CartStore>()(
         finally { set({ isLoading: false }); }
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
+      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null, deliveryDate: null }),
       getCheckoutUrl: () => get().checkoutUrl,
+
+      setDeliveryDate: async (date) => {
+        const { cartId, clearCart } = get();
+        set({ deliveryDate: date });
+        if (!cartId) return;
+        try {
+          const [attrRes, noteRes] = await Promise.all([
+            updateShopifyCartAttributes(cartId, [{ key: 'Data de Entrega', value: date }]),
+            updateShopifyCartNote(cartId, `Data de entrega solicitada: ${date}`),
+          ]);
+          if (attrRes.cartNotFound || noteRes.cartNotFound) clearCart();
+        } catch (error) {
+          console.error('Failed to set delivery date:', error);
+        }
+      },
 
       syncCart: async () => {
         const { cartId, isSyncing, clearCart } = get();
