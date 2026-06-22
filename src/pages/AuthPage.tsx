@@ -56,7 +56,7 @@ export default function AuthPage() {
       },
     });
     if (error) {
-      toast({ title: "Erro ao criar conta", description: error.message, variant: "destructive" });
+      toast({ title: "Erro ao criar conta", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       setSuccess("Verifique seu e-mail para confirmar o cadastro.");
     }
