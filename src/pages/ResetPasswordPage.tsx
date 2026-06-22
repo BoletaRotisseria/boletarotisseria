@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
-      toast({ title: "Erro", description: error.message, variant: "destructive" });
+      toast({ title: "Erro", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       setSuccess(true);
       setTimeout(() => navigate("/dashboard"), 2000);
