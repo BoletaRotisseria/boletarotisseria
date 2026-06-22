@@ -37,7 +37,7 @@ export default function AuthPage() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      toast({ title: "Erro ao entrar", description: error.message, variant: "destructive" });
+      toast({ title: "Erro ao entrar", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       navigate("/dashboard");
     }
