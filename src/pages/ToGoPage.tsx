@@ -39,7 +39,7 @@ export default function ToGoPage() {
             <div className="text-center py-20">
               <ShoppingCart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="font-serif text-2xl mb-2">Em breve</h3>
-              <p className="text-muted-foreground">Os pratos To Go serão exibidos aqui em breve.</p>
+              <p className="text-muted-foreground">Os pratos individuais serão exibidos aqui em breve.</p>
             </div>
           )}
         </div>
