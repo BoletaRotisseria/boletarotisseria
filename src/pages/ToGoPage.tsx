@@ -15,7 +15,7 @@ export default function ToGoPage() {
       >
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center text-white">
-          <h1 className="font-serif text-3xl md:text-5xl font-bold mb-3">To Go</h1>
+          <h1 className="font-serif text-3xl md:text-5xl font-bold mb-3">Individual</h1>
           <p className="text-white/80 max-w-lg mx-auto text-sm md:text-base">
             Refeições prontas para levar. Praticidade sem abrir mão do sabor.
           </p>
