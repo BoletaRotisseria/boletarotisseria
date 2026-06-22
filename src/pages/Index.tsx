@@ -158,7 +158,7 @@ const Index = () => {
             Peça pelo<br />nosso site!
           </h2>
           <p className="text-primary-foreground/80 text-base md:text-lg mb-4 max-w-sm">
-            Monte seu pedido online, agende a entrega e receba tudo fresquinho na sua casa.
+            Monte seu pedido online, agende a entrega e receba tudo na sua casa.
           </p>
           <Link to="/cardapios">
             <Button size="lg" variant="outline" className="cta-text border-background text-primary-foreground bg-transparent hover:bg-background/10 rounded-full px-8">
