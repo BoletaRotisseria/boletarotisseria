@@ -55,7 +55,7 @@ const navItems: NavItem[] = [
         ],
       },
       {
-        label: "To Go",
+        label: "Individual",
         path: "/to-go",
       },
       {
