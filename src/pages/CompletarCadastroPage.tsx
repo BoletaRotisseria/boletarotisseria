@@ -91,7 +91,7 @@ export default function CompletarCadastroPage() {
       if (error.message.includes("unique") || error.message.includes("cpf")) {
         setServerError("Este CPF já está cadastrado em outra conta.");
       } else {
-        setServerError(error.message);
+        setServerError(getSafeErrorMessage(error));
       }
       setLoading(false);
       return;
