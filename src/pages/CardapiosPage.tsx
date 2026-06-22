@@ -13,7 +13,7 @@ const categories = [
     path: "/emporio",
   },
   {
-    title: "To Go",
+    title: "Individual",
     description: "Refeições prontas para levar. Praticidade sem abrir mão do sabor.",
     path: "/to-go",
   },

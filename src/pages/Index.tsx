@@ -81,14 +81,14 @@ const Index = () => {
           ref={carouselRef}
           className="h-full w-full flex overflow-x-auto horizontal-snap">
 
-          {/* Slide 1 – To Go */}
+          {/* Slide 1 – Individual */}
           <Link
             to="/to-go"
             className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
-            <img src={togoBg} alt="To Go" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <img src={togoBg} alt="Individual" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">To Go</h2>
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">Individual</h2>
               <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">Pratos prontos para levar e saborear onde quiser.</p>
             </div>
           </Link>
@@ -158,7 +158,7 @@ const Index = () => {
             Peça pelo<br />nosso site!
           </h2>
           <p className="text-primary-foreground/80 text-base md:text-lg mb-4 max-w-sm">
-            Monte seu pedido online, agende a entrega e receba tudo fresquinho na sua casa.
+            Monte seu pedido online, agende a entrega e receba tudo na sua casa.
           </p>
           <Link to="/cardapios">
             <Button size="lg" variant="outline" className="cta-text border-background text-primary-foreground bg-transparent hover:bg-background/10 rounded-full px-8">
