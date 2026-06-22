@@ -65,7 +65,7 @@ export default function CriarContaPage() {
       if (authError.message.includes("already registered")) {
         setServerError("Este e-mail já está cadastrado.");
       } else {
-        setServerError(authError.message);
+        setServerError(getSafeErrorMessage(authError));
       }
       setLoading(false);
       return;
