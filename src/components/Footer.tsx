@@ -50,7 +50,7 @@ export function Footer() {
           <div>
             <img src={boletaLogo} alt="Boleta Rotisseria" className="h-20 rounded mb-4" />
             <p className="text-sm text-foreground/60 leading-relaxed mb-6">
-              O Boleta oferece uma experiência gastronômica artesanal, com pratos preparados diariamente e ingredientes selecionados.
+              O Boleta oferece uma experiência gastronômica artesanal, com pratos frescos e congelados, fáceis de aquecer e servir.
             </p>
             <p className="font-sans text-[11px] font-bold tracking-[0.14em] uppercase mb-3">
               Siga o Boleta
