@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle2 } from "lucide-react";
+import { getSafeErrorMessage } from "@/lib/errors";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -42,7 +43,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
-      toast({ title: "Erro", description: error.message, variant: "destructive" });
+      toast({ title: "Erro", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       setSuccess(true);
       setTimeout(() => navigate("/dashboard"), 2000);

@@ -6,7 +6,9 @@ import { Loader2, Search } from "lucide-react";
 export default function BuscaPage() {
   const [searchParams] = useSearchParams();
   const q = searchParams.get("q") || "";
-  const { data: products, isLoading } = useShopifyProducts(250, q ? `${q} AND -tag:oculto` : undefined);
+  // Sanitize: strip Shopify query operators/special chars to prevent filter bypass
+  const sanitizedQ = q.replace(/["\\]/g, "").replace(/\b(AND|OR|NOT)\b/gi, "").replace(/[:()*-]/g, " ").replace(/\s+/g, " ").trim();
+  const { data: products, isLoading } = useShopifyProducts(250, sanitizedQ ? `title:"${sanitizedQ}" AND -tag:oculto` : undefined);
 
   return (
     <div className="container py-10 md:py-16">

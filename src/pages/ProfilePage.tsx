@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { getSafeErrorMessage } from "@/lib/errors";
 
 export default function ProfilePage() {
   const { user, loading: authLoading, signOut } = useAuth();
@@ -52,7 +53,7 @@ export default function ProfilePage() {
       .eq("user_id", user.id);
 
     if (error) {
-      toast({ title: "Erro ao salvar", description: error.message, variant: "destructive" });
+      toast({ title: "Erro ao salvar", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       toast({ title: "Perfil atualizado!" });
     }

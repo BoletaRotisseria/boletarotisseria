@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import { getSafeErrorMessage } from "@/lib/errors";
 import { useQueryClient } from "@tanstack/react-query";
 
 const UF_LIST = [
@@ -90,7 +91,7 @@ export default function CompletarCadastroPage() {
       if (error.message.includes("unique") || error.message.includes("cpf")) {
         setServerError("Este CPF já está cadastrado em outra conta.");
       } else {
-        setServerError(error.message);
+        setServerError(getSafeErrorMessage(error));
       }
       setLoading(false);
       return;

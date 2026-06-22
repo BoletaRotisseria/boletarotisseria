@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { getSafeErrorMessage } from "@/lib/errors";
 
 type AuthView = "login" | "signup" | "forgot";
 
@@ -36,7 +37,7 @@ export default function AuthPage() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      toast({ title: "Erro ao entrar", description: error.message, variant: "destructive" });
+      toast({ title: "Erro ao entrar", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       navigate("/dashboard");
     }
@@ -55,7 +56,7 @@ export default function AuthPage() {
       },
     });
     if (error) {
-      toast({ title: "Erro ao criar conta", description: error.message, variant: "destructive" });
+      toast({ title: "Erro ao criar conta", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       setSuccess("Verifique seu e-mail para confirmar o cadastro.");
     }
@@ -69,7 +70,7 @@ export default function AuthPage() {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     if (error) {
-      toast({ title: "Erro", description: error.message, variant: "destructive" });
+      toast({ title: "Erro", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       setSuccess("Enviamos um link de recuperação para seu e-mail.");
     }
