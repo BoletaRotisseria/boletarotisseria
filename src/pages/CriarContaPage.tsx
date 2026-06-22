@@ -90,7 +90,7 @@ export default function CriarContaPage() {
       });
 
       if (insertError) {
-        setServerError(insertError.message);
+        setServerError(getSafeErrorMessage(insertError));
         setLoading(false);
         return;
       }
