@@ -70,7 +70,7 @@ export default function AuthPage() {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     if (error) {
-      toast({ title: "Erro", description: error.message, variant: "destructive" });
+      toast({ title: "Erro", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       setSuccess("Enviamos um link de recuperação para seu e-mail.");
     }
