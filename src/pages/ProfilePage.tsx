@@ -53,7 +53,7 @@ export default function ProfilePage() {
       .eq("user_id", user.id);
 
     if (error) {
-      toast({ title: "Erro ao salvar", description: error.message, variant: "destructive" });
+      toast({ title: "Erro ao salvar", description: getSafeErrorMessage(error), variant: "destructive" });
     } else {
       toast({ title: "Perfil atualizado!" });
     }
