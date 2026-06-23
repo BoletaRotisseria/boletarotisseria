@@ -65,7 +65,22 @@ Deno.serve(async (req) => {
     localFinal = `Entrega: ${parts.join(" - ")}`;
   }
 
+  // Cabeçalho compacto: AAAAMMDD | TIPO | HORÁRIO (para filtrar/imprimir etiquetas no Bling)
+  // data vem como DD/MM/YYYY
+  let dataCompacta = "00000000";
+  const m = data.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (m) dataCompacta = `${m[3]}${m[2]}${m[1]}`;
+  const tipo = metodo.toLowerCase().startsWith("entrega")
+    ? "ENTREGA"
+    : metodo.toLowerCase().startsWith("retirada")
+      ? "RETIRADA"
+      : (metodo || "-").toUpperCase();
+  const horarioCompacto = (horario || "-").replace(/\s+/g, "");
+  const header = `${dataCompacta} | ${tipo} | ${horarioCompacto}`;
+
   const observacoes_text = [
+    header,
+    "",
     `Método de Recebimento: ${metodo || "-"}`,
     `Data de Entrega/Retirada: ${data || "-"}`,
     `Horário de Entrega/Retirada: ${horario || "-"}`,
