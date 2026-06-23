@@ -189,7 +189,7 @@ const Index = () => {
             </p>
           </div>
           {/* Vídeo à direita */}
-          <div className="h-screen md:h-full bg-muted flex items-center justify-center overflow-hidden">
+          <div className="h-1/2 md:h-full bg-muted flex items-center justify-center overflow-hidden">
             <video
               src="/videos/preparo.mp4"
               className="w-full h-full object-cover"
