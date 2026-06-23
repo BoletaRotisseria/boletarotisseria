@@ -105,7 +105,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
           <p className="font-serif tracking-[0.3em] text-xs md:text-sm text-muted-foreground uppercase mb-3">
             Combine com…
           </p>
-          <h2 className="font-serif text-2xl md:text-4xl font-normal">{rule.title}</h2>
+          <h2 className="font-courier lowercase text-2xl md:text-4xl font-normal">{rule.title}</h2>
         </div>
 
         {isLoadingTag ? (
