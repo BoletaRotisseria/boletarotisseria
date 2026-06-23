@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         serif: ['Courier Prime', 'Courier New', 'monospace'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Work Sans', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
