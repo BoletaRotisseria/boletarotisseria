@@ -76,7 +76,7 @@ const Index = () => {
   return (
     <>
       {/* Capa – Carrossel horizontal */}
-      <section className="relative bg-foreground h-[85vh] md:h-[90vh]">
+      <section className="relative bg-foreground h-screen md:h-[90vh]">
         <div
           ref={carouselRef}
           className="h-full w-full flex overflow-x-auto horizontal-snap">
