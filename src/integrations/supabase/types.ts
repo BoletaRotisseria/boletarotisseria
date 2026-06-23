@@ -14,6 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      bling_sync_jobs: {
+        Row: {
+          attempts: number
+          bling_pedido_id: string | null
+          created_at: string
+          id: string
+          last_error: string | null
+          next_attempt_at: string
+          observacoes_text: string
+          shopify_order_id: string
+          shopify_order_number: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          bling_pedido_id?: string | null
+          created_at?: string
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string
+          observacoes_text: string
+          shopify_order_id: string
+          shopify_order_number: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          bling_pedido_id?: string | null
+          created_at?: string
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string
+          observacoes_text?: string
+          shopify_order_id?: string
+          shopify_order_number?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bling_tokens: {
+        Row: {
+          access_token: string
+          expires_at: string
+          id: boolean
+          refresh_token: string
+          updated_at: string
+        }
+        Insert: {
+          access_token: string
+          expires_at: string
+          id?: boolean
+          refresh_token: string
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string
+          expires_at?: string
+          id?: boolean
+          refresh_token?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       clientes: {
         Row: {
           atualizado_em: string
