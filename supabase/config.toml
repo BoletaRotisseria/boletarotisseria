@@ -1,1 +1,7 @@
 project_id = "yuavzvlynsqrkbuzmcra"
+
+[functions.shopify-order-webhook]
+verify_jwt = false
+
+[functions.bling-oauth-callback]
+verify_jwt = false
