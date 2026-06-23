@@ -155,14 +155,14 @@ export function Header() {
               {item.path.includes('#') ? (
                 <a
                   href={item.path}
-                  className={`flex items-center gap-1 px-4 py-2 text-[11px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground text-foreground/60`}
+                  className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground text-foreground/60`}
                 >
                   {item.label}
                 </a>
               ) : (
                 <Link
                   to={item.path}
-                  className={`flex items-center gap-1 px-4 py-2 text-[11px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+                  className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
                     location.pathname === item.path ? "text-foreground" : "text-foreground/60"
                   }`}
                 >
