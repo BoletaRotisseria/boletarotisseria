@@ -112,7 +112,7 @@ const Index = () => {
             <img src={rotisseriaBg} alt="Rotisseria" className="absolute inset-0 w-full h-full object-cover scale-110 transition-transform duration-500 group-hover:scale-120" />
             <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
             <div className="relative z-10 text-center px-6">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">Rotisseria</h2>
+              <h2 className="font-courier text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">Rotisseria</h2>
               <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">Clássicos da casa, empório e muito mais.</p>
             </div>
           </Link>

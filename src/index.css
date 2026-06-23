@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -81,6 +81,10 @@
     hsl(var(--secondary)) 10px,
     hsl(var(--secondary)) 11px
   );
+}
+
+.font-courier {
+  font-family: 'Courier Prime', 'Courier New', monospace;
 }
 
 .cta-text {

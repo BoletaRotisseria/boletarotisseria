@@ -47,7 +47,7 @@ export default function RotisseriePage() {
       >
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center text-white">
-          <h1 className="font-serif text-3xl md:text-5xl font-bold mb-3">Rotisseria</h1>
+          <h1 className="font-courier text-3xl md:text-5xl font-bold mb-3">Rotisseria</h1>
           <p className="text-white/80 max-w-lg mx-auto text-sm md:text-base">
             Clássicos da casa, preparados com carinho e ingredientes selecionados.
           </p>
