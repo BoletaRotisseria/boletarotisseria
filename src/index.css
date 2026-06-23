@@ -83,6 +83,10 @@
   );
 }
 
+.font-courier {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+}
+
 .cta-text {
   font-family: var(--font-sans);
   text-transform: uppercase;
