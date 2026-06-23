@@ -65,7 +65,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <span className="font-normal">
           {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
         </span>
-        <Button size="sm" className="cta-text text-xs" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
+        <Button size="sm" className="cta-text text-xs bg-primary/60 hover:bg-primary/80" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
           {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
         </Button>
       </div>
