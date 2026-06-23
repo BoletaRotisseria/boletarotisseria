@@ -175,7 +175,7 @@ const Index = () => {
         <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.37 }} />
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
           {/* Texto à esquerda */}
-          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
+          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16 h-screen md:h-full">
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Preparo fácil e rápido
             </span>
