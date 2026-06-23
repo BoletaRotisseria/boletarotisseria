@@ -149,12 +149,13 @@ const Index = () => {
       </section>
 
       {/* Banner duplo – Peça pelo nosso site */}
-      <section className="grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
-        <div className="h-screen md:h-full overflow-hidden">
+      <section className="grid grid-cols-1 md:grid-cols-2 h-screen md:h-[90vh]">
+        <div className="h-1/2 md:h-full overflow-hidden">
           <img src={heroImage} alt="Sacolas Boleta" className="w-full h-full object-cover" />
         </div>
 
-        <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16 h-screen md:h-full">
+        <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16 h-1/2 md:h-full">
+
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground leading-[1.1] mb-4">
             Peça pelo<br />nosso site!
           </h2>
@@ -173,9 +174,10 @@ const Index = () => {
       <section className="relative bg-background">
         <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.37 }} />
         <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.37 }} />
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 h-screen md:h-[90vh]">
           {/* Texto à esquerda */}
-          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16 h-screen md:h-full">
+          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16 h-1/2 md:h-full">
+
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Preparo fácil e rápido
             </span>
@@ -187,7 +189,7 @@ const Index = () => {
             </p>
           </div>
           {/* Vídeo à direita */}
-          <div className="h-screen md:h-full bg-muted flex items-center justify-center overflow-hidden">
+          <div className="h-1/2 md:h-full bg-muted flex items-center justify-center overflow-hidden">
             <video
               src="/videos/preparo.mp4"
               className="w-full h-full object-cover"
