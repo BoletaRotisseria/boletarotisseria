@@ -47,7 +47,7 @@ export default function CardapiosPage() {
             className="group border border-border rounded-lg p-6 md:p-8 flex flex-col justify-between hover:shadow-md hover:border-primary/40 transition-all"
           >
             <div>
-              <h2 className="font-serif text-2xl md:text-3xl font-bold mb-2 group-hover:text-primary transition-colors">
+              <h2 className={`${cat.title === "Rotisseria" ? "font-courier" : "font-serif"} text-2xl md:text-3xl font-bold mb-2 group-hover:text-primary transition-colors`}>
                 {cat.title}
               </h2>
               <p className="text-muted-foreground text-sm">{cat.description}</p>
