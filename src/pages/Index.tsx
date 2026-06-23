@@ -154,7 +154,7 @@ const Index = () => {
           <img src={heroImage} alt="Sacolas Boleta" className="w-full h-full object-cover" />
         </div>
 
-        <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16">
+        <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16 h-screen md:h-full">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground leading-[1.1] mb-4">
             Peça pelo<br />nosso site!
           </h2>
