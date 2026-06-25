@@ -107,9 +107,48 @@ Deno.serve(async (req) => {
       { onConflict: "shopify_order_id" },
     );
 
-  if (upsertErr) {
-    console.error("Failed to enqueue job", upsertErr);
-    return new Response("DB error", { status: 500 });
+  // ===== Adicionar tags ao pedido na Shopify (ENTREGA/RETIRADA + AAAA-MM-DD) =====
+  // Permite filtrar/organizar pedidos por data de entrega/retirada no admin Shopify.
+  try {
+    const adminToken = Deno.env.get("SHOPIFY_ACCESS_TOKEN");
+    const shopDomain = Deno.env.get("SHOPIFY_SHOP_DOMAIN") ?? "boleta-direct-8l7a1.myshopify.com";
+    if (adminToken && shopifyOrderId) {
+      const newTags: string[] = [];
+      if (tipo === "ENTREGA" || tipo === "RETIRADA") newTags.push(tipo);
+      // data vem como DD/MM/YYYY → tag em AAAA-MM-DD (ordenável)
+      if (m) newTags.push(`${m[3]}-${m[2]}-${m[1]}`);
+      // tag combinada útil para filtros operacionais (ex.: ENTREGA-2026-06-25)
+      if ((tipo === "ENTREGA" || tipo === "RETIRADA") && m) {
+        newTags.push(`${tipo}-${m[3]}-${m[2]}-${m[1]}`);
+      }
+      // horário compacto também ajuda a separar lotes do dia
+      if (horarioCompacto && horarioCompacto !== "-") newTags.push(`HORARIO-${horarioCompacto}`);
+
+      if (newTags.length > 0) {
+        const existingTags = String(payload?.tags ?? "")
+          .split(",").map((t) => t.trim()).filter(Boolean);
+        const merged = Array.from(new Set([...existingTags, ...newTags]));
+        const url = `https://${shopDomain}/admin/api/2025-07/orders/${shopifyOrderId}.json`;
+        const resp = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Shopify-Access-Token": adminToken,
+          },
+          body: JSON.stringify({
+            order: { id: Number(shopifyOrderId), tags: merged.join(", ") },
+          }),
+        });
+        if (!resp.ok) {
+          console.error("Falha ao adicionar tags na Shopify",
+            resp.status, await resp.text().catch(() => ""));
+        }
+      }
+    } else if (!adminToken) {
+      console.warn("SHOPIFY_ACCESS_TOKEN ausente; tags não foram adicionadas");
+    }
+  } catch (e) {
+    console.error("Erro ao adicionar tags na Shopify", e);
   }
 
   return new Response(JSON.stringify({ ok: true }), {
@@ -117,3 +156,4 @@ Deno.serve(async (req) => {
     status: 200,
   });
 });
+
