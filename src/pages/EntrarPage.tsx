@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 
 export default function EntrarPage() {
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,15 +28,32 @@ export default function EntrarPage() {
     e.preventDefault();
     setError(null);
 
-    if (!email.trim()) { setError("Informe um e-mail válido."); return; }
+    const id = identifier.trim();
+    if (!id) { setError("Informe seu e-mail ou CPF."); return; }
     if (!password) { setError("Informe sua senha."); return; }
 
     setLoading(true);
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+
+    // Detecta CPF (>= 8 dígitos numéricos no input) e converte para e-mail
+    let emailToUse = id;
+    const digits = id.replace(/\D/g, "");
+    const isCpf = !id.includes("@") && digits.length >= 8;
+
+    if (isCpf) {
+      const { data: foundEmail, error: rpcErr } = await supabase.rpc("email_por_cpf", { _cpf: digits });
+      if (rpcErr || !foundEmail) {
+        setError("CPF não encontrado. Verifique ou cadastre-se.");
+        setLoading(false);
+        return;
+      }
+      emailToUse = foundEmail as string;
+    }
+
+    const { error: err } = await supabase.auth.signInWithPassword({ email: emailToUse, password });
 
     if (err) {
       if (err.message.includes("Invalid login")) {
-        setError("E-mail ou senha incorretos.");
+        setError("E-mail/CPF ou senha incorretos.");
       } else if (err.message.includes("Email not confirmed")) {
         setError("Seu e-mail ainda não foi confirmado. Verifique sua caixa de entrada.");
       } else if (err.message.includes("rate") || err.status === 429) {
@@ -74,18 +91,20 @@ export default function EntrarPage() {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor="email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">
-              E-mail
+            <Label htmlFor="identifier" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">
+              E-mail ou CPF
             </Label>
             <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="seu@email.com"
+              id="identifier"
+              type="text"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              placeholder="seu@email.com ou 000.000.000-00"
+              autoComplete="username"
               className="h-11 font-sans tracking-[-0.02em]"
             />
           </div>
+
 
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
