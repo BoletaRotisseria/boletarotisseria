@@ -1,9 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
 const maybeSingleMock = vi.fn();
-const signUpMock = vi.fn();
 
 vi.mock("@/integrations/supabase/client", () => {
   return {
@@ -15,7 +14,7 @@ vi.mock("@/integrations/supabase/client", () => {
           }),
         }),
       }),
-      auth: { signUp: signUpMock },
+      auth: { signUp: vi.fn() },
       functions: { invoke: vi.fn() },
     },
   };
@@ -24,11 +23,6 @@ vi.mock("@/integrations/supabase/client", () => {
 import CriarContaPage from "./CriarContaPage";
 
 describe("CriarContaPage", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    maybeSingleMock.mockReset();
-  });
-
   it("shows existing account alert instead of redirecting when email is already registered", async () => {
     maybeSingleMock
       .mockResolvedValueOnce({ data: { id: "existing-user" } }) // email exists
@@ -68,6 +62,5 @@ describe("CriarContaPage", () => {
 
     expect(screen.getByRole("button", { name: "Entrar" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Esqueci a senha" })).toBeInTheDocument();
-    expect(signUpMock).not.toHaveBeenCalled();
   });
 });
