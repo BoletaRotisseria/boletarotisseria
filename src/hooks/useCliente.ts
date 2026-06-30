@@ -41,13 +41,7 @@ export function useCliente() {
     query.data &&
     query.data.nome_completo &&
     query.data.cpf &&
-    query.data.telefone &&
-    query.data.cep &&
-    query.data.estado &&
-    query.data.cidade &&
-    query.data.bairro &&
-    query.data.rua &&
-    query.data.numero
+    query.data.telefone
   );
 
   return { ...query, cliente: query.data, isComplete };
