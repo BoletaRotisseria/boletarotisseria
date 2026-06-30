@@ -1,17 +1,23 @@
 import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, CalendarIcon, MapPin, Store } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, CalendarIcon, MapPin, Store, Mail } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_VARIANT_IDS } from "@/lib/giftWrap";
+import { useAuth } from "@/hooks/useAuth";
+import { useCliente } from "@/hooks/useCliente";
+import { supabase } from "@/integrations/supabase/client";
+
+const SHOPIFY_STORE_LOGIN_URL = "https://boleta-direct-8l7a1.myshopify.com/account/login";
 
 const WEEKDAY_SLOTS = ["11h às 13h", "13h às 17h30"];
 const SATURDAY_SLOTS = ["11h às 13h"];
