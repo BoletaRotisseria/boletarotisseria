@@ -107,6 +107,41 @@ Deno.serve(async (req) => {
       { onConflict: "shopify_order_id" },
     );
 
+  // ===== Sincroniza endereço do cliente (quando for entrega com shipping_address) =====
+  // Procura cliente pelo e-mail do pedido e atualiza os campos de endereço.
+  try {
+    const customerEmail = String(payload?.email ?? payload?.customer?.email ?? "").trim().toLowerCase();
+    const ship = payload?.shipping_address;
+    if (metodo.toLowerCase().startsWith("entrega") && customerEmail && ship) {
+      const cepClean = String(ship.zip ?? "").replace(/\D/g, "");
+      const updates: Record<string, string> = {
+        cep: cepClean,
+        estado: String(ship.province_code ?? ship.province ?? "").toUpperCase().slice(0, 2),
+        cidade: String(ship.city ?? "").trim(),
+        bairro: String(ship.neighborhood ?? ship.address2 ?? "").trim(),
+        rua: String(ship.address1 ?? "").trim(),
+        numero: String(ship.number ?? "").trim(),
+        complemento: String(ship.company ?? "").trim(),
+        atualizado_em: new Date().toISOString(),
+      };
+      // Só atualiza campos não-vazios para não sobrescrever dados existentes com vazio
+      const filtered: Record<string, string> = {};
+      for (const [k, v] of Object.entries(updates)) {
+        if (v && v.length > 0) filtered[k] = v;
+      }
+      if (Object.keys(filtered).length > 1) {
+        const { error: addrErr } = await supabase
+          .from("clientes")
+          .update(filtered)
+          .eq("email", customerEmail);
+        if (addrErr) console.error("Falha ao atualizar endereço do cliente", addrErr);
+      }
+    }
+  } catch (e) {
+    console.error("Erro ao sincronizar endereço do cliente", e);
+  }
+
+
   // ===== Adicionar tags ao pedido na Shopify (ENTREGA/RETIRADA + AAAA-MM-DD) =====
   // Permite filtrar/organizar pedidos por data de entrega/retirada no admin Shopify.
   try {

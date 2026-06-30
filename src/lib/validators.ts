@@ -67,20 +67,6 @@ export const cadastroSchema = z.object({
     .string()
     .min(1, "Informe seu telefone.")
     .refine((v) => v.replace(/\D/g, "").length >= 10, "Telefone inválido. Inclua DDD + número."),
-  data_nascimento: z.string().optional(),
-  cep: z
-    .string()
-    .min(1, "Informe o CEP.")
-    .refine((v) => v.replace(/\D/g, "").length === 8, "CEP inválido."),
-  estado: z
-    .string()
-    .min(1, "Informe o estado.")
-    .refine((v) => v.length === 2, "Informe a UF com 2 letras."),
-  cidade: z.string().trim().min(1, "Informe a cidade."),
-  bairro: z.string().trim().min(1, "Informe o bairro."),
-  rua: z.string().trim().min(1, "Informe a rua."),
-  numero: z.string().trim().min(1, "Informe o número."),
-  complemento: z.string().optional(),
   senha: z.string().min(8, "A senha deve ter no mínimo 8 caracteres."),
   confirmar_senha: z.string(),
   termos: z.literal(true, { errorMap: () => ({ message: "Você deve aceitar os termos." }) }),
@@ -105,20 +91,6 @@ export const completarCadastroSchema = z.object({
     .string()
     .min(1, "Informe seu telefone.")
     .refine((v) => v.replace(/\D/g, "").length >= 10, "Telefone inválido. Inclua DDD + número."),
-  data_nascimento: z.string().optional(),
-  cep: z
-    .string()
-    .min(1, "Informe o CEP.")
-    .refine((v) => v.replace(/\D/g, "").length === 8, "CEP inválido."),
-  estado: z
-    .string()
-    .min(1, "Informe o estado.")
-    .refine((v) => v.length === 2, "Informe a UF com 2 letras."),
-  cidade: z.string().trim().min(1, "Informe a cidade."),
-  bairro: z.string().trim().min(1, "Informe o bairro."),
-  rua: z.string().trim().min(1, "Informe a rua."),
-  numero: z.string().trim().min(1, "Informe o número."),
-  complemento: z.string().optional(),
 });
 
 export type CompletarCadastroFormData = z.infer<typeof completarCadastroSchema>;

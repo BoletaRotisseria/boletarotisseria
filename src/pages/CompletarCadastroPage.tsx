@@ -5,18 +5,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCliente } from "@/hooks/useCliente";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { completarCadastroSchema, type CompletarCadastroFormData, maskCPF, maskPhone, maskCEP, maskDate, dateBrToIso, dateIsoToBr } from "@/lib/validators";
+import { completarCadastroSchema, type CompletarCadastroFormData, maskCPF, maskPhone } from "@/lib/validators";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { getSafeErrorMessage } from "@/lib/errors";
 import { useQueryClient } from "@tanstack/react-query";
-
-const UF_LIST = [
-  "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA",
-  "PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO",
-];
 
 export default function CompletarCadastroPage() {
   const { user, loading: authLoading } = useAuth();
@@ -49,14 +44,6 @@ export default function CompletarCadastroPage() {
         nome_completo: cliente.nome_completo || user?.user_metadata?.full_name || "",
         cpf: cliente.cpf ? maskCPF(cliente.cpf) : "",
         telefone: cliente.telefone ? maskPhone(cliente.telefone) : "",
-        data_nascimento: cliente.data_nascimento ? dateIsoToBr(cliente.data_nascimento) : "",
-        cep: cliente.cep ? maskCEP(cliente.cep) : "",
-        estado: cliente.estado || "",
-        cidade: cliente.cidade || "",
-        bairro: cliente.bairro || "",
-        rua: cliente.rua || "",
-        numero: cliente.numero || "",
-        complemento: cliente.complemento || "",
       });
     }
   }, [cliente, user, reset]);
@@ -73,18 +60,9 @@ export default function CompletarCadastroPage() {
       cpf: cpfClean,
       email: user.email || "",
       telefone: data.telefone.replace(/\D/g, ""),
-      data_nascimento: dateBrToIso(data.data_nascimento),
-      cep: data.cep.replace(/\D/g, ""),
-      estado: data.estado.toUpperCase(),
-      cidade: data.cidade.trim(),
-      bairro: data.bairro.trim(),
-      rua: data.rua.trim(),
-      numero: data.numero.trim(),
-      complemento: data.complemento?.trim() || null,
       atualizado_em: new Date().toISOString(),
     };
 
-    // Upsert: insert if not exists, update if exists
     const { error } = await supabase.from("clientes").upsert(payload, { onConflict: "id" });
 
     if (error) {
@@ -136,7 +114,6 @@ export default function CompletarCadastroPage() {
           </button>
         </div>
 
-
         {serverError && (
           <div className="animate-[fadeIn_0.3s_ease-out] rounded-lg bg-destructive/10 border border-destructive/20 px-4 py-3 text-sm font-sans text-destructive">
             {serverError}
@@ -168,52 +145,9 @@ export default function CompletarCadastroPage() {
             />
           </FieldWrapper>
 
-          <p className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground font-semibold pt-2">Endereço</p>
-
-          <div className="grid grid-cols-2 gap-3">
-            <FieldWrapper label="CEP" error={errors.cep?.message}>
-              <Input
-                {...register("cep")}
-                placeholder="00000-000"
-                className="h-11 font-sans tracking-[-0.02em]"
-                onChange={(e) => setValue("cep", maskCEP(e.target.value))}
-                value={watch("cep") || ""}
-              />
-            </FieldWrapper>
-            <FieldWrapper label="Estado" error={errors.estado?.message}>
-              <select
-                {...register("estado")}
-                className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-sans tracking-[-0.02em] ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                <option value="">Selecione</option>
-                {UF_LIST.map((uf) => (
-                  <option key={uf} value={uf}>{uf}</option>
-                ))}
-              </select>
-            </FieldWrapper>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <FieldWrapper label="Cidade" error={errors.cidade?.message}>
-              <Input {...register("cidade")} placeholder="Sua cidade" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-            <FieldWrapper label="Bairro" error={errors.bairro?.message}>
-              <Input {...register("bairro")} placeholder="Seu bairro" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-          </div>
-
-          <FieldWrapper label="Rua" error={errors.rua?.message}>
-            <Input {...register("rua")} placeholder="Nome da rua" className="h-11 font-sans tracking-[-0.02em]" />
-          </FieldWrapper>
-
-          <div className="grid grid-cols-2 gap-3">
-            <FieldWrapper label="Número" error={errors.numero?.message}>
-              <Input {...register("numero")} placeholder="Nº" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-            <FieldWrapper label="Complemento" error={errors.complemento?.message}>
-              <Input {...register("complemento")} placeholder="Opcional" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-          </div>
+          <p className="font-sans text-xs tracking-[-0.02em] text-muted-foreground pt-1">
+            O endereço será preenchido automaticamente quando você finalizar seu primeiro pedido de entrega.
+          </p>
 
           <Button type="submit" disabled={loading} className="w-full h-11 font-sans font-semibold tracking-[-0.02em] transition-all duration-200 active:scale-[0.98]">
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Salvar e Continuar"}
