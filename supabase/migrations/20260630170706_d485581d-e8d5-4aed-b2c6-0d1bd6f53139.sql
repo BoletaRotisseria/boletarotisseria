@@ -1,0 +1,2 @@
+REVOKE EXECUTE ON FUNCTION public.upsert_cliente_servidor(uuid, text, text, text, text) FROM public, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.upsert_cliente_servidor(uuid, text, text, text, text) TO service_role;

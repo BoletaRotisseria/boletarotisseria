@@ -1,17 +1,23 @@
 import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, CalendarIcon, MapPin, Store } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, CalendarIcon, MapPin, Store, Mail } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_VARIANT_IDS } from "@/lib/giftWrap";
+import { useAuth } from "@/hooks/useAuth";
+import { useCliente } from "@/hooks/useCliente";
+import { supabase } from "@/integrations/supabase/client";
+
+const SHOPIFY_STORE_LOGIN_URL = "https://boleta-direct-8l7a1.myshopify.com/account/login";
 
 const WEEKDAY_SLOTS = ["11h às 13h", "13h às 17h30"];
 const SATURDAY_SLOTS = ["11h às 13h"];
@@ -39,6 +45,8 @@ function toISODate(d: Date): string {
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const { cliente, isComplete } = useCliente();
   const {
     items, isLoading, isSyncing,
     updateQuantity, removeItem, getCheckoutUrl, syncCart,
@@ -46,6 +54,20 @@ export function CartDrawer() {
     setFulfillmentMethod, setFulfillmentDate, setFulfillmentTime,
     submitFulfillmentAttributes,
   } = useCartStore();
+
+  const [guestEmail, setGuestEmail] = useState("");
+  const [emailChecking, setEmailChecking] = useState(false);
+  const [emailNotFound, setEmailNotFound] = useState(false);
+
+  // Reseta gate quando logado/cadastro completo
+  useEffect(() => {
+    if (isComplete) {
+      setEmailNotFound(false);
+      setGuestEmail("");
+    } else if (user?.email) {
+      setGuestEmail(user.email);
+    }
+  }, [isComplete, user?.email]);
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -73,7 +95,7 @@ export function CartDrawer() {
     return false;
   };
 
-  const canCheckout =
+  const baseReady =
     visibleItems.length > 0 &&
     !!fulfillmentMethod &&
     !!fulfillmentDate &&
@@ -81,11 +103,12 @@ export function CartDrawer() {
     !isLoading &&
     !isSyncing;
 
+  const canCheckout = baseReady && (isComplete || guestEmail.trim().length > 0);
+
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
 
-  const goToCheckout = async () => {
-    if (!canCheckout) return;
+  const proceedToCheckout = async () => {
     await submitFulfillmentAttributes();
     const checkoutUrl = getCheckoutUrl();
     if (!checkoutUrl) return;
@@ -99,6 +122,41 @@ export function CartDrawer() {
       return;
     }
     window.location.href = checkoutUrl;
+  };
+
+  const goToCheckout = async () => {
+    if (!canCheckout) return;
+    setEmailNotFound(false);
+
+    // Logado com cadastro completo → segue direto
+    if (isComplete) {
+      await proceedToCheckout();
+      return;
+    }
+
+    // Caso contrário: valida o e-mail informado
+    const email = guestEmail.trim().toLowerCase();
+    if (!email) return;
+
+    setEmailChecking(true);
+    try {
+      const { data, error } = await supabase.rpc("cliente_existe", {
+        _email: email,
+        _telefone: cliente?.telefone ?? "",
+      });
+      if (error) {
+        console.error("cliente_existe erro", error);
+        setEmailNotFound(true);
+        return;
+      }
+      if (data === true) {
+        await proceedToCheckout();
+      } else {
+        setEmailNotFound(true);
+      }
+    } finally {
+      setEmailChecking(false);
+    }
   };
 
   return (
@@ -286,8 +344,43 @@ export function CartDrawer() {
                   <span className="font-serif text-lg">Total</span>
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
                 </div>
-                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout}>
-                  {isLoading || isSyncing ? (
+
+                {!isComplete && (
+                  <div className="space-y-2">
+                    <Label htmlFor="checkout-email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground flex items-center gap-1.5">
+                      <Mail className="h-3.5 w-3.5" /> Seu e-mail
+                    </Label>
+                    <Input
+                      id="checkout-email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="seu@email.com"
+                      value={guestEmail}
+                      onChange={(e) => { setGuestEmail(e.target.value); setEmailNotFound(false); }}
+                      className="h-11 font-sans"
+                    />
+                  </div>
+                )}
+
+                {emailNotFound && (
+                  <div className="rounded-md border border-primary/30 bg-primary/5 p-3 space-y-2 animate-[fadeIn_0.2s_ease-out]">
+                    <p className="text-xs text-foreground font-sans">
+                      Não encontramos um cadastro com este e-mail. Faça login no Shopify para continuar.
+                    </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => window.open(SHOPIFY_STORE_LOGIN_URL, "_blank", "noopener,noreferrer")}
+                    >
+                      Entrar no Shopify
+                    </Button>
+                  </div>
+                )}
+
+                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout || emailChecking}>
+                  {isLoading || isSyncing || emailChecking ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
                     <>
@@ -296,7 +389,7 @@ export function CartDrawer() {
                     </>
                   )}
                 </Button>
-                {!canCheckout && visibleItems.length > 0 && (
+                {!baseReady && visibleItems.length > 0 && (
                   <p className="text-xs text-center text-muted-foreground">
                     Selecione método, data e horário para continuar.
                   </p>

@@ -89,18 +89,33 @@ export default function CriarContaPage() {
 
     // Insert cliente profile
     if (authData.user) {
+      const telClean = data.telefone.replace(/\D/g, "");
       const { error: insertError } = await supabase.from("clientes").insert({
         id: authData.user.id,
         nome_completo: data.nome_completo.trim(),
         cpf: cpfClean,
         email: emailClean,
-        telefone: data.telefone.replace(/\D/g, ""),
+        telefone: telClean,
       });
 
       if (insertError) {
         setServerError(getSafeErrorMessage(insertError));
         setLoading(false);
         return;
+      }
+
+      // Sincroniza com Shopify (cria customer lá). Falha silenciosa — o webhook do pedido cobre.
+      try {
+        await supabase.functions.invoke("shopify-customer-sync", {
+          body: {
+            nome_completo: data.nome_completo.trim(),
+            cpf: cpfClean,
+            email: emailClean,
+            telefone: telClean,
+          },
+        });
+      } catch (e) {
+        console.warn("shopify-customer-sync falhou (ignorado)", e);
       }
     }
 
