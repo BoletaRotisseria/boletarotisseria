@@ -2,29 +2,31 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
-const fromMock = vi.fn();
 const maybeSingleMock = vi.fn();
 const signUpMock = vi.fn();
-const invokeMock = vi.fn();
 
-vi.mock("@/integrations/supabase/client", () => ({
-  supabase: {
-    from: fromMock,
-    auth: { signUp: signUpMock },
-    functions: { invoke: invokeMock },
-  },
-}));
+vi.mock("@/integrations/supabase/client", () => {
+  return {
+    supabase: {
+      from: () => ({
+        select: () => ({
+          eq: () => ({
+            maybeSingle: maybeSingleMock,
+          }),
+        }),
+      }),
+      auth: { signUp: signUpMock },
+      functions: { invoke: vi.fn() },
+    },
+  };
+});
 
 import CriarContaPage from "./CriarContaPage";
 
 describe("CriarContaPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    fromMock.mockReturnValue({
-      select: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockReturnThis(),
-      maybeSingle: maybeSingleMock,
-    });
+    maybeSingleMock.mockReset();
   });
 
   it("shows existing account alert instead of redirecting when email is already registered", async () => {
