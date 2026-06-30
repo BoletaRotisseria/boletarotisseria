@@ -3,18 +3,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cadastroSchema, type CadastroFormData, maskCPF, maskPhone, maskCEP, maskDate, dateBrToIso } from "@/lib/validators";
+import { cadastroSchema, type CadastroFormData, maskCPF, maskPhone } from "@/lib/validators";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2, CheckCircle2, ArrowLeft } from "lucide-react";
 import { getSafeErrorMessage } from "@/lib/errors";
-
-const UF_LIST = [
-  "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA",
-  "PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO",
-];
 
 export default function CriarContaPage() {
   const [loading, setLoading] = useState(false);
@@ -30,7 +25,7 @@ export default function CriarContaPage() {
     formState: { errors },
   } = useForm<CadastroFormData>({
     resolver: zodResolver(cadastroSchema),
-    defaultValues: { complemento: "", termos: false as any },
+    defaultValues: { termos: false as any },
   });
 
   const onSubmit = async (data: CadastroFormData) => {
@@ -85,7 +80,7 @@ export default function CriarContaPage() {
       return;
     }
 
-    // Supabase returns user with empty identities array when email already exists (and confirmations enabled)
+    // Supabase returns user with empty identities array when email already exists
     if (authData.user && Array.isArray(authData.user.identities) && authData.user.identities.length === 0) {
       setServerError("Já existe um cadastro com esse e-mail. Faça login ou recupere sua senha.");
       setLoading(false);
@@ -98,16 +93,8 @@ export default function CriarContaPage() {
         id: authData.user.id,
         nome_completo: data.nome_completo.trim(),
         cpf: cpfClean,
-        email: data.email.trim(),
+        email: emailClean,
         telefone: data.telefone.replace(/\D/g, ""),
-        data_nascimento: dateBrToIso(data.data_nascimento),
-        cep: data.cep.replace(/\D/g, ""),
-        estado: data.estado.toUpperCase(),
-        cidade: data.cidade.trim(),
-        bairro: data.bairro.trim(),
-        rua: data.rua.trim(),
-        numero: data.numero.trim(),
-        complemento: data.complemento?.trim() || null,
       });
 
       if (insertError) {
@@ -161,12 +148,10 @@ export default function CriarContaPage() {
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Nome */}
           <FieldWrapper label="Nome completo" error={errors.nome_completo?.message}>
             <Input {...register("nome_completo")} placeholder="Seu nome completo" className="h-11 font-sans tracking-[-0.02em]" />
           </FieldWrapper>
 
-          {/* CPF */}
           <FieldWrapper label="CPF" error={errors.cpf?.message}>
             <Input
               {...register("cpf")}
@@ -177,12 +162,10 @@ export default function CriarContaPage() {
             />
           </FieldWrapper>
 
-          {/* Email */}
           <FieldWrapper label="E-mail" error={errors.email?.message}>
             <Input {...register("email")} type="email" placeholder="seu@email.com" className="h-11 font-sans tracking-[-0.02em]" />
           </FieldWrapper>
 
-          {/* Telefone */}
           <FieldWrapper label="Telefone / WhatsApp" error={errors.telefone?.message}>
             <Input
               {...register("telefone")}
@@ -193,55 +176,9 @@ export default function CriarContaPage() {
             />
           </FieldWrapper>
 
-          {/* Endereço header */}
-          <p className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground font-semibold pt-2">Endereço</p>
-
-          {/* CEP + UF */}
-          <div className="grid grid-cols-2 gap-3">
-            <FieldWrapper label="CEP" error={errors.cep?.message}>
-              <Input
-                {...register("cep")}
-                placeholder="00000-000"
-                className="h-11 font-sans tracking-[-0.02em]"
-                onChange={(e) => setValue("cep", maskCEP(e.target.value))}
-                value={watch("cep") || ""}
-              />
-            </FieldWrapper>
-            <FieldWrapper label="Estado" error={errors.estado?.message}>
-              <select
-                {...register("estado")}
-                className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-sans tracking-[-0.02em] ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                <option value="">Selecione</option>
-                {UF_LIST.map((uf) => (
-                  <option key={uf} value={uf}>{uf}</option>
-                ))}
-              </select>
-            </FieldWrapper>
-          </div>
-
-          {/* Cidade + Bairro */}
-          <div className="grid grid-cols-2 gap-3">
-            <FieldWrapper label="Cidade" error={errors.cidade?.message}>
-              <Input {...register("cidade")} placeholder="Sua cidade" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-            <FieldWrapper label="Bairro" error={errors.bairro?.message}>
-              <Input {...register("bairro")} placeholder="Seu bairro" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-          </div>
-
-          {/* Rua + Número + Complemento */}
-          <FieldWrapper label="Rua" error={errors.rua?.message}>
-            <Input {...register("rua")} placeholder="Nome da rua" className="h-11 font-sans tracking-[-0.02em]" />
-          </FieldWrapper>
-          <div className="grid grid-cols-2 gap-3">
-            <FieldWrapper label="Número" error={errors.numero?.message}>
-              <Input {...register("numero")} placeholder="Nº" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-            <FieldWrapper label="Complemento" error={errors.complemento?.message}>
-              <Input {...register("complemento")} placeholder="Opcional" className="h-11 font-sans tracking-[-0.02em]" />
-            </FieldWrapper>
-          </div>
+          <p className="font-sans text-xs tracking-[-0.02em] text-muted-foreground pt-1">
+            O endereço será preenchido automaticamente quando você finalizar seu primeiro pedido de entrega.
+          </p>
 
           {/* Senha */}
           <p className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground font-semibold pt-2">Senha de acesso</p>
