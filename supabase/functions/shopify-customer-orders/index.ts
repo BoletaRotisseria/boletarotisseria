@@ -92,22 +92,24 @@ Deno.serve(async (req) => {
     }
 
 
-    const orders = (ord.body?.orders ?? []).map((o: any) => ({
-      id: o.id,
-      name: o.name,
-      created_at: o.created_at,
-      financial_status: o.financial_status,
-      fulfillment_status: o.fulfillment_status,
-      cancelled_at: o.cancelled_at,
-      total_price: o.total_price,
-      currency: o.currency,
-      order_status_url: o.order_status_url,
-      line_items: (o.line_items ?? []).map((li: any) => ({
-        title: li.title,
-        quantity: li.quantity,
-        variant_title: li.variant_title,
-      })),
-    }));
+    const orders = Array.from(ordersMap.values())
+      .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .map((o: any) => ({
+        id: o.id,
+        name: o.name,
+        created_at: o.created_at,
+        financial_status: o.financial_status,
+        fulfillment_status: o.fulfillment_status,
+        cancelled_at: o.cancelled_at,
+        total_price: o.total_price,
+        currency: o.currency,
+        order_status_url: o.order_status_url,
+        line_items: (o.line_items ?? []).map((li: any) => ({
+          title: li.title,
+          quantity: li.quantity,
+          variant_title: li.variant_title,
+        })),
+      }));
 
     return new Response(JSON.stringify({ orders }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
