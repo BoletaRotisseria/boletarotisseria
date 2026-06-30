@@ -96,12 +96,12 @@ export default function CriarContaPage() {
     // Insert cliente profile
     if (authData.user) {
       const telClean = data.telefone.replace(/\D/g, "");
-      const { error: insertError } = await supabase.from("clientes").insert({
-        id: authData.user.id,
-        nome_completo: data.nome_completo.trim(),
-        cpf: cpfClean,
-        email: emailClean,
-        telefone: telClean,
+      const { error: insertError } = await supabase.rpc("upsert_cliente_servidor", {
+        _id: authData.user.id,
+        _nome: data.nome_completo.trim(),
+        _cpf: cpfClean,
+        _email: emailClean,
+        _telefone: telClean,
       });
 
       if (insertError) {
