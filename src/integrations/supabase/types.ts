@@ -196,6 +196,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cliente_existe: {
+        Args: { _email: string; _telefone: string }
+        Returns: boolean
+      }
       email_por_cpf: { Args: { _cpf: string }; Returns: string }
       has_role: {
         Args: {
@@ -206,6 +210,16 @@ export type Database = {
       }
       is_cliente_complete: { Args: { cliente_id: string }; Returns: boolean }
       is_own_profile: { Args: { profile_user_id: string }; Returns: boolean }
+      upsert_cliente_servidor: {
+        Args: {
+          _cpf: string
+          _email: string
+          _id: string
+          _nome: string
+          _telefone: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
