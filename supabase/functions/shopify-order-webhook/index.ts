@@ -225,6 +225,14 @@ Deno.serve(async (req) => {
           const merged = new Set(existing);
           merged.add(dataTag);
           if (tipoDataTag) merged.add(tipoDataTag);
+          // Tag de horário (ex.: "horario-13h-as-17h30") e combinada com data
+          if (horarioCompacto && horarioCompacto !== "-") {
+            const hSlug = horarioCompacto.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+            if (hSlug) {
+              merged.add(`horario-${hSlug}`);
+              merged.add(`${m[3]}-${m[2]}-${m[1]}-${hSlug}`);
+            }
+          }
           // Só atualiza se mudou
           if (merged.size === existing.length) continue;
           const upd = await fetch(
