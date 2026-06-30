@@ -63,37 +63,53 @@ Deno.serve(async (req) => {
       if (r.ok) customerId = r.body?.customers?.[0]?.id ? String(r.body.customers[0].id) : null;
     }
 
-    if (!customerId) {
+    // 2) Buscar pedidos: por customer_id (se achou) E também por email direto (cobre pedidos guest / customer recém-criado)
+    const ordersMap = new Map<number, any>();
+
+    const collect = (arr: any[]) => {
+      for (const o of arr ?? []) {
+        if (o?.id != null) ordersMap.set(Number(o.id), o);
+      }
+    };
+
+    if (customerId) {
+      const ord = await shopify(`/orders.json?customer_id=${customerId}&status=any&limit=100&order=created_at+desc`);
+      if (ord.ok) collect(ord.body?.orders ?? []);
+      else console.error("orders by customer_id failed", ord.status, ord.body);
+    }
+
+    if (email) {
+      const ord = await shopify(`/orders.json?email=${encodeURIComponent(email)}&status=any&limit=100&order=created_at+desc`);
+      if (ord.ok) collect(ord.body?.orders ?? []);
+      else console.error("orders by email failed", ord.status, ord.body);
+    }
+
+    if (ordersMap.size === 0) {
+      console.log("Nenhum pedido encontrado", { email, cpf: cpf ? cpf.slice(0, 3) + "***" : null, customerId });
       return new Response(JSON.stringify({ orders: [] }), {
         status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    // 2) Listar pedidos do customer
-    const ord = await shopify(`/orders.json?customer_id=${customerId}&status=any&limit=100&order=created_at+desc`);
-    if (!ord.ok) {
-      console.error("orders fetch failed", ord.status, ord.body);
-      return new Response(JSON.stringify({ orders: [] }), {
-        status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
 
-    const orders = (ord.body?.orders ?? []).map((o: any) => ({
-      id: o.id,
-      name: o.name,
-      created_at: o.created_at,
-      financial_status: o.financial_status,
-      fulfillment_status: o.fulfillment_status,
-      cancelled_at: o.cancelled_at,
-      total_price: o.total_price,
-      currency: o.currency,
-      order_status_url: o.order_status_url,
-      line_items: (o.line_items ?? []).map((li: any) => ({
-        title: li.title,
-        quantity: li.quantity,
-        variant_title: li.variant_title,
-      })),
-    }));
+    const orders = Array.from(ordersMap.values())
+      .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .map((o: any) => ({
+        id: o.id,
+        name: o.name,
+        created_at: o.created_at,
+        financial_status: o.financial_status,
+        fulfillment_status: o.fulfillment_status,
+        cancelled_at: o.cancelled_at,
+        total_price: o.total_price,
+        currency: o.currency,
+        order_status_url: o.order_status_url,
+        line_items: (o.line_items ?? []).map((li: any) => ({
+          title: li.title,
+          quantity: li.quantity,
+          variant_title: li.variant_title,
+        })),
+      }));
 
     return new Response(JSON.stringify({ orders }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
