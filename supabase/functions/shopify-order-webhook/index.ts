@@ -184,7 +184,70 @@ Deno.serve(async (req) => {
     }
   } catch (e) {
     console.error("Erro ao adicionar tags na Shopify", e);
+  } catch (e) {
+    console.error("Erro ao adicionar tags na Shopify", e);
   }
+
+  // ===== Adicionar tag de data nos PRODUTOS do pedido =====
+  // Cada produto comprado recebe uma tag com a data de entrega/retirada (AAAA-MM-DD)
+  // para que seja possível filtrar produtos por data no admin Shopify.
+  try {
+    const adminToken = Deno.env.get("SHOPIFY_ACCESS_TOKEN");
+    const shopDomain = Deno.env.get("SHOPIFY_SHOP_DOMAIN") ?? "boleta-direct-8l7a1.myshopify.com";
+    if (adminToken && m) {
+      const dataTag = `data-${m[3]}-${m[2]}-${m[1]}`;
+      const tipoDataTag = (tipo === "ENTREGA" || tipo === "RETIRADA")
+        ? `${tipo.toLowerCase()}-${m[3]}-${m[2]}-${m[1]}`
+        : null;
+
+      const lineItems: Array<{ product_id?: number | string }> = payload?.line_items ?? [];
+      const productIds = Array.from(
+        new Set(
+          lineItems
+            .map((li) => (li?.product_id ? String(li.product_id) : ""))
+            .filter(Boolean),
+        ),
+      );
+
+      for (const pid of productIds) {
+        try {
+          const getRes = await fetch(
+            `https://${shopDomain}/admin/api/2025-07/products/${pid}.json?fields=id,tags`,
+            { headers: { "X-Shopify-Access-Token": adminToken } },
+          );
+          if (!getRes.ok) {
+            console.error("Falha ao ler produto", pid, getRes.status);
+            continue;
+          }
+          const pData = await getRes.json();
+          const existing = String(pData?.product?.tags ?? "")
+            .split(",").map((t: string) => t.trim()).filter(Boolean);
+          const merged = new Set(existing);
+          merged.add(dataTag);
+          if (tipoDataTag) merged.add(tipoDataTag);
+          // Só atualiza se mudou
+          if (merged.size === existing.length) continue;
+          const upd = await fetch(
+            `https://${shopDomain}/admin/api/2025-07/products/${pid}.json`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "X-Shopify-Access-Token": adminToken,
+              },
+              body: JSON.stringify({
+                product: { id: Number(pid), tags: Array.from(merged).join(", ") },
+              }),
+            },
+          );
+          if (!upd.ok) {
+            console.error("Falha ao tag produto", pid, upd.status, await upd.text().catch(() => ""));
+          }
+        } catch (e) {
+          console.error("Erro ao tag produto", pid, e);
+        }
+      }
+    }
 
   // ===== Dedup de cliente no Shopify por CPF =====
   // Mantém o customer mais antigo como canônico; os duplicados ganham tag "duplicado-cpf"
