@@ -45,6 +45,8 @@ function toISODate(d: Date): string {
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const { cliente, isComplete } = useCliente();
   const {
     items, isLoading, isSyncing,
     updateQuantity, removeItem, getCheckoutUrl, syncCart,
@@ -52,6 +54,20 @@ export function CartDrawer() {
     setFulfillmentMethod, setFulfillmentDate, setFulfillmentTime,
     submitFulfillmentAttributes,
   } = useCartStore();
+
+  const [guestEmail, setGuestEmail] = useState("");
+  const [emailChecking, setEmailChecking] = useState(false);
+  const [emailNotFound, setEmailNotFound] = useState(false);
+
+  // Reseta gate quando logado/cadastro completo
+  useEffect(() => {
+    if (isComplete) {
+      setEmailNotFound(false);
+      setGuestEmail("");
+    } else if (user?.email) {
+      setGuestEmail(user.email);
+    }
+  }, [isComplete, user?.email]);
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -79,7 +95,7 @@ export function CartDrawer() {
     return false;
   };
 
-  const canCheckout =
+  const baseReady =
     visibleItems.length > 0 &&
     !!fulfillmentMethod &&
     !!fulfillmentDate &&
@@ -87,11 +103,12 @@ export function CartDrawer() {
     !isLoading &&
     !isSyncing;
 
+  const canCheckout = baseReady && (isComplete || guestEmail.trim().length > 0);
+
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
 
-  const goToCheckout = async () => {
-    if (!canCheckout) return;
+  const proceedToCheckout = async () => {
     await submitFulfillmentAttributes();
     const checkoutUrl = getCheckoutUrl();
     if (!checkoutUrl) return;
@@ -105,6 +122,41 @@ export function CartDrawer() {
       return;
     }
     window.location.href = checkoutUrl;
+  };
+
+  const goToCheckout = async () => {
+    if (!canCheckout) return;
+    setEmailNotFound(false);
+
+    // Logado com cadastro completo → segue direto
+    if (isComplete) {
+      await proceedToCheckout();
+      return;
+    }
+
+    // Caso contrário: valida o e-mail informado
+    const email = guestEmail.trim().toLowerCase();
+    if (!email) return;
+
+    setEmailChecking(true);
+    try {
+      const { data, error } = await supabase.rpc("cliente_existe", {
+        _email: email,
+        _telefone: cliente?.telefone ?? "",
+      });
+      if (error) {
+        console.error("cliente_existe erro", error);
+        setEmailNotFound(true);
+        return;
+      }
+      if (data === true) {
+        await proceedToCheckout();
+      } else {
+        setEmailNotFound(true);
+      }
+    } finally {
+      setEmailChecking(false);
+    }
   };
 
   return (
