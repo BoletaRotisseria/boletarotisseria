@@ -186,6 +186,125 @@ Deno.serve(async (req) => {
     console.error("Erro ao adicionar tags na Shopify", e);
   }
 
+  // ===== Dedup de cliente no Shopify por CPF =====
+  // Mantém o customer mais antigo como canônico; os duplicados ganham tag "duplicado-cpf"
+  // e uma nota apontando pro canônico. Também grava o CPF no metafield do canônico se faltar.
+  try {
+    const adminToken = Deno.env.get("SHOPIFY_ACCESS_TOKEN");
+    const shopDomain = Deno.env.get("SHOPIFY_SHOP_DOMAIN") ?? "boleta-direct-8l7a1.myshopify.com";
+    const customerId = payload?.customer?.id ? String(payload.customer.id) : "";
+    if (adminToken && customerId) {
+      // 1) descobre CPF: prioridade note_attributes (CPF/CNPJ, CPF, Documento) > metafield custom.cpf
+      let cpfRaw = "";
+      for (const name of ["CPF/CNPJ", "CPF", "cpf", "Documento", "documento"]) {
+        const v = noteAttributes.find((a) => a?.name === name)?.value;
+        if (v) { cpfRaw = String(v); break; }
+      }
+      let cpf = cpfRaw.replace(/\D/g, "");
+
+      const gql = async (query: string, variables: any) => {
+        const r = await fetch(`https://${shopDomain}/admin/api/2025-07/graphql.json`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Shopify-Access-Token": adminToken,
+          },
+          body: JSON.stringify({ query, variables }),
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || j.errors) throw new Error(`GraphQL ${r.status}: ${JSON.stringify(j.errors ?? j)}`);
+        return j.data;
+      };
+
+      // Se não veio no note_attributes, lê metafield do customer do pedido
+      if (!cpf) {
+        const data = await gql(
+          `query($id: ID!){ customer(id: $id){ metafield(namespace:"custom", key:"cpf"){ value } } }`,
+          { id: `gid://shopify/Customer/${customerId}` },
+        );
+        const v = data?.customer?.metafield?.value;
+        if (v) cpf = String(v).replace(/\D/g, "");
+      }
+
+      if (cpf && cpf.length >= 11) {
+        // 2) busca todos os customers com esse CPF (metafield OU tag cpf:XXXX)
+        const searchQ = `metafields.custom.cpf:${cpf} OR tag:cpf:${cpf}`;
+        const found = await gql(
+          `query($q:String!){ customers(first:50, query:$q){ edges{ node{ id legacyResourceId createdAt tags email } } } }`,
+          { q: searchQ },
+        );
+        let matches: Array<{ id: string; legacyResourceId: string; createdAt: string; tags: string[]; email: string | null }> =
+          (found?.customers?.edges ?? []).map((e: any) => e.node);
+
+        // garante que o customer do pedido está na lista (mesmo que ainda não tenha metafield/tag)
+        if (!matches.find((m) => String(m.legacyResourceId) === customerId)) {
+          const cur = await gql(
+            `query($id:ID!){ customer(id:$id){ id legacyResourceId createdAt tags email } }`,
+            { id: `gid://shopify/Customer/${customerId}` },
+          );
+          if (cur?.customer) matches.push(cur.customer);
+        }
+
+        if (matches.length > 0) {
+          // canônico = mais antigo
+          matches.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+          const canonical = matches[0];
+          const duplicates = matches.slice(1);
+
+          // 3) garante CPF gravado como metafield e tag no canônico
+          const canonTags = new Set(canonical.tags ?? []);
+          canonTags.add(`cpf:${cpf}`);
+          await gql(
+            `mutation($input: CustomerInput!){ customerUpdate(input:$input){ userErrors{ message } } }`,
+            {
+              input: {
+                id: canonical.id,
+                tags: Array.from(canonTags),
+                metafields: [{ namespace: "custom", key: "cpf", type: "single_line_text_field", value: cpf }],
+              },
+            },
+          );
+
+          // 4) marca duplicados
+          for (const dup of duplicates) {
+            const dupTags = new Set(dup.tags ?? []);
+            dupTags.add("duplicado-cpf");
+            dupTags.add(`canonico:${canonical.legacyResourceId}`);
+            dupTags.add(`cpf:${cpf}`);
+            await gql(
+              `mutation($input: CustomerInput!){ customerUpdate(input:$input){ userErrors{ message } } }`,
+              {
+                input: {
+                  id: dup.id,
+                  tags: Array.from(dupTags),
+                  note: `Cadastro duplicado por CPF ${cpf}. Cliente canônico: ${canonical.legacyResourceId} (${canonical.email ?? "-"}).`,
+                  metafields: [{ namespace: "custom", key: "cpf", type: "single_line_text_field", value: cpf }],
+                },
+              },
+            );
+          }
+
+          // 5) se o pedido caiu num customer duplicado, deixa nota no pedido
+          if (String(canonical.legacyResourceId) !== customerId) {
+            const orderUrl = `https://${shopDomain}/admin/api/2025-07/orders/${shopifyOrderId}.json`;
+            const existingNote = String(payload?.note ?? "").trim();
+            const extra = `[CPF ${cpf}] Cliente canônico: ${canonical.legacyResourceId} (${canonical.email ?? "-"}). Este pedido caiu num customer duplicado (${customerId}).`;
+            const newNote = existingNote ? `${existingNote}\n\n${extra}` : extra;
+            await fetch(orderUrl, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json", "X-Shopify-Access-Token": adminToken },
+              body: JSON.stringify({ order: { id: Number(shopifyOrderId), note: newNote } }),
+            }).catch(() => {});
+          }
+
+          console.log(`Dedup CPF ${cpf}: canônico=${canonical.legacyResourceId}, duplicados=${duplicates.map(d => d.legacyResourceId).join(",") || "nenhum"}`);
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Erro na dedup de CPF no Shopify", e);
+  }
+
   return new Response(JSON.stringify({ ok: true }), {
     headers: { ...corsHeaders, "Content-Type": "application/json" },
     status: 200,
