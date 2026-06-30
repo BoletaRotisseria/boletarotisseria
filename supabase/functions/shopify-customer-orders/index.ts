@@ -70,7 +70,7 @@ Deno.serve(async (req) => {
     }
 
     // 2) Listar pedidos do customer
-    const ord = await shopify(`/orders.json?customer_id=${customerId}&status=any&limit=50`);
+    const ord = await shopify(`/orders.json?customer_id=${customerId}&status=any&limit=100&order=created_at+desc`);
     if (!ord.ok) {
       console.error("orders fetch failed", ord.status, ord.body);
       return new Response(JSON.stringify({ orders: [] }), {

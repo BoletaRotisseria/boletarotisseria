@@ -5,7 +5,7 @@ import { useCliente } from "@/hooks/useCliente";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, LogOut, User, Mail, Phone, MapPin, Calendar, FileText, Pencil, Save, X, Package, ExternalLink } from "lucide-react";
+import { Loader2, LogOut, User, Mail, Phone, MapPin, Calendar, FileText, Pencil, Save, X, Package, ExternalLink, RefreshCw } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { maskPhone, maskCEP } from "@/lib/validators";
 import { supabase } from "@/integrations/supabase/client";
@@ -327,26 +327,81 @@ function statusInfo(o: ShopifyOrder): { label: string; tone: string; active: boo
   return { label: "Em andamento", tone: "bg-primary/10 text-primary", active: true };
 }
 
+type RangeKey = "all" | "7d" | "30d" | "90d" | "year";
+
+const RANGES: { key: RangeKey; label: string; days: number | null }[] = [
+  { key: "all", label: "Tudo", days: null },
+  { key: "7d", label: "7 dias", days: 7 },
+  { key: "30d", label: "30 dias", days: 30 },
+  { key: "90d", label: "90 dias", days: 90 },
+  { key: "year", label: "Este ano", days: 0 },
+];
+
 function PedidosSection({ userId }: { userId: string }) {
-  const { data, isLoading, error } = useQuery({
+  const [range, setRange] = useState<RangeKey>("all");
+  const { data, isLoading, isFetching, error, refetch } = useQuery({
     queryKey: ["pedidos-shopify", userId],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke<{ orders: ShopifyOrder[] }>("shopify-customer-orders", { body: {} });
       if (error) throw error;
       return data?.orders ?? [];
     },
-    staleTime: 60_000,
+    staleTime: 15_000,
   });
 
-  const orders = data ?? [];
+  const allOrders = (data ?? []).slice().sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+
+  const cutoff = (() => {
+    const r = RANGES.find((x) => x.key === range);
+    if (!r || r.days === null) return null;
+    if (r.key === "year") {
+      const d = new Date();
+      return new Date(d.getFullYear(), 0, 1).getTime();
+    }
+    return Date.now() - r.days * 24 * 60 * 60 * 1000;
+  })();
+
+  const orders = cutoff === null
+    ? allOrders
+    : allOrders.filter((o) => new Date(o.created_at).getTime() >= cutoff);
+
   const ativos = orders.filter((o) => statusInfo(o).active);
   const passados = orders.filter((o) => !statusInfo(o).active);
 
   return (
     <div className="rounded-xl border border-border bg-card p-6 shadow-sm space-y-4 animate-[fadeIn_0.6s_ease-out]">
-      <div className="flex items-center gap-2">
-        <Package className="h-4 w-4 text-muted-foreground" />
-        <h2 className="font-serif text-lg tracking-[-0.02em] text-foreground">Meus pedidos</h2>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <Package className="h-4 w-4 text-muted-foreground" />
+          <h2 className="font-serif text-lg tracking-[-0.02em] text-foreground">Meus pedidos</h2>
+        </div>
+        <button
+          onClick={() => refetch()}
+          disabled={isFetching}
+          className="font-sans text-xs text-muted-foreground hover:text-foreground tracking-[-0.02em] inline-flex items-center gap-1 disabled:opacity-50"
+          aria-label="Atualizar pedidos"
+        >
+          <RefreshCw className={`h-3.5 w-3.5 ${isFetching ? "animate-spin" : ""}`} />
+          Atualizar
+        </button>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5">
+        {RANGES.map((r) => (
+          <button
+            key={r.key}
+            onClick={() => setRange(r.key)}
+            className={`font-sans text-xs tracking-[-0.02em] px-2.5 py-1 rounded-full border transition-colors ${
+              range === r.key
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {r.label}
+          </button>
+        ))}
       </div>
 
       {isLoading ? (
@@ -355,8 +410,10 @@ function PedidosSection({ userId }: { userId: string }) {
         </div>
       ) : error ? (
         <p className="font-sans text-sm text-muted-foreground">Não foi possível carregar seus pedidos agora.</p>
-      ) : orders.length === 0 ? (
+      ) : allOrders.length === 0 ? (
         <p className="font-sans text-sm text-muted-foreground">Você ainda não tem pedidos.</p>
+      ) : orders.length === 0 ? (
+        <p className="font-sans text-sm text-muted-foreground">Nenhum pedido neste período.</p>
       ) : (
         <div className="space-y-5">
           {ativos.length > 0 && (
