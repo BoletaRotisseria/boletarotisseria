@@ -120,11 +120,22 @@ export default function CompletarCadastroPage() {
           </p>
         </div>
 
-        {/* Email read-only */}
+        {/* Email read-only com opção de trocar */}
         <div className="space-y-1.5">
           <Label className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">E-mail</Label>
           <Input value={user?.email || ""} disabled className="h-11 font-sans tracking-[-0.02em] bg-muted" />
+          <button
+            type="button"
+            onClick={async () => {
+              await supabase.auth.signOut();
+              navigate("/criar-conta", { replace: true });
+            }}
+            className="font-sans text-xs tracking-[-0.02em] text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+          >
+            Usar outro e-mail
+          </button>
         </div>
+
 
         {serverError && (
           <div className="animate-[fadeIn_0.3s_ease-out] rounded-lg bg-destructive/10 border border-destructive/20 px-4 py-3 text-sm font-sans text-destructive">
