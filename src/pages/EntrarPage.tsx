@@ -48,18 +48,6 @@ export default function EntrarPage() {
     setLoading(false);
   };
 
-  const handleGoogle = async () => {
-    setGoogleLoading(true);
-    setError(null);
-    const { error: err } = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (err) {
-      setError(err.message || "Erro ao conectar com o Google.");
-      setGoogleLoading(false);
-    }
-  };
-
   if (authLoading) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center">
