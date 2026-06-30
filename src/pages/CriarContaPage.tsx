@@ -37,6 +37,20 @@ export default function CriarContaPage() {
     setLoading(true);
     setServerError(null);
 
+    // Check email uniqueness in clientes
+    const emailClean = data.email.trim().toLowerCase();
+    const { data: existingEmail } = await supabase
+      .from("clientes")
+      .select("id")
+      .eq("email", emailClean)
+      .maybeSingle();
+
+    if (existingEmail) {
+      setServerError("Já existe um cadastro com esse e-mail. Faça login ou recupere sua senha.");
+      setLoading(false);
+      return;
+    }
+
     // Check CPF uniqueness
     const cpfClean = data.cpf.replace(/\D/g, "");
     const { data: existing } = await supabase
@@ -53,7 +67,7 @@ export default function CriarContaPage() {
 
     // Create auth user
     const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: data.email,
+      email: emailClean,
       password: data.senha,
       options: {
         data: { full_name: data.nome_completo },
@@ -62,11 +76,18 @@ export default function CriarContaPage() {
     });
 
     if (authError) {
-      if (authError.message.includes("already registered")) {
-        setServerError("Este e-mail já está cadastrado.");
+      if (authError.message.toLowerCase().includes("already") || authError.message.toLowerCase().includes("registered")) {
+        setServerError("Já existe um cadastro com esse e-mail. Faça login ou recupere sua senha.");
       } else {
         setServerError(getSafeErrorMessage(authError));
       }
+      setLoading(false);
+      return;
+    }
+
+    // Supabase returns user with empty identities array when email already exists (and confirmations enabled)
+    if (authData.user && Array.isArray(authData.user.identities) && authData.user.identities.length === 0) {
+      setServerError("Já existe um cadastro com esse e-mail. Faça login ou recupere sua senha.");
       setLoading(false);
       return;
     }
