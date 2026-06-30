@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useCliente } from "@/hooks/useCliente";
 import { Button } from "@/components/ui/button";
@@ -9,19 +9,22 @@ import { dateIsoToBr } from "@/lib/validators";
 export default function ContaPage() {
   const { user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { cliente, isLoading: clienteLoading, isComplete } = useCliente();
+  const userId = user?.id;
 
   useEffect(() => {
-    if (!authLoading && !user) {
+    if (!authLoading && !userId && location.pathname !== "/entrar") {
       navigate("/entrar?redirectTo=/conta", { replace: true });
     }
-  }, [user, authLoading, navigate]);
+  }, [userId, authLoading, navigate, location.pathname]);
 
   useEffect(() => {
-    if (user && !clienteLoading && !isComplete) {
+    if (userId && !clienteLoading && !isComplete && location.pathname !== "/completar-cadastro") {
       navigate("/completar-cadastro", { replace: true });
     }
-  }, [user, clienteLoading, isComplete, navigate]);
+  }, [userId, clienteLoading, isComplete, navigate, location.pathname]);
+
 
   if (authLoading || clienteLoading) {
     return (
