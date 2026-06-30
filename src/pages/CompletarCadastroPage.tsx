@@ -75,6 +75,20 @@ export default function CompletarCadastroPage() {
       return;
     }
 
+    // Sincroniza com Shopify (cria/atualiza customer lá)
+    try {
+      await supabase.functions.invoke("shopify-customer-sync", {
+        body: {
+          nome_completo: payload.nome_completo,
+          cpf: payload.cpf,
+          email: payload.email,
+          telefone: payload.telefone,
+        },
+      });
+    } catch (e) {
+      console.warn("shopify-customer-sync falhou (ignorado)", e);
+    }
+
     await queryClient.invalidateQueries({ queryKey: ["cliente", user.id] });
     navigate("/conta", { replace: true });
     setLoading(false);
