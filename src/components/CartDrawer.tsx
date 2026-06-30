@@ -402,13 +402,3 @@ export function CartDrawer() {
     </Sheet>
   );
 }
-
-                )}
-              </div>
-            </>
-          )}
-        </div>
-      </SheetContent>
-    </Sheet>
-  );
-}
