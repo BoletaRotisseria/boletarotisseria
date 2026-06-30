@@ -24,3 +24,14 @@ Object.defineProperty(window, "localStorage", {
     clear: vi.fn(),
   },
 });
+
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(window, "ResizeObserver", {
+  writable: true,
+  value: ResizeObserverMock,
+});
