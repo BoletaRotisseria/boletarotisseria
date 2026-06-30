@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useCliente } from "@/hooks/useCliente";
@@ -17,25 +17,28 @@ export default function CompletarCadastroPage() {
   const { user, loading: authLoading } = useAuth();
   const { cliente, isLoading: clienteLoading, isComplete } = useCliente();
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const userId = user?.id;
 
   const { register, handleSubmit, setValue, watch, formState: { errors }, reset } = useForm<CompletarCadastroFormData>({
     resolver: zodResolver(completarCadastroSchema),
   });
 
   useEffect(() => {
-    if (!authLoading && !user) {
+    if (!authLoading && !userId && location.pathname !== "/entrar") {
       navigate("/entrar", { replace: true });
     }
-  }, [user, authLoading, navigate]);
+  }, [userId, authLoading, navigate, location.pathname]);
 
   useEffect(() => {
-    if (user && !clienteLoading && isComplete) {
+    if (userId && !clienteLoading && isComplete && location.pathname !== "/conta") {
       navigate("/conta", { replace: true });
     }
-  }, [user, clienteLoading, isComplete, navigate]);
+  }, [userId, clienteLoading, isComplete, navigate, location.pathname]);
+
 
   // Prefill with existing data
   useEffect(() => {
