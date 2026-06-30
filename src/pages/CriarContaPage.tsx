@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,14 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader2, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Loader2, CheckCircle2, ArrowLeft, Info } from "lucide-react";
 import { getSafeErrorMessage } from "@/lib/errors";
 
 export default function CriarContaPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const [isExistingAccount, setIsExistingAccount] = useState(false);
 
   const {
     register,
@@ -28,9 +29,16 @@ export default function CriarContaPage() {
     defaultValues: { termos: false as any },
   });
 
+  const handleExistingAccount = () => {
+    setIsExistingAccount(true);
+    setServerError(null);
+    setLoading(false);
+  };
+
   const onSubmit = async (data: CadastroFormData) => {
     setLoading(true);
     setServerError(null);
+    setIsExistingAccount(false);
 
     // Check email uniqueness in clientes
     const emailClean = data.email.trim().toLowerCase();
@@ -41,8 +49,7 @@ export default function CriarContaPage() {
       .maybeSingle();
 
     if (existingEmail) {
-      setServerError("Já existe um cadastro com esse e-mail. Faça login ou recupere sua senha.");
-      setLoading(false);
+      handleExistingAccount();
       return;
     }
 
@@ -72,7 +79,7 @@ export default function CriarContaPage() {
 
     if (authError) {
       if (authError.message.toLowerCase().includes("already") || authError.message.toLowerCase().includes("registered")) {
-        setServerError("Já existe um cadastro com esse e-mail. Faça login ou recupere sua senha.");
+        handleExistingAccount();
       } else {
         setServerError(getSafeErrorMessage(authError));
       }
@@ -82,8 +89,7 @@ export default function CriarContaPage() {
 
     // Supabase returns user with empty identities array when email already exists
     if (authData.user && Array.isArray(authData.user.identities) && authData.user.identities.length === 0) {
-      setServerError("Já existe um cadastro com esse e-mail. Faça login ou recupere sua senha.");
-      setLoading(false);
+      handleExistingAccount();
       return;
     }
 
@@ -156,11 +162,31 @@ export default function CriarContaPage() {
           </p>
         </div>
 
-        {serverError && (
+        {isExistingAccount ? (
+          <Alert className="animate-[fadeIn_0.3s_ease-out] border-accent/20 bg-accent/10 text-foreground [&>svg]:text-accent">
+            <Info className="h-4 w-4" />
+            <AlertTitle className="font-serif text-base tracking-[-0.02em] lowercase">Já existe uma conta com esse e-mail</AlertTitle>
+            <AlertDescription className="font-sans text-sm text-muted-foreground">
+              Use o botão abaixo para entrar. Se esqueceu sua senha, recupere o acesso.
+            </AlertDescription>
+            <div className="mt-4 flex flex-col gap-2">
+              <Link to="/entrar">
+                <Button className="w-full h-11 font-sans font-semibold tracking-[-0.02em]">
+                  Entrar
+                </Button>
+              </Link>
+              <Link to="/recuperar-senha">
+                <Button variant="outline" className="w-full h-11 font-sans tracking-[-0.02em]">
+                  Esqueci a senha
+                </Button>
+              </Link>
+            </div>
+          </Alert>
+        ) : serverError ? (
           <div className="animate-[fadeIn_0.3s_ease-out] rounded-lg bg-destructive/10 border border-destructive/20 px-4 py-3 text-sm font-sans text-destructive">
             {serverError}
           </div>
-        )}
+        ) : null}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <FieldWrapper label="Nome completo" error={errors.nome_completo?.message}>
