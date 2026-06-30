@@ -2,18 +2,6 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
-Object.defineProperty(window, "localStorage", {
-  writable: true,
-  value: {
-    getItem: vi.fn(),
-    setItem: vi.fn(),
-    removeItem: vi.fn(),
-    clear: vi.fn(),
-  },
-});
-
-import CriarContaPage from "./CriarContaPage";
-
 const fromMock = vi.fn();
 const maybeSingleMock = vi.fn();
 const signUpMock = vi.fn();
@@ -26,6 +14,8 @@ vi.mock("@/integrations/supabase/client", () => ({
     functions: { invoke: invokeMock },
   },
 }));
+
+import CriarContaPage from "./CriarContaPage";
 
 describe("CriarContaPage", () => {
   beforeEach(() => {
