@@ -1,0 +1,1 @@
+GRANT EXECUTE ON FUNCTION public.upsert_cliente_servidor(uuid, text, text, text, text) TO anon, authenticated;
