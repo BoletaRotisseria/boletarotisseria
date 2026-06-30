@@ -45,27 +45,29 @@ Deno.serve(async (req) => {
 
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-    const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const ANON = Deno.env.get("SUPABASE_ANON_KEY")!;
 
-    // Authenticate caller
+    // Autenticação opcional: durante o cadastro (com confirmação de e-mail)
+    // ainda não há sessão. Aceitamos os dados do body nesse caso.
+    let sessionEmail: string | null = null;
     const authHeader = req.headers.get("Authorization") ?? "";
-    const userClient = createClient(SUPABASE_URL, ANON, {
-      global: { headers: { Authorization: authHeader } },
-    });
-    const { data: userRes, error: userErr } = await userClient.auth.getUser();
-    if (userErr || !userRes?.user) {
-      return new Response(JSON.stringify({ error: "unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    if (authHeader && !authHeader.endsWith(ANON)) {
+      try {
+        const userClient = createClient(SUPABASE_URL, ANON, {
+          global: { headers: { Authorization: authHeader } },
+        });
+        const { data: userRes } = await userClient.auth.getUser();
+        sessionEmail = userRes?.user?.email ?? null;
+      } catch (_) {
+        // ignora — segue como cadastro novo
+      }
     }
-    const user = userRes.user;
 
     const body = await req.json().catch(() => ({}));
     const nome = String(body.nome_completo ?? "").trim();
     const cpfRaw = String(body.cpf ?? "").replace(/\D/g, "");
     const telefoneRaw = String(body.telefone ?? "").trim();
-    const email = String(body.email ?? user.email ?? "").trim().toLowerCase();
+    const email = String(body.email ?? sessionEmail ?? "").trim().toLowerCase();
 
     if (!email) {
       return new Response(JSON.stringify({ error: "email obrigatório" }), {
