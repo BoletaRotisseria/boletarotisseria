@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS clientes_cpf_unique ON public.clientes (cpf) WHERE cpf <> '';
