@@ -204,7 +204,22 @@ export default function CriarContaPage() {
           </FieldWrapper>
 
           <FieldWrapper label="E-mail" error={errors.email?.message}>
-            <Input {...register("email")} type="email" placeholder="seu@email.com" className="h-11 font-sans tracking-[-0.02em]" />
+            <Input
+              {...register("email")}
+              type="email"
+              placeholder="seu@email.com"
+              className="h-11 font-sans tracking-[-0.02em]"
+              onBlur={async (e) => {
+                const value = e.target.value.trim().toLowerCase();
+                if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return;
+                const { data: existing } = await supabase
+                  .from("clientes")
+                  .select("id")
+                  .eq("email", value)
+                  .maybeSingle();
+                if (existing) handleExistingAccount();
+              }}
+            />
           </FieldWrapper>
 
           <FieldWrapper label="Telefone / WhatsApp" error={errors.telefone?.message}>
