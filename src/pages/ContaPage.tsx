@@ -303,3 +303,113 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     </div>
   );
 }
+
+type ShopifyOrder = {
+  id: number;
+  name: string;
+  created_at: string;
+  financial_status: string | null;
+  fulfillment_status: string | null;
+  cancelled_at: string | null;
+  total_price: string;
+  currency: string;
+  order_status_url: string | null;
+  line_items: { title: string; quantity: number; variant_title: string | null }[];
+};
+
+function statusInfo(o: ShopifyOrder): { label: string; tone: string; active: boolean } {
+  if (o.cancelled_at) return { label: "Cancelado", tone: "bg-destructive/10 text-destructive", active: false };
+  if (o.fulfillment_status === "fulfilled") return { label: "Entregue", tone: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", active: false };
+  if (o.fulfillment_status === "partial") return { label: "Entrega parcial", tone: "bg-amber-500/10 text-amber-700 dark:text-amber-400", active: true };
+  if (o.financial_status === "paid") return { label: "Em preparo", tone: "bg-primary/10 text-primary", active: true };
+  if (o.financial_status === "pending") return { label: "Aguardando pagamento", tone: "bg-amber-500/10 text-amber-700 dark:text-amber-400", active: true };
+  if (o.financial_status === "refunded") return { label: "Reembolsado", tone: "bg-muted text-muted-foreground", active: false };
+  return { label: "Em andamento", tone: "bg-primary/10 text-primary", active: true };
+}
+
+function PedidosSection({ userId }: { userId: string }) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["pedidos-shopify", userId],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke<{ orders: ShopifyOrder[] }>("shopify-customer-orders", { body: {} });
+      if (error) throw error;
+      return data?.orders ?? [];
+    },
+    staleTime: 60_000,
+  });
+
+  const orders = data ?? [];
+  const ativos = orders.filter((o) => statusInfo(o).active);
+  const passados = orders.filter((o) => !statusInfo(o).active);
+
+  return (
+    <div className="rounded-xl border border-border bg-card p-6 shadow-sm space-y-4 animate-[fadeIn_0.6s_ease-out]">
+      <div className="flex items-center gap-2">
+        <Package className="h-4 w-4 text-muted-foreground" />
+        <h2 className="font-serif text-lg tracking-[-0.02em] text-foreground">Meus pedidos</h2>
+      </div>
+
+      {isLoading ? (
+        <div className="flex items-center justify-center py-6">
+          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        </div>
+      ) : error ? (
+        <p className="font-sans text-sm text-muted-foreground">Não foi possível carregar seus pedidos agora.</p>
+      ) : orders.length === 0 ? (
+        <p className="font-sans text-sm text-muted-foreground">Você ainda não tem pedidos.</p>
+      ) : (
+        <div className="space-y-5">
+          {ativos.length > 0 && (
+            <div className="space-y-2">
+              <p className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground font-semibold">Em andamento</p>
+              {ativos.map((o) => <PedidoCard key={o.id} o={o} />)}
+            </div>
+          )}
+          {passados.length > 0 && (
+            <div className="space-y-2">
+              <p className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground font-semibold">Histórico</p>
+              {passados.map((o) => <PedidoCard key={o.id} o={o} />)}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PedidoCard({ o }: { o: ShopifyOrder }) {
+  const s = statusInfo(o);
+  const data = new Date(o.created_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+  const total = Number(o.total_price).toLocaleString("pt-BR", { style: "currency", currency: o.currency || "BRL" });
+  return (
+    <div className="rounded-lg border border-border/60 bg-background/50 p-3 space-y-2">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <p className="font-sans text-sm font-semibold tracking-[-0.02em] text-foreground">Pedido {o.name}</p>
+          <p className="font-sans text-xs text-muted-foreground tracking-[-0.02em]">{data} · {total}</p>
+        </div>
+        <span className={`font-sans text-[10px] uppercase tracking-wider px-2 py-1 rounded-full whitespace-nowrap ${s.tone}`}>
+          {s.label}
+        </span>
+      </div>
+      {o.line_items.length > 0 && (
+        <ul className="font-sans text-xs text-muted-foreground tracking-[-0.02em] space-y-0.5">
+          {o.line_items.slice(0, 4).map((li, i) => (
+            <li key={i}>· {li.quantity}× {li.title}{li.variant_title ? ` (${li.variant_title})` : ""}</li>
+          ))}
+          {o.line_items.length > 4 && <li className="italic">+ {o.line_items.length - 4} item(ns)</li>}
+        </ul>
+      )}
+      {o.order_status_url && (
+        <a
+          href={o.order_status_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 font-sans text-xs text-primary hover:underline tracking-[-0.02em]"
+        >
+          Acompanhar pedido <ExternalLink className="h-3 w-3" />
+        </a>
+      )}
+    </div>
+  );
+}
