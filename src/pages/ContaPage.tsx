@@ -191,6 +191,8 @@ export default function ContaPage() {
               <Pencil className="h-4 w-4 mr-2" />
               Editar dados
             </Button>
+
+            <PedidosSection userId={userId!} />
           </>
         ) : (
           <div className="rounded-xl border border-border bg-card p-6 shadow-sm space-y-4 animate-[fadeIn_0.3s_ease-out]">
