@@ -80,96 +80,6 @@ export type Database = {
         }
         Relationships: []
       }
-      clientes: {
-        Row: {
-          atualizado_em: string
-          bairro: string
-          cep: string
-          cidade: string
-          complemento: string | null
-          cpf: string
-          criado_em: string
-          data_nascimento: string | null
-          email: string
-          estado: string
-          id: string
-          nome_completo: string
-          numero: string
-          rua: string
-          telefone: string
-        }
-        Insert: {
-          atualizado_em?: string
-          bairro?: string
-          cep?: string
-          cidade?: string
-          complemento?: string | null
-          cpf?: string
-          criado_em?: string
-          data_nascimento?: string | null
-          email?: string
-          estado?: string
-          id: string
-          nome_completo?: string
-          numero?: string
-          rua?: string
-          telefone?: string
-        }
-        Update: {
-          atualizado_em?: string
-          bairro?: string
-          cep?: string
-          cidade?: string
-          complemento?: string | null
-          cpf?: string
-          criado_em?: string
-          data_nascimento?: string | null
-          email?: string
-          estado?: string
-          id?: string
-          nome_completo?: string
-          numero?: string
-          rua?: string
-          telefone?: string
-        }
-        Relationships: []
-      }
-      profiles: {
-        Row: {
-          address: string | null
-          avatar_url: string | null
-          created_at: string
-          email: string | null
-          full_name: string | null
-          id: string
-          phone: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          address?: string | null
-          avatar_url?: string | null
-          created_at?: string
-          email?: string | null
-          full_name?: string | null
-          id?: string
-          phone?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          address?: string | null
-          avatar_url?: string | null
-          created_at?: string
-          email?: string | null
-          full_name?: string | null
-          id?: string
-          phone?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       user_roles: {
         Row: {
           created_at: string
@@ -196,29 +106,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      cliente_existe: {
-        Args: { _email: string; _telefone: string }
-        Returns: boolean
-      }
-      email_por_cpf: { Args: { _cpf: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
-      }
-      is_cliente_complete: { Args: { cliente_id: string }; Returns: boolean }
-      is_own_profile: { Args: { profile_user_id: string }; Returns: boolean }
-      upsert_cliente_servidor: {
-        Args: {
-          _cpf: string
-          _email: string
-          _id: string
-          _nome: string
-          _telefone: string
-        }
-        Returns: undefined
       }
     }
     Enums: {
