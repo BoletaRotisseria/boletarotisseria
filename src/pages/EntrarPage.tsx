@@ -8,23 +8,32 @@ import { customerLogin, customerCreate, customerRecover } from '@/lib/shopifyCus
 import { useShopifyCustomer } from '@/hooks/useShopifyCustomer';
 import { toast } from 'sonner';
 
-const SHOP_ID = '73655975981';
+const SHOP_DOMAIN = 'boleta-direct-8l7a1.myshopify.com';
 const SHOP_LOGIN_URL = 'https://shop.app/pay/login';
 
-// Load Shop JS SDK once
-function useShopJS() {
+// Load Shopify Storefront Web Components SDK once (provides <shopify-account>)
+function useShopifyWebComponents() {
   useEffect(() => {
-    if (document.getElementById('shopify-shop-js')) return;
+    if (document.getElementById('shopify-web-components')) return;
     const s = document.createElement('script');
-    s.id = 'shopify-shop-js';
-    s.src = 'https://cdn.shopify.com/shopifycloud/shop-js/client.js';
-    s.async = true;
+    s.id = 'shopify-web-components';
+    s.type = 'module';
+    s.src = 'https://cdn.shopify.com/storefront/web-components.js';
     document.head.appendChild(s);
   }, []);
 }
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'shopify-store': any;
+      'shopify-account': any;
+    }
+  }
+}
+
 export default function EntrarPage() {
-  useShopJS();
+  useShopifyWebComponents();
   const navigate = useNavigate();
   const { isLoggedIn, reload } = useShopifyCustomer();
 
@@ -82,11 +91,13 @@ export default function EntrarPage() {
           </p>
         </div>
 
-        {/* Shop Pay auto-detect */}
+        {/* Shopify account component: shows Shop auto-recognition popup + sign-in sheet */}
         {mode === 'login' && (
-          <div className="flex justify-center" dangerouslySetInnerHTML={{
-            __html: `<shop-user-status shop-id="${SHOP_ID}"></shop-user-status>`
-          }} />
+          <div className="flex justify-center">
+            <shopify-store store-domain={SHOP_DOMAIN}>
+              <shopify-account></shopify-account>
+            </shopify-store>
+          </div>
         )}
 
         {error && (
