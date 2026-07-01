@@ -20,6 +20,7 @@ import SemanaPage from "./pages/SemanaPage";
 import RotisseriePage from "./pages/RotisseriePage";
 import EntrarPage from "./pages/EntrarPage";
 import MinhaContaPage from "./pages/MinhaContaPage";
+import ObrigadoPage from "./pages/ObrigadoPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
