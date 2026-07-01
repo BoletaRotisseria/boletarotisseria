@@ -7,17 +7,11 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { customerLogin, customerCreate, customerRecover, getStoredToken } from '@/lib/shopifyCustomer';
 
-const SHOP_ID = '73655975981';
-
 declare global {
   namespace JSX {
     interface IntrinsicElements {
       'shop-login-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-        'client-id'?: string;
-        'shop-id'?: string;
-        version?: string;
-        scope?: string;
-        'redirect-uri'?: string;
+        storefront?: string;
       };
     }
   }
