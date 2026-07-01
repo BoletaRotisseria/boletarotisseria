@@ -99,11 +99,7 @@ export default function EntrarPage() {
         {mode === 'login' && (
           <>
             <div className="w-full flex justify-center">
-              <shop-login-button
-                shop-id={SHOP_ID}
-                version="2"
-                scope="openid email profile"
-              />
+              <shop-login-button storefront="boletarotisseria.myshopify.com" />
             </div>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
