@@ -305,39 +305,24 @@ export function CartDrawer() {
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
                 </div>
 
-                {!isComplete && (
-                  <div className="space-y-2">
-                    <Label htmlFor="checkout-email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground flex items-center gap-1.5">
-                      <Mail className="h-3.5 w-3.5" /> Seu e-mail
-                    </Label>
-                    <Input
-                      id="checkout-email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="seu@email.com"
-                      value={guestEmail}
-                      onChange={(e) => { setGuestEmail(e.target.value); setEmailNotFound(false); }}
-                      className="h-11 font-sans"
-                    />
-                  </div>
-                )}
+                <div className="space-y-2">
+                  <Label htmlFor="checkout-email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground flex items-center gap-1.5">
+                    <Mail className="h-3.5 w-3.5" /> Seu e-mail
+                  </Label>
+                  <Input
+                    id="checkout-email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="seu@email.com"
+                    value={guestEmail}
+                    onChange={(e) => setGuestEmail(e.target.value)}
+                    className="h-11 font-sans"
+                  />
+                  {isLoggedIn && (
+                    <p className="text-[11px] text-muted-foreground">Conectado como {customer?.email}</p>
+                  )}
+                </div>
 
-                {emailNotFound && (
-                  <div className="rounded-md border border-primary/30 bg-primary/5 p-3 space-y-2 animate-[fadeIn_0.2s_ease-out]">
-                    <p className="text-xs text-foreground font-sans">
-                      Não encontramos um cadastro com este e-mail. Faça login no Shopify para continuar.
-                    </p>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="w-full"
-                      onClick={() => window.open(SHOPIFY_STORE_LOGIN_URL, "_blank", "noopener,noreferrer")}
-                    >
-                      Entrar no Shopify
-                    </Button>
-                  </div>
-                )}
 
                 <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout || emailChecking}>
                   {isLoading || isSyncing || emailChecking ? (
