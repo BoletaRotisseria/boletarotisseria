@@ -34,7 +34,7 @@ declare global {
 
 
 export default function EntrarPage() {
-  useShopifyWebComponents();
+  useShopJS();
   const navigate = useNavigate();
   const { isLoggedIn, reload } = useShopifyCustomer();
 
