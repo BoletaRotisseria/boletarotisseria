@@ -11,14 +11,14 @@ import { toast } from 'sonner';
 const SHOP_DOMAIN = 'boleta-direct-8l7a1.myshopify.com';
 const SHOP_LOGIN_URL = 'https://shop.app/pay/login';
 
-// Load Shopify Storefront Web Components SDK once (provides <shopify-account>)
-function useShopifyWebComponents() {
+// Load Shop JS SDK (provides <shop-login-button> with auto-recognition popup)
+function useShopJS() {
   useEffect(() => {
-    if (document.getElementById('shopify-web-components')) return;
+    if (document.getElementById('shop-js-sdk')) return;
     const s = document.createElement('script');
-    s.id = 'shopify-web-components';
-    s.type = 'module';
-    s.src = 'https://cdn.shopify.com/storefront/web-components.js';
+    s.id = 'shop-js-sdk';
+    s.src = 'https://shop.app/js/shop-js/client.js';
+    s.async = true;
     document.head.appendChild(s);
   }, []);
 }
@@ -26,11 +26,12 @@ function useShopifyWebComponents() {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'shopify-store': any;
-      'shopify-account': any;
+      'shop-login-button': any;
+      'shop-user-status': any;
     }
   }
 }
+
 
 export default function EntrarPage() {
   useShopifyWebComponents();
