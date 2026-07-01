@@ -324,8 +324,8 @@ export function CartDrawer() {
                 </div>
 
 
-                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout || emailChecking}>
-                  {isLoading || isSyncing || emailChecking ? (
+                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout}>
+                  {isLoading || isSyncing ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
                     <>
