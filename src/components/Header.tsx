@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
+import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
 
 interface SubItem {
