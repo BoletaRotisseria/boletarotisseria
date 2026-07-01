@@ -43,19 +43,29 @@ export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const {
     items, isLoading, isSyncing,
-    updateQuantity, removeItem, getCheckoutUrl, syncCart,
+    addItem, updateQuantity, removeItem, getCheckoutUrl, syncCart,
     fulfillmentMethod, fulfillmentDate, fulfillmentTime,
     setFulfillmentMethod, setFulfillmentDate, setFulfillmentTime,
     submitFulfillmentAttributes,
   } = useCartStore();
 
   const [guestEmail, setGuestEmail] = useState("");
+  const [isGift, setIsGift] = useState<"sim" | "nao" | null>(null);
+  const [giftMessage, setGiftMessage] = useState("");
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
+  const selectedGiftId = giftItem
+    ? GIFT_WRAP_OPTIONS.find((o) => o.variantId === giftItem.variantId)?.id ?? null
+    : (isGift === "sim" ? "sacola-boleta" : null);
   const totalItems = visibleItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
   const currencyCode = items[0]?.price.currencyCode || "BRL";
+
+  // Sync isGift state when giftItem changes (e.g. from persisted cart)
+  useEffect(() => {
+    if (giftItem && isGift === null) setIsGift("sim");
+  }, [giftItem, isGift]);
 
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
 
