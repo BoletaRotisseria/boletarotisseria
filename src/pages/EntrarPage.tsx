@@ -11,14 +11,14 @@ import { toast } from 'sonner';
 const SHOP_DOMAIN = 'boleta-direct-8l7a1.myshopify.com';
 const SHOP_LOGIN_URL = 'https://shop.app/pay/login';
 
-// Load Shopify Storefront Web Components SDK once (provides <shopify-account>)
-function useShopifyWebComponents() {
+// Load Shop JS SDK (provides <shop-login-button> with auto-recognition popup)
+function useShopJS() {
   useEffect(() => {
-    if (document.getElementById('shopify-web-components')) return;
+    if (document.getElementById('shop-js-sdk')) return;
     const s = document.createElement('script');
-    s.id = 'shopify-web-components';
-    s.type = 'module';
-    s.src = 'https://cdn.shopify.com/storefront/web-components.js';
+    s.id = 'shop-js-sdk';
+    s.src = 'https://shop.app/js/shop-js/client.js';
+    s.async = true;
     document.head.appendChild(s);
   }, []);
 }
@@ -26,14 +26,15 @@ function useShopifyWebComponents() {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'shopify-store': any;
-      'shopify-account': any;
+      'shop-login-button': any;
+      'shop-user-status': any;
     }
   }
 }
 
+
 export default function EntrarPage() {
-  useShopifyWebComponents();
+  useShopJS();
   const navigate = useNavigate();
   const { isLoggedIn, reload } = useShopifyCustomer();
 
@@ -91,14 +92,24 @@ export default function EntrarPage() {
           </p>
         </div>
 
-        {/* Shopify account component: shows Shop auto-recognition popup + sign-in sheet */}
+        {/* Shop auto-recognition popup + Shop Pay login button */}
         {mode === 'login' && (
           <div className="flex justify-center">
-            <shopify-store store-domain={SHOP_DOMAIN}>
-              <shopify-account></shopify-account>
-            </shopify-store>
+            <shop-login-button
+              client-id="8fe23eda-a06d-46bb-931a-8de52d5b8016"
+              store-name="Boleta Rotisserie"
+              shop-permanent-domain={SHOP_DOMAIN}
+              redirect-uri={typeof window !== 'undefined' ? window.location.origin + '/entrar' : ''}
+              scope="openid email profile"
+              response-type="code"
+              flow="self"
+              version="unstable"
+              analytics-context="loginwithshop_lovable"
+              action="continue"
+            ></shop-login-button>
           </div>
         )}
+
 
         {error && (
           <div className="rounded-lg bg-destructive/10 border border-destructive/20 px-4 py-3 text-sm text-destructive">
