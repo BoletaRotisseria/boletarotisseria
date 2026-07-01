@@ -33,15 +33,6 @@ export default function EntrarPage() {
     if (getStoredToken()) navigate('/minha-conta', { replace: true });
   }, [navigate]);
 
-  // Load Shop JS script once
-  useEffect(() => {
-    if (document.querySelector('script[data-shop-js]')) return;
-    const s = document.createElement('script');
-    s.src = 'https://shop.app/js/shop-js/shop-js.js';
-    s.async = true;
-    s.setAttribute('data-shop-js', 'true');
-    document.head.appendChild(s);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
