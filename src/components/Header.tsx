@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
-import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
 
 interface SubItem {
@@ -97,7 +96,6 @@ export function Header() {
   const mobileClosedByClick = useRef(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn } = useShopifyCustomer();
 
   const handleEnter = (label: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -241,9 +239,9 @@ export function Header() {
             </button>
           </div>
           <Link
-            to={isLoggedIn ? "/minha-conta" : "/entrar"}
+            to="/entrar"
             className="p-2 text-foreground hover:text-foreground/70 transition-colors"
-            aria-label={isLoggedIn ? "Minha Conta" : "Entrar"}
+            aria-label="Minha conta"
           >
             <User className="h-5 w-5" />
           </Link>

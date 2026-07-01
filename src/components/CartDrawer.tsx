@@ -13,7 +13,6 @@ import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_VARIANT_IDS } from "@/lib/giftWrap";
-import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 
 const WEEKDAY_SLOTS = ["11h às 13h", "13h às 17h30"];
 const SATURDAY_SLOTS = ["11h às 13h"];
@@ -41,7 +40,6 @@ function toISODate(d: Date): string {
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
-  const { customer, isLoggedIn } = useShopifyCustomer();
   const {
     items, isLoading, isSyncing,
     updateQuantity, removeItem, getCheckoutUrl, syncCart,
@@ -51,13 +49,6 @@ export function CartDrawer() {
   } = useCartStore();
 
   const [guestEmail, setGuestEmail] = useState("");
-
-  // Preenche e-mail se o cliente estiver logado no Shopify
-  useEffect(() => {
-    if (isLoggedIn && customer?.email) {
-      setGuestEmail(customer.email);
-    }
-  }, [isLoggedIn, customer?.email]);
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -318,9 +309,6 @@ export function CartDrawer() {
                     onChange={(e) => setGuestEmail(e.target.value)}
                     className="h-11 font-sans"
                   />
-                  {isLoggedIn && (
-                    <p className="text-[11px] text-muted-foreground">Conectado como {customer?.email}</p>
-                  )}
                 </div>
 
 
