@@ -100,8 +100,51 @@ export function CartDrawer() {
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
 
+  const selectGiftOption = async (optionId: string) => {
+    const currentItems = useCartStore.getState().items;
+    // Remove existing gift wrap items
+    for (const it of currentItems) {
+      if (GIFT_WRAP_VARIANT_IDS.has(it.variantId)) {
+        await removeItem(it.variantId);
+      }
+    }
+    const opt = GIFT_WRAP_OPTIONS.find((o) => o.id === optionId);
+    if (!opt) return;
+    const cartItem = buildGiftWrapCartItem(opt);
+    if (cartItem) await addItem(cartItem);
+  };
+
+  const clearGiftSelection = async () => {
+    const currentItems = useCartStore.getState().items;
+    for (const it of currentItems) {
+      if (GIFT_WRAP_VARIANT_IDS.has(it.variantId)) {
+        await removeItem(it.variantId);
+      }
+    }
+  };
+
+  const handleGiftToggle = async (value: "sim" | "nao") => {
+    setIsGift(value);
+    if (value === "nao") {
+      setGiftMessage("");
+      await clearGiftSelection();
+    }
+  };
+
   const proceedToCheckout = async () => {
-    await submitFulfillmentAttributes();
+    const extraAttrs: Array<{ key: string; value: string }> = [];
+    const extraNote: string[] = [];
+    if (isGift === "sim" && selectedGiftId) {
+      const opt = GIFT_WRAP_OPTIONS.find((o) => o.id === selectedGiftId);
+      extraAttrs.push({ key: "Presente", value: "Sim" });
+      if (opt) extraAttrs.push({ key: "Embalagem", value: opt.label });
+      if (giftMessage.trim()) {
+        extraAttrs.push({ key: "Mensagem do Presente", value: giftMessage.trim() });
+        extraNote.push(`Mensagem do Presente: ${giftMessage.trim()}`);
+      }
+      if (opt) extraNote.push(`Embalagem de Presente: ${opt.label}`);
+    }
+    await submitFulfillmentAttributes(extraAttrs, extraNote);
     const checkoutUrl = getCheckoutUrl();
     if (!checkoutUrl) return;
     try {
