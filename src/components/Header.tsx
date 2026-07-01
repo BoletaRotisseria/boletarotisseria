@@ -241,9 +241,9 @@ export function Header() {
             </button>
           </div>
           <Link
-            to="/entrar"
+            to={isLoggedIn ? "/minha-conta" : "/entrar"}
             className="p-2 text-foreground hover:text-foreground/70 transition-colors"
-            aria-label="Minha conta"
+            aria-label={isLoggedIn ? "Minha conta" : "Entrar"}
           >
             <User className="h-5 w-5" />
           </Link>
