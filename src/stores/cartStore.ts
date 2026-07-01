@@ -33,7 +33,7 @@ interface CartStore {
   setFulfillmentMethod: (m: FulfillmentMethod | null) => void;
   setFulfillmentDate: (d: string | null) => void;
   setFulfillmentTime: (t: string | null) => void;
-  submitFulfillmentAttributes: () => Promise<void>;
+  submitFulfillmentAttributes: (extraAttributes?: Array<{ key: string; value: string }>, extraNoteLines?: string[]) => Promise<void>;
   getCheckoutUrl: () => string | null;
 }
 
