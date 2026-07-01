@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.bling-oauth-callback]
 verify_jwt = false
+
+[functions.tag-order-by-delivery]
+verify_jwt = false

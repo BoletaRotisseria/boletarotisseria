@@ -147,6 +147,9 @@ export const useCartStore = create<CartStore>()(
         ];
         const note = noteParts.join('\n');
         try {
+          localStorage.setItem('pending_delivery', JSON.stringify({ fulfillmentDate, fulfillmentTime }));
+        } catch (e) { /* ignore */ }
+        try {
           const [attrRes, noteRes] = await Promise.all([
             updateShopifyCartAttributes(cartId, attributes),
             updateShopifyCartNote(cartId, note),

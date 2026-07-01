@@ -20,6 +20,7 @@ import SemanaPage from "./pages/SemanaPage";
 import RotisseriePage from "./pages/RotisseriePage";
 import EntrarPage from "./pages/EntrarPage";
 import MinhaContaPage from "./pages/MinhaContaPage";
+import ObrigadoPage from "./pages/ObrigadoPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ function AppContent() {
         {/* Auth (Shopify Storefront Customer API) */}
         <Route path="/entrar" element={<EntrarPage />} />
         <Route path="/minha-conta" element={<MinhaContaPage />} />
+        <Route path="/obrigado" element={<ObrigadoPage />} />
         {/* Legacy redirects */}
         <Route path="/conta" element={<Navigate to="/minha-conta" replace />} />
         <Route path="/login" element={<Navigate to="/entrar" replace />} />
