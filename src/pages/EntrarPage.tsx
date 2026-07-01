@@ -91,11 +91,13 @@ export default function EntrarPage() {
           </p>
         </div>
 
-        {/* Shop Pay auto-detect */}
+        {/* Shopify account component: shows Shop auto-recognition popup + sign-in sheet */}
         {mode === 'login' && (
-          <div className="flex justify-center" dangerouslySetInnerHTML={{
-            __html: `<shop-user-status shop-id="${SHOP_ID}"></shop-user-status>`
-          }} />
+          <div className="flex justify-center">
+            <shopify-store store-domain={SHOP_DOMAIN}>
+              <shopify-account></shopify-account>
+            </shopify-store>
+          </div>
         )}
 
         {error && (
