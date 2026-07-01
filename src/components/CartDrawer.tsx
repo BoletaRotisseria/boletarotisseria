@@ -13,11 +13,7 @@ import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_VARIANT_IDS } from "@/lib/giftWrap";
-import { useAuth } from "@/hooks/useAuth";
-import { useCliente } from "@/hooks/useCliente";
-import { supabase } from "@/integrations/supabase/client";
-
-const SHOPIFY_STORE_LOGIN_URL = "https://boleta-direct-8l7a1.myshopify.com/account/login";
+import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 
 const WEEKDAY_SLOTS = ["11h às 13h", "13h às 17h30"];
 const SATURDAY_SLOTS = ["11h às 13h"];
@@ -45,8 +41,7 @@ function toISODate(d: Date): string {
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
-  const { cliente, isComplete } = useCliente();
+  const { customer, isLoggedIn } = useShopifyCustomer();
   const {
     items, isLoading, isSyncing,
     updateQuantity, removeItem, getCheckoutUrl, syncCart,
@@ -56,18 +51,13 @@ export function CartDrawer() {
   } = useCartStore();
 
   const [guestEmail, setGuestEmail] = useState("");
-  const [emailChecking, setEmailChecking] = useState(false);
-  const [emailNotFound, setEmailNotFound] = useState(false);
 
-  // Reseta gate quando logado/cadastro completo
+  // Preenche e-mail se o cliente estiver logado no Shopify
   useEffect(() => {
-    if (isComplete) {
-      setEmailNotFound(false);
-      setGuestEmail("");
-    } else if (user?.email) {
-      setGuestEmail(user.email);
+    if (isLoggedIn && customer?.email) {
+      setGuestEmail(customer.email);
     }
-  }, [isComplete, user?.email]);
+  }, [isLoggedIn, customer?.email]);
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -103,7 +93,7 @@ export function CartDrawer() {
     !isLoading &&
     !isSyncing;
 
-  const canCheckout = baseReady && (isComplete || guestEmail.trim().length > 0);
+  const canCheckout = baseReady && guestEmail.trim().length > 0;
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
