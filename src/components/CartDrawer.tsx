@@ -13,11 +13,7 @@ import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_VARIANT_IDS } from "@/lib/giftWrap";
-import { useAuth } from "@/hooks/useAuth";
-import { useCliente } from "@/hooks/useCliente";
-import { supabase } from "@/integrations/supabase/client";
-
-const SHOPIFY_STORE_LOGIN_URL = "https://boleta-direct-8l7a1.myshopify.com/account/login";
+import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 
 const WEEKDAY_SLOTS = ["11h às 13h", "13h às 17h30"];
 const SATURDAY_SLOTS = ["11h às 13h"];
@@ -45,8 +41,7 @@ function toISODate(d: Date): string {
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
-  const { cliente, isComplete } = useCliente();
+  const { customer, isLoggedIn } = useShopifyCustomer();
   const {
     items, isLoading, isSyncing,
     updateQuantity, removeItem, getCheckoutUrl, syncCart,
@@ -56,18 +51,13 @@ export function CartDrawer() {
   } = useCartStore();
 
   const [guestEmail, setGuestEmail] = useState("");
-  const [emailChecking, setEmailChecking] = useState(false);
-  const [emailNotFound, setEmailNotFound] = useState(false);
 
-  // Reseta gate quando logado/cadastro completo
+  // Preenche e-mail se o cliente estiver logado no Shopify
   useEffect(() => {
-    if (isComplete) {
-      setEmailNotFound(false);
-      setGuestEmail("");
-    } else if (user?.email) {
-      setGuestEmail(user.email);
+    if (isLoggedIn && customer?.email) {
+      setGuestEmail(customer.email);
     }
-  }, [isComplete, user?.email]);
+  }, [isLoggedIn, customer?.email]);
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
@@ -103,7 +93,7 @@ export function CartDrawer() {
     !isLoading &&
     !isSyncing;
 
-  const canCheckout = baseReady && (isComplete || guestEmail.trim().length > 0);
+  const canCheckout = baseReady && guestEmail.trim().length > 0;
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
@@ -126,37 +116,7 @@ export function CartDrawer() {
 
   const goToCheckout = async () => {
     if (!canCheckout) return;
-    setEmailNotFound(false);
-
-    // Logado com cadastro completo → segue direto
-    if (isComplete) {
-      await proceedToCheckout();
-      return;
-    }
-
-    // Caso contrário: valida o e-mail informado
-    const email = guestEmail.trim().toLowerCase();
-    if (!email) return;
-
-    setEmailChecking(true);
-    try {
-      const { data, error } = await supabase.rpc("cliente_existe", {
-        _email: email,
-        _telefone: cliente?.telefone ?? "",
-      });
-      if (error) {
-        console.error("cliente_existe erro", error);
-        setEmailNotFound(true);
-        return;
-      }
-      if (data === true) {
-        await proceedToCheckout();
-      } else {
-        setEmailNotFound(true);
-      }
-    } finally {
-      setEmailChecking(false);
-    }
+    await proceedToCheckout();
   };
 
   return (
@@ -345,42 +305,27 @@ export function CartDrawer() {
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
                 </div>
 
-                {!isComplete && (
-                  <div className="space-y-2">
-                    <Label htmlFor="checkout-email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground flex items-center gap-1.5">
-                      <Mail className="h-3.5 w-3.5" /> Seu e-mail
-                    </Label>
-                    <Input
-                      id="checkout-email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="seu@email.com"
-                      value={guestEmail}
-                      onChange={(e) => { setGuestEmail(e.target.value); setEmailNotFound(false); }}
-                      className="h-11 font-sans"
-                    />
-                  </div>
-                )}
+                <div className="space-y-2">
+                  <Label htmlFor="checkout-email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground flex items-center gap-1.5">
+                    <Mail className="h-3.5 w-3.5" /> Seu e-mail
+                  </Label>
+                  <Input
+                    id="checkout-email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="seu@email.com"
+                    value={guestEmail}
+                    onChange={(e) => setGuestEmail(e.target.value)}
+                    className="h-11 font-sans"
+                  />
+                  {isLoggedIn && (
+                    <p className="text-[11px] text-muted-foreground">Conectado como {customer?.email}</p>
+                  )}
+                </div>
 
-                {emailNotFound && (
-                  <div className="rounded-md border border-primary/30 bg-primary/5 p-3 space-y-2 animate-[fadeIn_0.2s_ease-out]">
-                    <p className="text-xs text-foreground font-sans">
-                      Não encontramos um cadastro com este e-mail. Faça login no Shopify para continuar.
-                    </p>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="w-full"
-                      onClick={() => window.open(SHOPIFY_STORE_LOGIN_URL, "_blank", "noopener,noreferrer")}
-                    >
-                      Entrar no Shopify
-                    </Button>
-                  </div>
-                )}
 
-                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout || emailChecking}>
-                  {isLoading || isSyncing || emailChecking ? (
+                <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout}>
+                  {isLoading || isSyncing ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
                     <>

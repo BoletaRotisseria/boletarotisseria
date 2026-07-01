@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
@@ -19,16 +19,7 @@ import CafePage from "./pages/CafePage";
 import SemanaPage from "./pages/SemanaPage";
 import RotisseriePage from "./pages/RotisseriePage";
 import EntrarPage from "./pages/EntrarPage";
-import CriarContaPage from "./pages/CriarContaPage";
-import RecuperarSenhaPage from "./pages/RecuperarSenhaPage";
-import AtualizarSenhaPage from "./pages/AtualizarSenhaPage";
-import ContaPage from "./pages/ContaPage";
-import CompletarCadastroPage from "./pages/CompletarCadastroPage";
-import AuthPage from "./pages/AuthPage";
-import ProfilePage from "./pages/ProfilePage";
-import LoginPage from "./pages/LoginPage";
-import DashboardPage from "./pages/DashboardPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
+import MinhaContaPage from "./pages/MinhaContaPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,19 +42,16 @@ function AppContent() {
         <Route path="/rotisserie" element={<RotisseriePage />} />
         <Route path="/product/:handle" element={<ProductDetailPage />} />
         <Route path="/busca" element={<BuscaPage />} />
-        {/* Auth routes */}
+        {/* Auth (Shopify Storefront Customer API) */}
         <Route path="/entrar" element={<EntrarPage />} />
-        <Route path="/criar-conta" element={<CriarContaPage />} />
-        <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
-        <Route path="/atualizar-senha" element={<AtualizarSenhaPage />} />
-        <Route path="/conta" element={<ContaPage />} />
-        <Route path="/completar-cadastro" element={<CompletarCadastroPage />} />
-        {/* Legacy routes */}
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/perfil" element={<ProfilePage />} />
+        <Route path="/minha-conta" element={<MinhaContaPage />} />
+        {/* Legacy redirects */}
+        <Route path="/conta" element={<Navigate to="/minha-conta" replace />} />
+        <Route path="/login" element={<Navigate to="/entrar" replace />} />
+        <Route path="/auth" element={<Navigate to="/entrar" replace />} />
+        <Route path="/perfil" element={<Navigate to="/minha-conta" replace />} />
+        <Route path="/criar-conta" element={<Navigate to="/entrar" replace />} />
+        <Route path="/recuperar-senha" element={<Navigate to="/entrar" replace />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
