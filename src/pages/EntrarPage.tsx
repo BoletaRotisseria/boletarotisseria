@@ -92,23 +92,16 @@ export default function EntrarPage() {
           </p>
         </div>
 
-        {/* Shop auto-recognition popup + Shop Pay login button */}
+        {/* Shop auto-recognition popup ("Confirm it's you") */}
         {mode === 'login' && (
           <div className="flex justify-center">
-            <shop-login-button
-              client-id="8fe23eda-a06d-46bb-931a-8de52d5b8016"
-              store-name="Boleta Rotisserie"
+            <shop-user-status
               shop-permanent-domain={SHOP_DOMAIN}
-              redirect-uri={typeof window !== 'undefined' ? window.location.origin + '/entrar' : ''}
-              scope="openid email profile"
-              response-type="code"
-              flow="self"
-              version="unstable"
-              analytics-context="loginwithshop_lovable"
-              action="continue"
-            ></shop-login-button>
+              store-name="Boleta Rotisserie"
+            ></shop-user-status>
           </div>
         )}
+
 
 
         {error && (
