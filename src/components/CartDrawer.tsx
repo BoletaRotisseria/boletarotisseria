@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
@@ -12,7 +13,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
-import { GIFT_WRAP_VARIANT_IDS } from "@/lib/giftWrap";
+import { GIFT_WRAP_OPTIONS, GIFT_WRAP_VARIANT_IDS, buildGiftWrapCartItem } from "@/lib/giftWrap";
 
 const WEEKDAY_SLOTS = ["11h às 13h", "13h às 17h30"];
 const SATURDAY_SLOTS = ["11h às 13h"];
@@ -42,19 +43,29 @@ export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const {
     items, isLoading, isSyncing,
-    updateQuantity, removeItem, getCheckoutUrl, syncCart,
+    addItem, updateQuantity, removeItem, getCheckoutUrl, syncCart,
     fulfillmentMethod, fulfillmentDate, fulfillmentTime,
     setFulfillmentMethod, setFulfillmentDate, setFulfillmentTime,
     submitFulfillmentAttributes,
   } = useCartStore();
 
   const [guestEmail, setGuestEmail] = useState("");
+  const [isGift, setIsGift] = useState<"sim" | "nao" | null>(null);
+  const [giftMessage, setGiftMessage] = useState("");
 
   const visibleItems = items.filter((i) => !GIFT_WRAP_VARIANT_IDS.has(i.variantId));
   const giftItem = items.find((i) => GIFT_WRAP_VARIANT_IDS.has(i.variantId));
+  const selectedGiftId = giftItem
+    ? GIFT_WRAP_OPTIONS.find((o) => o.variantId === giftItem.variantId)?.id ?? null
+    : (isGift === "sim" ? "sacola-boleta" : null);
   const totalItems = visibleItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
   const currencyCode = items[0]?.price.currencyCode || "BRL";
+
+  // Sync isGift state when giftItem changes (e.g. from persisted cart)
+  useEffect(() => {
+    if (giftItem && isGift === null) setIsGift("sim");
+  }, [giftItem, isGift]);
 
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
 
@@ -89,8 +100,51 @@ export function CartDrawer() {
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
 
+  const selectGiftOption = async (optionId: string) => {
+    const currentItems = useCartStore.getState().items;
+    // Remove existing gift wrap items
+    for (const it of currentItems) {
+      if (GIFT_WRAP_VARIANT_IDS.has(it.variantId)) {
+        await removeItem(it.variantId);
+      }
+    }
+    const opt = GIFT_WRAP_OPTIONS.find((o) => o.id === optionId);
+    if (!opt) return;
+    const cartItem = buildGiftWrapCartItem(opt);
+    if (cartItem) await addItem(cartItem);
+  };
+
+  const clearGiftSelection = async () => {
+    const currentItems = useCartStore.getState().items;
+    for (const it of currentItems) {
+      if (GIFT_WRAP_VARIANT_IDS.has(it.variantId)) {
+        await removeItem(it.variantId);
+      }
+    }
+  };
+
+  const handleGiftToggle = async (value: "sim" | "nao") => {
+    setIsGift(value);
+    if (value === "nao") {
+      setGiftMessage("");
+      await clearGiftSelection();
+    }
+  };
+
   const proceedToCheckout = async () => {
-    await submitFulfillmentAttributes();
+    const extraAttrs: Array<{ key: string; value: string }> = [];
+    const extraNote: string[] = [];
+    if (isGift === "sim" && selectedGiftId) {
+      const opt = GIFT_WRAP_OPTIONS.find((o) => o.id === selectedGiftId);
+      extraAttrs.push({ key: "Presente", value: "Sim" });
+      if (opt) extraAttrs.push({ key: "Embalagem", value: opt.label });
+      if (giftMessage.trim()) {
+        extraAttrs.push({ key: "Mensagem do Presente", value: giftMessage.trim() });
+        extraNote.push(`Mensagem do Presente: ${giftMessage.trim()}`);
+      }
+      if (opt) extraNote.push(`Embalagem de Presente: ${opt.label}`);
+    }
+    await submitFulfillmentAttributes(extraAttrs, extraNote);
     const checkoutUrl = getCheckoutUrl();
     if (!checkoutUrl) return;
     try {
@@ -171,20 +225,91 @@ export function CartDrawer() {
                     </div>
                   </div>
                 ))}
-                {giftItem && (
-                  <div className="flex gap-3 p-3 rounded-md bg-primary/10 border border-primary/20">
-                    <div className="w-16 h-16 bg-primary/20 rounded flex items-center justify-center flex-shrink-0">
-                      <Gift className="h-6 w-6 text-primary" />
+                {/* Gift wrap selection */}
+                <div className="space-y-3 pt-4 border-t mt-4">
+                  <Label className="font-serif text-base flex items-center gap-2">
+                    <Gift className="h-4 w-4" /> Este pedido é um presente?
+                  </Label>
+                  <RadioGroup
+                    value={isGift ?? ""}
+                    onValueChange={(v) => handleGiftToggle(v as "sim" | "nao")}
+                    className="grid grid-cols-2 gap-2"
+                  >
+                    <Label
+                      htmlFor="gift-sim"
+                      className={cn(
+                        "flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors",
+                        isGift === "sim" ? "border-primary bg-primary/5" : "border-border"
+                      )}
+                    >
+                      <RadioGroupItem value="sim" id="gift-sim" />
+                      <span className="text-sm">Sim</span>
+                    </Label>
+                    <Label
+                      htmlFor="gift-nao"
+                      className={cn(
+                        "flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors",
+                        isGift === "nao" ? "border-primary bg-primary/5" : "border-border"
+                      )}
+                    >
+                      <RadioGroupItem value="nao" id="gift-nao" />
+                      <span className="text-sm">Não</span>
+                    </Label>
+                  </RadioGroup>
+
+                  {isGift === "sim" && (
+                    <div className="space-y-3 pt-2">
+                      <Label className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">
+                        Escolha a embalagem
+                      </Label>
+                      <div className="grid gap-2">
+                        {GIFT_WRAP_OPTIONS.map((opt) => {
+                          const isSelected = selectedGiftId === opt.id;
+                          return (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              onClick={() => selectGiftOption(opt.id)}
+                              disabled={isLoading}
+                              className={cn(
+                                "flex items-center justify-between gap-3 rounded-md border p-3 text-left transition-colors",
+                                isSelected ? "border-primary bg-primary/5" : "border-border hover:bg-secondary/40"
+                              )}
+                            >
+                              <div className="flex items-center gap-3 min-w-0">
+                                <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                  <Gift className="h-4 w-4 text-primary" />
+                                </div>
+                                <div className="min-w-0">
+                                  <p className="font-medium text-sm truncate">{opt.label}</p>
+                                  <p className="text-xs text-muted-foreground truncate">{opt.description}</p>
+                                </div>
+                              </div>
+                              <span className="text-sm font-semibold flex-shrink-0">
+                                {opt.price === 0 ? "Cortesia" : formatPrice(opt.price)}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="gift-message" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">
+                          Mensagem do cartão (opcional)
+                        </Label>
+                        <Textarea
+                          id="gift-message"
+                          value={giftMessage}
+                          onChange={(e) => setGiftMessage(e.target.value.slice(0, 300))}
+                          placeholder="Escreva uma dedicatória para acompanhar o presente"
+                          className="min-h-[80px] font-sans text-sm"
+                          maxLength={300}
+                        />
+                        <p className="text-[10px] text-muted-foreground text-right">{giftMessage.length}/300</p>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-sm">{giftItem.product.node.title}</h4>
-                      <p className="font-semibold text-sm mt-1">{formatPrice(parseFloat(giftItem.price.amount))}</p>
-                    </div>
-                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeItem(giftItem.variantId)}>
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 {/* Fulfillment selection */}
                 <div className="space-y-4 pt-4 border-t mt-4">

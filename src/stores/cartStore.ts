@@ -33,7 +33,7 @@ interface CartStore {
   setFulfillmentMethod: (m: FulfillmentMethod | null) => void;
   setFulfillmentDate: (d: string | null) => void;
   setFulfillmentTime: (t: string | null) => void;
-  submitFulfillmentAttributes: () => Promise<void>;
+  submitFulfillmentAttributes: (extraAttributes?: Array<{ key: string; value: string }>, extraNoteLines?: string[]) => Promise<void>;
   getCheckoutUrl: () => string | null;
 }
 
@@ -119,7 +119,7 @@ export const useCartStore = create<CartStore>()(
       setFulfillmentDate: (d) => set({ fulfillmentDate: d, fulfillmentTime: null }),
       setFulfillmentTime: (t) => set({ fulfillmentTime: t }),
 
-      submitFulfillmentAttributes: async () => {
+      submitFulfillmentAttributes: async (extraAttributes = [], extraNoteLines = []) => {
         const { cartId, fulfillmentMethod, fulfillmentDate, fulfillmentTime, clearCart } = get();
         if (!cartId || !fulfillmentMethod || !fulfillmentDate || !fulfillmentTime) return;
         const methodLabel = fulfillmentMethod === 'retirada' ? 'Retirada' : 'Entrega';
@@ -133,8 +133,16 @@ export const useCartStore = create<CartStore>()(
           { key: 'Data de Entrega/Retirada', value: dateLabel },
           { key: 'Horário de Entrega/Retirada', value: fulfillmentTime },
           { key: 'Local', value: locationLabel },
+          ...extraAttributes,
         ];
-        const note = `Método de Recebimento: ${methodLabel}\nData de Entrega/Retirada: ${dateLabel}\nHorário de Entrega/Retirada: ${fulfillmentTime}\n${locationLabel}`;
+        const noteParts = [
+          `Método de Recebimento: ${methodLabel}`,
+          `Data de Entrega/Retirada: ${dateLabel}`,
+          `Horário de Entrega/Retirada: ${fulfillmentTime}`,
+          locationLabel,
+          ...extraNoteLines,
+        ];
+        const note = noteParts.join('\n');
         try {
           const [attrRes, noteRes] = await Promise.all([
             updateShopifyCartAttributes(cartId, attributes),
