@@ -7,17 +7,11 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { customerLogin, customerCreate, customerRecover, getStoredToken } from '@/lib/shopifyCustomer';
 
-const SHOP_ID = '73655975981';
-
 declare global {
   namespace JSX {
     interface IntrinsicElements {
       'shop-login-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-        'client-id'?: string;
-        'shop-id'?: string;
-        version?: string;
-        scope?: string;
-        'redirect-uri'?: string;
+        storefront?: string;
       };
     }
   }
@@ -39,15 +33,6 @@ export default function EntrarPage() {
     if (getStoredToken()) navigate('/minha-conta', { replace: true });
   }, [navigate]);
 
-  // Load Shop JS script once
-  useEffect(() => {
-    if (document.querySelector('script[data-shop-js]')) return;
-    const s = document.createElement('script');
-    s.src = 'https://shop.app/js/shop-js/shop-js.js';
-    s.async = true;
-    s.setAttribute('data-shop-js', 'true');
-    document.head.appendChild(s);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,11 +99,7 @@ export default function EntrarPage() {
         {mode === 'login' && (
           <>
             <div className="w-full flex justify-center">
-              <shop-login-button
-                shop-id={SHOP_ID}
-                version="2"
-                scope="openid email profile"
-              />
+              <shop-login-button storefront="boletarotisseria.myshopify.com" />
             </div>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
