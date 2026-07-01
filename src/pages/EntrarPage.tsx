@@ -8,33 +8,7 @@ import { customerLogin, customerCreate, customerRecover } from '@/lib/shopifyCus
 import { useShopifyCustomer } from '@/hooks/useShopifyCustomer';
 import { toast } from 'sonner';
 
-const SHOP_DOMAIN = 'boleta-direct-8l7a1.myshopify.com';
-const SHOP_LOGIN_URL = 'https://shop.app/pay/login';
-
-// Load Shop JS SDK (provides <shop-login-button> with auto-recognition popup)
-function useShopJS() {
-  useEffect(() => {
-    if (document.getElementById('shop-js-sdk')) return;
-    const s = document.createElement('script');
-    s.id = 'shop-js-sdk';
-    s.src = 'https://shop.app/js/shop-js/client.js';
-    s.async = true;
-    document.head.appendChild(s);
-  }, []);
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'shop-login-button': any;
-      'shop-user-status': any;
-    }
-  }
-}
-
-
 export default function EntrarPage() {
-  useShopJS();
   const navigate = useNavigate();
   const { isLoggedIn, reload } = useShopifyCustomer();
 
