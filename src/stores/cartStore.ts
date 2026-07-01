@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { format, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import {
   CartItem,
   createShopifyCart,
@@ -125,6 +127,7 @@ export const useCartStore = create<CartStore>()(
         const methodLabel = fulfillmentMethod === 'retirada' ? 'Retirada' : 'Entrega';
         const [y, m, d] = fulfillmentDate.split('-');
         const dateLabel = `${d}/${m}/${y}`;
+        const formattedDate = format(parseISO(fulfillmentDate), "EEEE, dd 'de' MMMM", { locale: ptBR });
         const locationLabel = fulfillmentMethod === 'retirada'
           ? 'Retirada na Boleta Rotisseria'
           : 'Entrega no endereço informado no checkout';
@@ -133,13 +136,13 @@ export const useCartStore = create<CartStore>()(
           { key: 'Data de Entrega/Retirada', value: dateLabel },
           { key: 'Horário de Entrega/Retirada', value: fulfillmentTime },
           { key: 'Local', value: locationLabel },
+          { key: '_delivery_sort', value: `${fulfillmentDate}T${fulfillmentTime}` },
           ...extraAttributes,
         ];
         const noteParts = [
-          `Método de Recebimento: ${methodLabel}`,
-          `Data de Entrega/Retirada: ${dateLabel}`,
-          `Horário de Entrega/Retirada: ${fulfillmentTime}`,
-          locationLabel,
+          `📅 Data: ${formattedDate}`,
+          `⏰ Horário: ${fulfillmentTime}`,
+          `🚗 Método: ${methodLabel}`,
           ...extraNoteLines,
         ];
         const note = noteParts.join('\n');
