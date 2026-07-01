@@ -97,6 +97,7 @@ export function Header() {
   const mobileClosedByClick = useRef(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLoggedIn } = useShopifyCustomer();
 
   const handleEnter = (label: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
