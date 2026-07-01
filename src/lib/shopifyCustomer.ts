@@ -1,7 +1,7 @@
 // Shopify Storefront Customer API
 // Token com scopes: unauthenticated_read/write_customers, unauthenticated_read_customer_tags
 const SHOPIFY_API_VERSION = '2025-07';
-const SHOPIFY_STORE = 'boleta-direct-8l7a1.myshopify.com';
+const SHOPIFY_STORE = 'boletarotisseria.myshopify.com';
 const SHOPIFY_URL = `https://${SHOPIFY_STORE}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 const CUSTOMER_TOKEN = '58f343adbc198074febf9ab590d42a88';
 
