@@ -66,15 +66,8 @@ export default function EntrarPage() {
           </p>
         </div>
 
-        {/* Shop auto-recognition popup ("Confirm it's you") */}
-        {mode === 'login' && (
-          <div className="flex justify-center">
-            <shop-user-status
-              shop-permanent-domain={SHOP_DOMAIN}
-              store-name="Boleta Rotisserie"
-            ></shop-user-status>
-          </div>
-        )}
+
+
 
 
 
