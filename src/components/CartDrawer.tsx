@@ -116,37 +116,7 @@ export function CartDrawer() {
 
   const goToCheckout = async () => {
     if (!canCheckout) return;
-    setEmailNotFound(false);
-
-    // Logado com cadastro completo → segue direto
-    if (isComplete) {
-      await proceedToCheckout();
-      return;
-    }
-
-    // Caso contrário: valida o e-mail informado
-    const email = guestEmail.trim().toLowerCase();
-    if (!email) return;
-
-    setEmailChecking(true);
-    try {
-      const { data, error } = await supabase.rpc("cliente_existe", {
-        _email: email,
-        _telefone: cliente?.telefone ?? "",
-      });
-      if (error) {
-        console.error("cliente_existe erro", error);
-        setEmailNotFound(true);
-        return;
-      }
-      if (data === true) {
-        await proceedToCheckout();
-      } else {
-        setEmailNotFound(true);
-      }
-    } finally {
-      setEmailChecking(false);
-    }
+    await proceedToCheckout();
   };
 
   return (
