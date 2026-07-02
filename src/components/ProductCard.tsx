@@ -60,6 +60,19 @@ export function ProductCard({ product }: ProductCardProps) {
     await addVariant(variant);
   };
 
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!pickerOpen || isMobile) return;
+    const handleClick = (e: MouseEvent) => {
+      if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+        setPickerOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [pickerOpen, isMobile]);
+
   const VariantButtons = (
     <div className="flex flex-col gap-2 pt-2">
       {variants.map(v => (
@@ -68,7 +81,7 @@ export function ProductCard({ product }: ProductCardProps) {
           variant="outline"
           disabled={isAdding || !v.availableForSale}
           onClick={() => addVariant(v)}
-          className="justify-between h-auto py-3 px-4"
+          className="justify-between h-auto py-3 px-4 hover:bg-[#F5B700] hover:text-black active:bg-[#F5B700] active:text-black focus-visible:bg-[#F5B700] focus-visible:text-black"
         >
           <span className="lowercase">{v.title}</span>
           <span>{formatPrice(parseFloat(v.price.amount))}</span>
@@ -78,7 +91,7 @@ export function ProductCard({ product }: ProductCardProps) {
   );
 
   return (
-    <>
+    <div ref={cardRef} className="relative overflow-visible">
       <Link to={`/product/${node.handle}`} className="group flex flex-col h-full">
         <div className="overflow-hidden rounded-md bg-secondary/30 aspect-square mb-3">
           {image ? (
@@ -116,16 +129,26 @@ export function ProductCard({ product }: ProductCardProps) {
           </SheetContent>
         </Sheet>
       ) : (
-        <Dialog open={pickerOpen} onOpenChange={setPickerOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle className="font-courier lowercase text-xl">{node.title}</DialogTitle>
-              <p className="text-sm text-muted-foreground">Escolha o tamanho:</p>
-            </DialogHeader>
+        pickerOpen && (
+          <div className="absolute bottom-full left-0 right-0 mb-2 z-50 bg-background border border-border rounded-md shadow-lg p-4">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <div className="font-courier lowercase text-xl">{node.title}</div>
+                <p className="text-sm text-muted-foreground">Escolha o tamanho:</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPickerOpen(false)}
+                className="text-muted-foreground hover:text-foreground"
+                aria-label="Fechar"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
             {VariantButtons}
-          </DialogContent>
-        </Dialog>
+          </div>
+        )
       )}
-    </>
+    </div>
   );
 }
