@@ -1,5 +1,3 @@
-$ cat /tmp/boletarotisseria/src/pages/EntrarPage.tsx
-
 import { User } from 'lucide-react';
 
 const SHOPIFY_ACCOUNT = 'https://boletarotisseria.myshopify.com/account';
