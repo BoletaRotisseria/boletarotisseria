@@ -345,7 +345,7 @@ export function CartDrawer() {
                     {fulfillmentMethod && (
                       <p className="text-xs text-muted-foreground">
                         {fulfillmentMethod === "retirada"
-                          ? "Retirada na Boleta Rotisseria"
+                          ? "Retirada no Boleta Rotisseria"
                           : "Entrega no endereço informado no checkout"}
                       </p>
                     )}
