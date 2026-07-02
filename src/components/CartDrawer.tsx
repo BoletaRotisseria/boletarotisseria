@@ -49,7 +49,6 @@ export function CartDrawer() {
     submitFulfillmentAttributes,
   } = useCartStore();
 
-  const [guestEmail, setGuestEmail] = useState("");
   const [isGift, setIsGift] = useState<"sim" | "nao" | null>(null);
   const [giftMessage, setGiftMessage] = useState("");
 
@@ -95,7 +94,7 @@ export function CartDrawer() {
     !isLoading &&
     !isSyncing;
 
-  const canCheckout = baseReady && guestEmail.trim().length > 0;
+  const canCheckout = baseReady;
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: currencyCode }).format(value);
@@ -421,21 +420,20 @@ export function CartDrawer() {
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="checkout-email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground flex items-center gap-1.5">
-                    <Mail className="h-3.5 w-3.5" /> Seu e-mail
-                  </Label>
-                  <Input
-                    id="checkout-email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="seu@email.com"
-                    value={guestEmail}
-                    onChange={(e) => setGuestEmail(e.target.value)}
-                    className="h-11 font-sans"
-                  />
-                </div>
-
+               <div className="space-y-2">
+  <Label htmlFor="checkout-email" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground flex items-center gap-1.5">
+    <Mail className="h-3.5 w-3.5" /> Seu e-mail
+  </Label>
+  <Input
+    id="checkout-email"
+    type="email"
+    autoComplete="email"
+    placeholder="seu@email.com"
+    value={guestEmail}
+    onChange={(e) => setGuestEmail(e.target.value)}
+    className="h-11 font-sans"
+  />
+</div>
 
                 <Button onClick={goToCheckout} className="w-full cta-text" size="lg" disabled={!canCheckout}>
                   {isLoading || isSyncing ? (
