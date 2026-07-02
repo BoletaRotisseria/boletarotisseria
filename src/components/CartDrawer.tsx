@@ -67,9 +67,7 @@ export function CartDrawer() {
 
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
 
-  useEffect(() => {
-    if (!isOpen) setStep(1);
-  }, [isOpen]);
+  useEffect(() => { if (!isOpen) setStep(1); }, [isOpen]);
 
   const { minDate, maxDate } = useMemo(() => {
     const now = new Date();
@@ -125,6 +123,28 @@ export function CartDrawer() {
       await clearGiftSelection();
     }
   };
+
+  const GiftQuestion = (
+    <div className="space-y-3">
+      <Label className="font-serif text-base flex items-center gap-2">
+        <Gift className="h-4 w-4" /> Este pedido é um presente?
+      </Label>
+      <RadioGroup
+        value={isGift ?? ""}
+        onValueChange={(v) => handleGiftToggle(v as "sim" | "nao")}
+        className="grid grid-cols-2 gap-2"
+      >
+        <Label htmlFor="gift-sim" className={cn("flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors", isGift === "sim" ? "border-primary bg-primary/5" : "border-border")}>
+          <RadioGroupItem value="sim" id="gift-sim" />
+          <span className="text-sm">Sim</span>
+        </Label>
+        <Label htmlFor="gift-nao" className={cn("flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors", isGift === "nao" ? "border-primary bg-primary/5" : "border-border")}>
+          <RadioGroupItem value="nao" id="gift-nao" />
+          <span className="text-sm">Não</span>
+        </Label>
+      </RadioGroup>
+    </div>
+  );
 
   const proceedToCheckout = async () => {
     const extraAttrs: Array<{ key: string; value: string }> = [];
@@ -193,42 +213,17 @@ export function CartDrawer() {
             </div>
           ) : step === 1 ? (
             <>
-              {/* Itens — rolável */}
               <div className="flex-1 overflow-y-auto pr-2 min-h-0 space-y-3">
-                {visibleItems.map((item) => (
-                  <div key={item.variantId} className="flex gap-3 p-3 rounded-md bg-secondary/30">
-                    <div className="w-16 h-16 bg-secondary rounded overflow-hidden flex-shrink-0">
-                      {item.product.node.images?.edges?.[0]?.node && (
-                        <img src={item.product.node.images.edges[0].node.url} alt={item.product.node.title} className="w-full h-full object-cover" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-sm truncate">{item.product.node.title}</h4>
-                      {item.variantTitle !== "Default Title" && (
-                        <p className="text-xs text-muted-foreground">{item.variantTitle}</p>
-                      )}
-                      <p className="font-semibold text-sm mt-1">{formatPrice(parseFloat(item.price.amount))}</p>
-                    </div>
-                    <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeItem(item.variantId)}>
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                      <div className="flex items-center gap-1">
-                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.variantId, item.quantity - 1)}>
-                          <Minus className="h-3 w-3" />
-                        </Button>
-                        <span className="w-6 text-center text-xs">{item.quantity}</span>
-                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.variantId, item.quantity + 1)}>
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
+                {/* Pergunta sobe para o topo quando Sim está selecionado */}
+                {isGift === "sim" && (
+                  <div className="pb-2">
+                    {GiftQuestion}
                   </div>
-                ))}
+                )}
 
                 {/* Opções de embalagem (só quando Sim) */}
                 {isGift === "sim" && (
-                  <div className="space-y-3 pt-2">
+                  <div className="space-y-3 border-t pt-3">
                     <Label className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">Escolha a embalagem</Label>
                     <div className="grid gap-2">
                       {GIFT_WRAP_OPTIONS.map((opt) => {
@@ -258,30 +253,48 @@ export function CartDrawer() {
                     </div>
                   </div>
                 )}
+
+                {/* Itens — aparecem abaixo quando Sim, ou no topo quando Não/null */}
+                {isGift !== "sim" && visibleItems.map((item) => (
+                  <div key={item.variantId} className="flex gap-3 p-3 rounded-md bg-secondary/30">
+                    <div className="w-16 h-16 bg-secondary rounded overflow-hidden flex-shrink-0">
+                      {item.product.node.images?.edges?.[0]?.node && (
+                        <img src={item.product.node.images.edges[0].node.url} alt={item.product.node.title} className="w-full h-full object-cover" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-sm truncate">{item.product.node.title}</h4>
+                      {item.variantTitle !== "Default Title" && (
+                        <p className="text-xs text-muted-foreground">{item.variantTitle}</p>
+                      )}
+                      <p className="font-semibold text-sm mt-1">{formatPrice(parseFloat(item.price.amount))}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeItem(item.variantId)}>
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                      <div className="flex items-center gap-1">
+                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.variantId, item.quantity - 1)}>
+                          <Minus className="h-3 w-3" />
+                        </Button>
+                        <span className="w-6 text-center text-xs">{item.quantity}</span>
+                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.variantId, item.quantity + 1)}>
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              {/* Fixo no fundo — presente + total + botão */}
+              {/* Fixo no fundo */}
               <div className="flex-shrink-0 mt-4 space-y-4">
-                <div className="space-y-3">
-                  <Label className="font-serif text-base flex items-center gap-2">
-                    <Gift className="h-4 w-4" /> Este pedido é um presente?
-                  </Label>
-                  <RadioGroup
-                    value={isGift ?? ""}
-                    onValueChange={(v) => handleGiftToggle(v as "sim" | "nao")}
-                    className="grid grid-cols-2 gap-2"
-                  >
-                    <Label htmlFor="gift-sim" className={cn("flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors", isGift === "sim" ? "border-primary bg-primary/5" : "border-border")}>
-                      <RadioGroupItem value="sim" id="gift-sim" />
-                      <span className="text-sm">Sim</span>
-                    </Label>
-                    <Label htmlFor="gift-nao" className={cn("flex items-center gap-2 rounded-md border p-3 cursor-pointer transition-colors", isGift === "nao" ? "border-primary bg-primary/5" : "border-border")}>
-                      <RadioGroupItem value="nao" id="gift-nao" />
-                      <span className="text-sm">Não</span>
-                    </Label>
-                  </RadioGroup>
-                </div>
-
+                {/* Pergunta fica no rodapé apenas quando não é Sim */}
+                {isGift !== "sim" && (
+                  <div className="pb-2">
+                    {GiftQuestion}
+                  </div>
+                )}
                 <div className="border-t pt-4 flex justify-between items-center">
                   <span className="font-serif text-lg">Total</span>
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
