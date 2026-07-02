@@ -1,86 +1,37 @@
-## Objetivo
+## Sincronizar data de entrega com "Processar por" no Shopify
 
-Quando um pedido é criado na Shopify, atualizar automaticamente o pedido correspondente no Bling (localizado pelo `numeroLoja` = número do pedido Shopify) preenchendo `observacoes` e `observacoesInternas` com Método de Recebimento, Data, Horário e Local/Endereço.
+Atualmente a edge function `tag-order-by-delivery` apenas adiciona uma tag `entrega-YYYY-MM-DD` ao pedido. Vamos estendê-la para também preencher a data/hora de fulfillment do pedido, que é o que popula a coluna "Processar por" no admin do Shopify.
 
-## Arquitetura
+### O que muda
 
-```text
-Shopify (orders/create webhook)
-        │
-        ▼
-Edge Function: shopify-order-webhook
-  • valida HMAC do webhook Shopify
-  • extrai note_attributes (Método, Data, Horário, Local)
-  • insere job em tabela bling_sync_jobs (status=pending, attempts=0)
-        │
-        ▼
-Edge Function: bling-sync-worker (cron a cada 2 min)
-  • pega jobs pending/retry com next_attempt_at <= now()
-  • garante access_token válido (refresh se expirado)
-  • GET /pedidos/vendas?numeroLoja={shopify_order_number}
-  • se achou → PATCH /pedidos/vendas/{id} com observacoes + observacoesInternas → status=done
-  • se não achou → attempts++, next_attempt_at = now()+5min, max 12 tentativas (1h)
-        │
-        ▼
-Edge Function: bling-oauth-callback
-  • recebe ?code=... do Bling após o admin autorizar
-  • troca por access_token + refresh_token
-  • salva em tabela bling_tokens (linha única)
-```
+**1. Edge function `tag-order-by-delivery/index.ts`**
 
-## Bling API v3 — o que você precisa fazer (uma vez)
+Além do PUT que adiciona a tag, fazer uma segunda chamada à Admin API para definir a deadline de fulfillment do pedido:
 
-1. Entrar em https://www.bling.com.br/ → Cadastro → Meus Aplicativos → "Criar novo aplicativo".
-2. Tipo: **API v3**.
-3. Link de redirecionamento (Callback URL): vou te passar a URL exata da edge function `bling-oauth-callback` depois que ela existir.
-4. Escopos: marcar **Pedidos de Vendas (Leitura e Escrita)**.
-5. Após criar, o Bling mostra **Client ID** e **Client Secret** — vou pedir via formulário seguro.
-6. Você abre a URL de autorização que eu vou gerar (`/connect-bling`) **uma vez**, loga e autoriza. A partir daí a integração refresca o token sozinha.
+- `POST /admin/api/2025-07/orders/{orderId}/fulfillment_orders.json` (GET) para obter os `fulfillment_order` IDs do pedido
+- Para cada fulfillment_order, chamar:
+  `POST /admin/api/2025-07/fulfillment_orders/{id}/reschedule.json`
+  com `{ "fulfillment_order": { "new_fulfill_at": "<ISO datetime>" } }`
 
-## Banco (Lovable Cloud)
+O `new_fulfill_at` será construído a partir de `fulfillmentDate` + `fulfillmentTime` recebidos no body (ex: `2026-07-05T10:00:00-03:00`).
 
-Tabelas novas:
+Isso faz o Shopify exibir a data/hora na coluna **Processar por** (Fulfill by) no admin de pedidos.
 
-- `bling_tokens` — 1 linha: `access_token`, `refresh_token`, `expires_at`. RLS bloqueada (só service_role).
-- `bling_sync_jobs` — `id`, `shopify_order_number`, `shopify_order_id`, `observacoes_text`, `status` (pending/done/failed), `attempts`, `next_attempt_at`, `last_error`, timestamps. RLS bloqueada.
+**2. Nenhuma mudança no frontend**
 
-## Edge Functions
+`ObrigadoPage` já envia `orderId`, `fulfillmentDate` e `fulfillmentTime` — suficiente para a edge function.
 
-1. **`bling-oauth-callback`** — público, sem JWT. Troca `code` por tokens e salva.
-2. **`shopify-order-webhook`** — público, sem JWT, valida HMAC com `SHOPIFY_WEBHOOK_SECRET`. Lê `note_attributes` do pedido e enfileira o job.
-3. **`bling-sync-worker`** — agendado via `pg_cron` a cada 2 min. Processa jobs pending. Faz refresh de token quando faltar < 60s pra expirar. Busca por `numeroLoja`, dá PATCH em `observacoes` e `observacoesInternas`. Retry com backoff (5 min, até 12 tentativas = 1h total).
+### Detalhes técnicos
 
-## Webhook Shopify
+- Manter a lógica atual de tag (não remover)
+- Tratar erro do reschedule sem falhar a request inteira (a tag é o mais importante)
+- Se `fulfillmentTime` vier como range ("10:00 - 12:00"), usar o início do range para `new_fulfill_at`
+- Timezone: usar `-03:00` (São Paulo) ao montar o ISO
 
-Após deploy, vou te passar:
-- URL: `https://<projeto>.supabase.co/functions/v1/shopify-order-webhook`
-- Evento: `Order creation`
-- Format: JSON
-- Webhook signing secret: você adiciona no app (já configurável) → eu uso pra validar HMAC.
+### Resultado
 
-Você cadastra em **Settings → Notifications → Webhooks** no admin da Shopify.
+Após uma compra, o pedido no Shopify Admin passará a mostrar:
+- Tag `entrega-2026-07-05`
+- Coluna **Processar por**: `5 jul, 10:00`
 
-## Secrets necessários
-
-- `BLING_CLIENT_ID` (você fornece)
-- `BLING_CLIENT_SECRET` (você fornece)
-- `SHOPIFY_WEBHOOK_SECRET` (você fornece — copiado da Shopify ao criar o webhook)
-
-## Texto gravado no Bling
-
-```
-Método de Recebimento: Retirada
-Data de Entrega/Retirada: 18/06/2026
-Horário de Entrega/Retirada: 13h às 17h30
-Local: Retirada na Boleta Rotisseria
-```
-
-Mesmo texto vai em `observacoes` e `observacoesInternas`.
-
-## Próximos passos depois que aprovar
-
-1. Crio as tabelas + edge functions + página `/connect-bling`.
-2. Te peço os 3 secrets via formulário seguro.
-3. Te passo a Callback URL pra colar no app do Bling.
-4. Te passo a URL do webhook Shopify pra cadastrar.
-5. Você clica em "Conectar Bling" uma vez → pronto, integração ativa.
+Permitindo filtrar/ordenar pedidos pela data de entrega prometida sem depender só das tags.
