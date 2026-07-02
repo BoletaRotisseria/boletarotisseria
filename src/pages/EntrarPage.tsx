@@ -10,7 +10,7 @@ export default function EntrarPage() {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-border/60 bg-background">
             <User className="h-5 w-5 text-foreground" />
           </div>
-          <h1 className="font-serif text-3xl font-bold text-foreground">entrar</h1>
+          <h1 className="font-serif text-3xl font-bold text-foreground">login</h1>
           <p className="font-sans text-sm text-muted-foreground">Acesse sua conta Boleta</p>
         </div>
 
