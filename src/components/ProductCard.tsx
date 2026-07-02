@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, ShoppingCart } from "lucide-react";
+import { Loader2, ShoppingCart, X } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { ShopifyProduct } from "@/lib/shopify";
 import { toast } from "sonner";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 
 interface ProductCardProps {
   product: ShopifyProduct;
