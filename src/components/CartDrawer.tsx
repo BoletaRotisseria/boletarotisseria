@@ -193,6 +193,7 @@ export function CartDrawer() {
             </div>
           ) : step === 1 ? (
             <>
+              {/* Itens — rolável */}
               <div className="flex-1 overflow-y-auto pr-2 min-h-0 space-y-3">
                 {visibleItems.map((item) => (
                   <div key={item.variantId} className="flex gap-3 p-3 rounded-md bg-secondary/30">
@@ -225,7 +226,43 @@ export function CartDrawer() {
                   </div>
                 ))}
 
-                <div className="space-y-3 pt-4 border-t mt-4">
+                {/* Opções de embalagem (só quando Sim) */}
+                {isGift === "sim" && (
+                  <div className="space-y-3 pt-2">
+                    <Label className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">Escolha a embalagem</Label>
+                    <div className="grid gap-2">
+                      {GIFT_WRAP_OPTIONS.map((opt) => {
+                        const isSelected = selectedGiftId === opt.id;
+                        return (
+                          <button key={opt.id} type="button" onClick={() => selectGiftOption(opt.id)} disabled={isLoading}
+                            className={cn("flex items-center justify-between gap-3 rounded-md border p-3 text-left transition-colors", isSelected ? "border-primary bg-primary/5" : "border-border hover:bg-secondary/40")}>
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <Gift className="h-4 w-4 text-primary" />
+                              </div>
+                              <div className="min-w-0">
+                                <p className="font-medium text-sm truncate">{opt.label}</p>
+                                <p className="text-xs text-muted-foreground truncate">{opt.description}</p>
+                              </div>
+                            </div>
+                            <span className="text-sm font-semibold flex-shrink-0">{opt.price === 0 ? "Cortesia" : formatPrice(opt.price)}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="gift-message" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">Mensagem do cartão (opcional)</Label>
+                      <Textarea id="gift-message" value={giftMessage} onChange={(e) => setGiftMessage(e.target.value.slice(0, 300))}
+                        placeholder="Escreva uma dedicatória para acompanhar o presente" className="min-h-[80px] font-sans text-sm" maxLength={300} />
+                      <p className="text-[10px] text-muted-foreground text-right">{giftMessage.length}/300</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Fixo no fundo — presente + total + botão */}
+              <div className="flex-shrink-0 pt-4 border-t mt-4 space-y-4">
+                <div className="space-y-3">
                   <Label className="font-serif text-base flex items-center gap-2">
                     <Gift className="h-4 w-4" /> Este pedido é um presente?
                   </Label>
@@ -243,52 +280,13 @@ export function CartDrawer() {
                       <span className="text-sm">Não</span>
                     </Label>
                   </RadioGroup>
-
-                  {isGift === "sim" && (
-                    <div className="space-y-3 pt-2">
-                      <Label className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">Escolha a embalagem</Label>
-                      <div className="grid gap-2">
-                        {GIFT_WRAP_OPTIONS.map((opt) => {
-                          const isSelected = selectedGiftId === opt.id;
-                          return (
-                            <button key={opt.id} type="button" onClick={() => selectGiftOption(opt.id)} disabled={isLoading}
-                              className={cn("flex items-center justify-between gap-3 rounded-md border p-3 text-left transition-colors", isSelected ? "border-primary bg-primary/5" : "border-border hover:bg-secondary/40")}>
-                              <div className="flex items-center gap-3 min-w-0">
-                                <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                  <Gift className="h-4 w-4 text-primary" />
-                                </div>
-                                <div className="min-w-0">
-                                  <p className="font-medium text-sm truncate">{opt.label}</p>
-                                  <p className="text-xs text-muted-foreground truncate">{opt.description}</p>
-                                </div>
-                              </div>
-                              <span className="text-sm font-semibold flex-shrink-0">{opt.price === 0 ? "Cortesia" : formatPrice(opt.price)}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="gift-message" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">Mensagem do cartão (opcional)</Label>
-                        <Textarea id="gift-message" value={giftMessage} onChange={(e) => setGiftMessage(e.target.value.slice(0, 300))}
-                          placeholder="Escreva uma dedicatória para acompanhar o presente" className="min-h-[80px] font-sans text-sm" maxLength={300} />
-                        <p className="text-[10px] text-muted-foreground text-right">{giftMessage.length}/300</p>
-                      </div>
-                    </div>
-                  )}
                 </div>
-              </div>
 
-              <div className="flex-shrink-0 space-y-4 pt-4 border-t mt-4">
                 <div className="flex justify-between items-center">
                   <span className="font-serif text-lg">Total</span>
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
                 </div>
-                <Button
-                  onClick={() => setStep(2)}
-                  className="w-full cta-text"
-                  size="lg"
-                  disabled={isGift === null}
-                >
+                <Button onClick={() => setStep(2)} className="w-full cta-text" size="lg" disabled={isGift === null}>
                   Continuar
                 </Button>
               </div>
