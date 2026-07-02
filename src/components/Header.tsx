@@ -98,7 +98,7 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoggedIn, customer } = useShopifyCustomer();
-  const ACCOUNT_URL = 'https://account.boletarotisseria.com.br/authentication/login';
+  const ACCOUNT_URL = 'https://shopify.com/73655975981/account';
   const firstLetter = customer?.firstName?.[0] || customer?.email?.[0] || '';
 
   const handleEnter = (label: string) => {
