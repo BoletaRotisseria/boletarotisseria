@@ -253,7 +253,7 @@ export function CartDrawer() {
                     <div className="space-y-2">
                       <Label htmlFor="gift-message" className="font-sans text-xs tracking-[-0.02em] uppercase text-muted-foreground">Mensagem do cartão (opcional)</Label>
                       <Textarea id="gift-message" value={giftMessage} onChange={(e) => setGiftMessage(e.target.value.slice(0, 300))}
-                        placeholder="Escreva uma dedicatória para acompanhar o presente" className="min-h-[80px] font-sans text-sm" maxLength={300} />
+                        placeholder="Escreva uma mensagem para acompanhar o presente" className="min-h-[80px] font-sans text-sm" maxLength={300} />
                       <p className="text-[10px] text-muted-foreground text-right">{giftMessage.length}/300</p>
                     </div>
                   </div>
