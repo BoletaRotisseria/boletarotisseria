@@ -261,7 +261,7 @@ export function CartDrawer() {
               </div>
 
               {/* Fixo no fundo — presente + total + botão */}
-              <div className="flex-shrink-0 pt-4 border-t mt-4 space-y-4">
+              <div className="flex-shrink-0 mt-4 space-y-4">
                 <div className="space-y-3">
                   <Label className="font-serif text-base flex items-center gap-2">
                     <Gift className="h-4 w-4" /> Este pedido é um presente?
@@ -282,7 +282,7 @@ export function CartDrawer() {
                   </RadioGroup>
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="border-t pt-4 flex justify-between items-center">
                   <span className="font-serif text-lg">Total</span>
                   <span className="text-xl font-bold">{formatPrice(totalPrice)}</span>
                 </div>
