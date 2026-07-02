@@ -97,7 +97,9 @@ export function Header() {
   const mobileClosedByClick = useRef(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn } = useShopifyCustomer();
+  const { isLoggedIn, customer } = useShopifyCustomer();
+  const ACCOUNT_URL = 'https://account.boletarotisseria.com.br/authentication/login';
+  const firstLetter = customer?.firstName?.[0] || customer?.email?.[0] || '';
 
   const handleEnter = (label: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -240,13 +242,19 @@ export function Header() {
               <Search className="h-5 w-5" />
             </button>
           </div>
-          <Link
-            to={isLoggedIn ? "/minha-conta" : "/entrar"}
-            className="p-2 text-foreground hover:text-foreground/70 transition-colors"
+          <a
+            href={ACCOUNT_URL}
+            className="p-2 text-foreground hover:text-foreground/70 transition-colors flex items-center justify-center"
             aria-label={isLoggedIn ? "Minha conta" : "Entrar"}
           >
-            <User className="h-5 w-5" />
-          </Link>
+            {isLoggedIn && firstLetter ? (
+              <div className="h-7 w-7 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-700 uppercase">
+                {firstLetter}
+              </div>
+            ) : (
+              <User className="h-5 w-5" />
+            )}
+          </a>
           <CartDrawer />
           <div
             onMouseEnter={handleMobileEnter}
@@ -303,9 +311,6 @@ export function Header() {
           </div>
         </div>
       )}
-
-
-
 
       {/* Mobile nav */}
       {mobileOpen && (
