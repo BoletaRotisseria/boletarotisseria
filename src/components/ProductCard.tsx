@@ -107,7 +107,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
         </div>
-        <h3 className="font-courier lowercase text-2xl md:text-3xl leading-snug font-normal mt-4 mb-4 tracking-wide line-clamp-2 min-h-[2.6em] flex items-center">{node.title}</h3>
+        <h3 className="font-courier lowercase text-3xl md:text-4xl leading-relaxed font-normal mt-6 mb-6 tracking-[0.08em] line-clamp-2 min-h-[2.6em] flex items-center">{node.title}</h3>
         <div className="flex items-center justify-between gap-2">
           <span className="font-normal">
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
