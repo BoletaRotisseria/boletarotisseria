@@ -1,4 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'LL Riptide';
+  src: url('/__l5e/assets-v1/8865105d-da20-4a84-8153-cde8534ac93a/LL_Riptide.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LL Riptide';
+  src: url('/__l5e/assets-v1/741ccbcc-b420-4574-8b8b-5b02aa0c8934/LL_Riptide_Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -45,7 +60,7 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --font-serif: 'Courier Prime', 'Courier New', monospace;
+    --font-serif: 'LL Riptide', Georgia, serif;
     --font-sans: 'Work Sans', system-ui, sans-serif;
   }
 }
