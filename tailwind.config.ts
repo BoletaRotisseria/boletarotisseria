@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ['Courier Prime', 'Courier New', 'monospace'],
+        serif: ['LL Riptide', 'Georgia', 'serif'],
         sans: ['Work Sans', 'system-ui', 'sans-serif'],
       },
       colors: {
