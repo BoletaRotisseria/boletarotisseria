@@ -184,9 +184,8 @@ Deno.serve(async (req) => {
     }
   } catch (e) {
     console.error("Erro ao adicionar tags na Shopify", e);
-  } catch (e) {
-    console.error("Erro ao adicionar tags na Shopify", e);
   }
+
 
   // ===== Adicionar tag de data nos PRODUTOS do pedido =====
   // Cada produto comprado recebe uma tag com a data de entrega/retirada (AAAA-MM-DD)
@@ -256,6 +255,11 @@ Deno.serve(async (req) => {
         }
       }
     }
+  } catch (e) {
+    console.error("Erro ao adicionar tag de data nos produtos", e);
+  }
+
+
 
   // ===== Dedup de cliente no Shopify por CPF =====
   // Mantém o customer mais antigo como canônico; os duplicados ganham tag "duplicado-cpf"
