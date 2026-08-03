@@ -47,7 +47,7 @@ const navItems: NavItem[] = [
         path: "/emporio",
         items: [
           { label: "Antepastos & Conservas", path: "/emporio?categoria=antepastos+e+conservas" },
-          { label: "Tábuas de Frios", path: "/emporio?categoria=tabuas+de+frios" },
+          
           { label: "Massas & Molhos", path: "/emporio?categoria=massas+e+molhos" },
           { label: "Doces & Chocolates", path: "/emporio?categoria=doces+e+chocolates" },
           { label: "Biscoitos & Snacks", path: "/emporio?categoria=biscoitos+e+snacks" },
@@ -63,17 +63,6 @@ const navItems: NavItem[] = [
         path: "/presentes",
         items: [
           { label: "Itens de Casa", path: "/presentes?categoria=itens+de+casa" },
-        ],
-      },
-      {
-        label: "Vinhos",
-        path: "/vinhos",
-        items: [
-          { label: "Branco", path: "/vinhos?categoria=branco" },
-          { label: "Tinto", path: "/vinhos?categoria=tinto" },
-          { label: "Rosé", path: "/vinhos?categoria=rose" },
-          { label: "Espumante", path: "/vinhos?categoria=espumante" },
-          { label: "Champagne", path: "/vinhos?categoria=champagne" },
         ],
       },
     ],
