@@ -255,6 +255,11 @@ Deno.serve(async (req) => {
         }
       }
     }
+  } catch (e) {
+    console.error("Erro ao adicionar tag de data nos produtos", e);
+  }
+
+
 
   // ===== Dedup de cliente no Shopify por CPF =====
   // Mantém o customer mais antigo como canônico; os duplicados ganham tag "duplicado-cpf"
