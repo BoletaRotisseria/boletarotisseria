@@ -22,11 +22,6 @@ const categories = [
     description: "Cestas gourmet e sugestões especiais para presentear.",
     path: "/presentes",
   },
-  {
-    title: "Vinhos",
-    description: "Brancos, tintos, rosés, espumantes e champagnes selecionados.",
-    path: "/vinhos",
-  },
 ];
 
 export default function CardapiosPage() {
