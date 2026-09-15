@@ -7,6 +7,7 @@ const categories = [
     description: "Aperitivos, pratos principais, massas, saladas e sobremesas da casa.",
     path: "/rotisserie",
   },
+  /*
   {
     title: "Empório",
     description: "Antepastos, doces, azeites, temperos e produtos especiais.",
@@ -17,6 +18,7 @@ const categories = [
     description: "Refeições prontas para levar. Praticidade sem abrir mão do sabor.",
     path: "/to-go",
   },
+  */
 ];
 
 export default function CardapiosPage() {

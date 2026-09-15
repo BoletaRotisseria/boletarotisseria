@@ -42,12 +42,12 @@ const navItems: NavItem[] = [
           { label: "Sobremesas", path: "/rotisserie?categoria=sobremesas" },
         ],
       },
+      /*
       {
         label: "Empório",
         path: "/emporio",
         items: [
           { label: "Antepastos & Conservas", path: "/emporio?categoria=antepastos+e+conservas" },
-          
           { label: "Massas & Molhos", path: "/emporio?categoria=massas+e+molhos" },
           { label: "Doces & Chocolates", path: "/emporio?categoria=doces+e+chocolates" },
           { label: "Biscoitos & Snacks", path: "/emporio?categoria=biscoitos+e+snacks" },
@@ -58,6 +58,7 @@ const navItems: NavItem[] = [
         label: "Individual",
         path: "/to-go",
       },
+      */
     ],
   },
   { label: "Sobre Nós", path: "/cafe" },
