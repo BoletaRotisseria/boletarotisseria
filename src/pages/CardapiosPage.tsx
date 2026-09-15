@@ -17,11 +17,6 @@ const categories = [
     description: "Refeições prontas para levar. Praticidade sem abrir mão do sabor.",
     path: "/to-go",
   },
-  {
-    title: "Presentes",
-    description: "Cestas gourmet e sugestões especiais para presentear.",
-    path: "/presentes",
-  },
 ];
 
 export default function CardapiosPage() {

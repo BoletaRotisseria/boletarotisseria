@@ -58,13 +58,6 @@ const navItems: NavItem[] = [
         label: "Individual",
         path: "/to-go",
       },
-      {
-        label: "Presentes",
-        path: "/presentes",
-        items: [
-          { label: "Itens de Casa", path: "/presentes?categoria=itens+de+casa" },
-        ],
-      },
     ],
   },
   { label: "Sobre Nós", path: "/cafe" },
