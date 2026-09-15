@@ -3,17 +3,11 @@ import { ProductCard } from "@/components/ProductCard";
 import { Loader2, ShoppingCart } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import rotisseriaBg from "@/assets/rotisseria-bg.jpg";
+import { CATEGORIAS_ROTISSERIA, handlesDaCategoria } from "@/lib/categoriasRotisseria";
 
 const rotisserieCategories = [
-  { label: "Todos", tag: "" },
-  { label: "Aperitivos", tag: "aperitivos" },
-  { label: "Carnes & Aves", tag: "carnes" },
-  { label: "Massas & Molhos", tag: "massas" },
-  { label: "Saladas", tag: "saladas" },
-  { label: "Acompanhamentos", tag: "acompanhamentos" },
-  { label: "Pizza", tag: "pizza" },
-  { label: "Sopas e Caldos", tag: "sopas" },
-  { label: "Sobremesas", tag: "sobremesas" },
+  { label: "Todos", slug: "" },
+  ...CATEGORIAS_ROTISSERIA.map((c) => ({ label: c.label, slug: c.slug })),
 ];
 
 export default function RotisseriePage() {
