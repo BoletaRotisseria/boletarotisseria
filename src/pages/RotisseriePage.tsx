@@ -12,7 +12,7 @@ const rotisserieCategories = [
   { label: "Saladas", tag: "saladas" },
   { label: "Acompanhamentos", tag: "acompanhamentos" },
   { label: "Pizza", tag: "pizza" },
-  { label: "Sopas", tag: "sopas" },
+  { label: "Sopas e Caldos", tag: "sopas" },
   { label: "Sobremesas", tag: "sobremesas" },
 ];
 
