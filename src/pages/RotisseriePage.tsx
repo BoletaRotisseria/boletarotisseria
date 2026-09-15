@@ -37,7 +37,7 @@ export default function RotisseriePage() {
       >
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center text-white">
-          <h1 className="font-courier lowercase text-3xl md:text-5xl font-normal mb-3">Rotisseria</h1>
+          <h1 className="font-courier lowercase text-5xl md:text-7xl lg:text-8xl font-normal mb-3">Rotisseria</h1>
           <p className="text-white/80 max-w-lg mx-auto text-sm md:text-base">
             Clássicos da casa, preparados com carinho e ingredientes selecionados.
           </p>
@@ -46,15 +46,15 @@ export default function RotisseriePage() {
 
       <div className="bg-background">
         <div className="container py-10 md:py-16">
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
             {rotisserieCategories.map((cat) => (
               <button
                 key={cat.slug}
                 onClick={() => setActiveSlug(cat.slug)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                className={`text-left w-full px-6 py-5 md:px-8 md:py-6 rounded-lg border transition-all text-lg md:text-xl lg:text-2xl font-serif lowercase ${
                   activeSlug === cat.slug
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-secondary/40 text-foreground border-border hover:border-primary/60 hover:bg-secondary/60"
                 }`}
               >
                 {cat.label}
