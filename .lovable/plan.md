@@ -1,61 +1,37 @@
-# Vender fatias com peso variável usando EAN-13 da balança
+# Criar marcador "site" e coleção automática para produtos ativos
 
-Seu cenário: a balança imprime uma etiqueta com código de barras EAN-13 que já contém o peso (ou o preço) da fatia, e a integração com o Bling é quem sincroniza com o Shopify. O Shopify puro **não interpreta** o "peso embutido" no código — quem faz isso é a balança + Bling. O que precisamos é preparar o cadastro para que cada leitura no PDV/Bling case com um item no Shopify.
+## Objetivo
+Permitir que, dentro do admin da Shopify, você identifique rapidamente quais produtos estão publicados no site da Boleta.
 
-## Como funciona o EAN-13 de peso variável
+## Contexto atual
+- O site decide o que exibe por uma **allowlist de handles** (`src/lib/catalogoAtivo.ts`, 83 produtos da Rotisseria) e por **tags específicas** em outras páginas (ex: `tag:emporio`).
+- Hoje não existe no Shopify uma tag ou coleção que signifique "está no site". Por isso não dá para filtrar no admin apenas os produtos ativos.
 
-Etiquetas de balança seguem o padrão GS1 prefixo `2`:
+## Plano
 
-```text
-2 X X X X X   P P P P P   D
-│ └─ código do produto ─┘ └── peso ou preço ──┘ dígito verificador
-```
+1. **Marcar todos os produtos ativos com a tag `site` via API**
+   - Para cada produto cujo handle está em `CATALOGO_ATIVO`, adicionar a tag `site` sem apagar as tags existentes.
+   - Usar `shopify--batch_update_products` em lotes de 20 para não perder as tags atuais (ex: `oculto`, `emporio`, categorias).
 
-- Prefixo **`20`–`29`** → produto de peso/preço variável
-- 5 dígitos seguintes → **PLU** (código interno do produto, ex.: `00123`)
-- 5 dígitos finais → **peso em gramas** ou **preço em centavos**, dependendo da configuração da balança
-- Último dígito → check digit
+2. **Refinar o filtro do site para exigir a tag `site` também**
+   - Em `src/hooks/useShopifyProducts.ts`, quando a busca é ampla (sem query específica), incluir `tag:site` junto com o filtro por allowlist.
+   - Páginas que já passam query própria (Rotisseria, Empório, Busca) continuam funcionando normalmente.
 
-O leitor no Bling reconhece o PLU e aplica o peso/preço lido da etiqueta.
+3. **Criar uma Coleção Automática no admin Shopify**
+   - Caminho manual: **Produtos → Coleções → Criar coleção → Automática**.
+   - Condição: **Product tag = site**.
+   - Nomear como **"Site"** (ou "Publicado no site").
+   - A API de coleções não está disponível nas ferramentas atuais, então esse passo será feito pelo usuário no admin.
 
-## Passo a passo no Shopify (via Bling)
+4. **Gerar planilha de referência**
+   - CSV com `ID Shopify`, `handle`, `título` dos produtos ativos.
+   - Serve para conferir no admin se todos os itens marcados estão corretos.
 
-### 1. Definir o PLU de cada produto na balança
-Ex.: Frango assado = PLU `00123`, Lombo = `00124`, Costela = `00125`.
+## Resultado esperado
+- No admin da Shopify você poderá filtrar produtos pela tag `site`.
+- A coleção "Site" mostrará automaticamente todos os produtos publicados.
+- O site continua usando a allowlist como camada final de segurança, então um produto fora da lista não aparece mesmo que tenha a tag.
 
-### 2. Criar 1 produto por item no Shopify
-Um produto para cada tipo de fatia/peça (não uma variante por peso). Ex.: "Frango Assado (fatia)".
-
-- **Preço:** o valor por kg (referência) — o Bling vai sobrescrever com o valor real da etiqueta ao criar o pedido.
-- **SKU:** o mesmo PLU (`00123`) para casar com o Bling.
-- **Código de barras (barcode):** deixar **em branco** ou usar o PLU. Não colar um EAN completo aqui, porque cada etiqueta impressa tem um EAN diferente (peso muda).
-- **Peso:** 1 kg de referência.
-- **Rastrear estoque:** desligado (ou tratado pelo Bling), já que peça a peça é variável.
-
-### 3. Configurar o mapeamento no Bling
-No Bling, cada produto precisa estar marcado como **"produto pesável"** com:
-- PLU igual ao da balança
-- Preço/kg cadastrado
-- Vinculado ao produto do Shopify pelo SKU
-
-Quando a etiqueta é lida, o Bling calcula `peso × preço/kg` e envia o pedido pro Shopify com a linha já com o valor final.
-
-### 4. Fluxo na venda
-1. Cliente escolhe a fatia já cortada.
-2. Você bipa a etiqueta da balança no Bling.
-3. Bling identifica o PLU, lê o peso/preço da etiqueta, monta o pedido.
-4. Pedido chega no Shopify com o item correto e o valor real da fatia.
-
-## Pontos de atenção
-
-- **Não cadastre um EAN fixo** no campo barcode do Shopify pra esses produtos — o EAN muda a cada etiqueta.
-- **O leitor precisa estar no Bling**, não no admin do Shopify, porque o Shopify Admin não decodifica o "2X" nativamente.
-- Se um dia quiser vender essas fatias **no site**, aí sim precisaríamos de uma lógica custom (não é o caso agora, você já confirmou que é só no Shopify/Bling).
-
-## O que eu faço a seguir
-
-Se quiser, quando você me passar a **lista de produtos pesáveis** (nome + PLU + preço/kg), eu:
-1. Crio cada produto no Shopify com SKU = PLU, sem barcode fixo, estoque destravado.
-2. Você configura o mapeamento no Bling usando o mesmo PLU.
-
-Me confirma se quer que eu já crie os produtos e me manda a lista.
+## Observações
+- Para remover um produto do site, basta retirar o handle da allowlist no código (não precisa mexer na tag do Shopify imediatamente).
+- Futuras inclusões no site devem seguir o fluxo: adicionar handle na allowlist + garantir a tag `site` no produto.
