@@ -12,26 +12,22 @@ const rotisserieCategories = [
 
 export default function RotisseriePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTag = searchParams.get("categoria") || "";
-  
-  const setActiveTag = (tag: string) => {
-    if (tag) {
-      setSearchParams({ categoria: tag });
+  const activeSlug = searchParams.get("categoria") || "";
+
+  const setActiveSlug = (slug: string) => {
+    if (slug) {
+      setSearchParams({ categoria: slug });
     } else {
       setSearchParams({});
     }
   };
 
-  const tagFilter =
-    activeTag === "massas"
-      ? "(tag:massas OR tag:molhos)"
-      : activeTag
-      ? `tag:${activeTag}`
-      : null;
-  const query = tagFilter
-    ? `product_type:Rotisseria AND ${tagFilter} AND -tag:oculto`
-    : "product_type:Rotisseria AND -tag:oculto";
-  const { data: products, isLoading } = useShopifyProducts(250, query);
+  const { data: allProducts, isLoading } = useShopifyProducts(250, "-tag:oculto");
+
+  const handles = activeSlug ? handlesDaCategoria(activeSlug) : null;
+  const products = handles
+    ? (allProducts || []).filter((p) => handles.includes(p.node.handle))
+    : allProducts;
 
   return (
     <div>
@@ -53,10 +49,10 @@ export default function RotisseriePage() {
           <div className="flex flex-wrap justify-center gap-2 mb-10">
             {rotisserieCategories.map((cat) => (
               <button
-                key={cat.tag}
-                onClick={() => setActiveTag(cat.tag)}
+                key={cat.slug}
+                onClick={() => setActiveSlug(cat.slug)}
                 className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                  activeTag === cat.tag
+                  activeSlug === cat.slug
                     ? "bg-primary text-primary-foreground"
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
