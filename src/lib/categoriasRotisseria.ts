@@ -73,7 +73,7 @@ export const CATEGORIAS_ROTISSERIA: CategoriaRotisseria[] = [
     handles: ["berinjela-parmegiana-rotisseria"],
   },
   {
-    label: "Carne, Peixe e Frango",
+    label: "Carnes e Peixes",
     slug: "carne-peixe-e-frango",
     handles: [
       "arroz-de-bacalhau-rotisseria",
