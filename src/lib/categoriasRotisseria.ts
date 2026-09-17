@@ -97,7 +97,7 @@ export const CATEGORIAS_ROTISSERIA: CategoriaRotisseria[] = [
     ],
   },
   {
-    label: "Massas",
+    label: "Massas e Molhos",
     slug: "massas",
     handles: [
       "capeletti-de-carne-mini",
@@ -111,12 +111,6 @@ export const CATEGORIAS_ROTISSERIA: CategoriaRotisseria[] = [
       "lasanha-bolonhesa",
       "lasanha-de-alcachofra",
       "lasanha-de-ossobuco",
-    ],
-  },
-  {
-    label: "Molhos",
-    slug: "molhos",
-    handles: [
       "molho-bolonhesa",
       "molho-limao-siciliano",
       "molho-parmesao",
