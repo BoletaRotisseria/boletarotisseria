@@ -24,6 +24,7 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         footer: "hsl(var(--footer))",
+        stripe: "hsl(var(--stripe))",
 
         primary: {
           DEFAULT: "hsl(var(--primary))",
