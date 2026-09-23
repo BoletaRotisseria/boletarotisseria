@@ -33,12 +33,12 @@ export function Footer() {
       </div>
 
       <div className="container px-4 py-5 md:py-6">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-12 md:items-start">
-          <div className="flex justify-center sm:justify-start md:col-span-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 md:items-start md:gap-x-12 lg:gap-x-16">
+          <div className="flex justify-center sm:justify-start">
             <img src={casinhaAsset.url} alt="Fachada da Boleta Rotisseria" className="-mt-10 -mb-6 h-60 w-auto object-contain md:-mt-14 md:-mb-10 md:h-72" />
           </div>
 
-          <div className="md:col-span-3">
+          <div>
             <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Institucional
             </h4>
@@ -55,7 +55,7 @@ export function Footer() {
             </nav>
           </div>
 
-          <div className="md:col-span-3">
+          <div>
             <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Atendimento
             </h4>
@@ -71,7 +71,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="md:col-span-3">
+          <div>
             <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Casinha
             </h4>
