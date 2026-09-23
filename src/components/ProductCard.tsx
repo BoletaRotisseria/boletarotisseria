@@ -108,7 +108,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
         </div>
-        <h3 className="font-sans text-lg md:text-xl leading-snug font-normal mt-3 mb-3 line-clamp-2 min-h-[2.6em] flex items-center">{sentenceCase(node.title)}</h3>
+        <h3 className="font-sans normal-case text-lg md:text-xl leading-snug font-normal mt-3 mb-3 line-clamp-2 min-h-[2.6em] flex items-center">{sentenceCase(node.title)}</h3>
         <div className="flex items-center justify-between gap-2">
           <span className="font-normal">
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
@@ -123,7 +123,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Sheet open={pickerOpen} onOpenChange={setPickerOpen}>
           <SheetContent side="bottom" className="rounded-t-lg">
             <SheetHeader>
-              <SheetTitle className="font-sans text-xl text-left">{sentenceCase(node.title)}</SheetTitle>
+              <SheetTitle className="font-sans normal-case text-xl text-left">{sentenceCase(node.title)}</SheetTitle>
               <p className="text-sm text-muted-foreground text-left">Escolha o tamanho:</p>
             </SheetHeader>
             {VariantButtons}

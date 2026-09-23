@@ -66,7 +66,7 @@ export default function ProductDetailPage() {
           {image && <img src={image.url} alt={image.altText || product.title} className="w-full h-full object-cover" />}
         </div>
         <div className="flex flex-col justify-center">
-          <h1 className="font-sans text-3xl md:text-4xl font-normal mb-4">{sentenceCase(product.title)}</h1>
+          <h1 className="font-sans normal-case text-3xl md:text-4xl font-normal mb-4">{sentenceCase(product.title)}</h1>
           {product.description && product.description.trim().replace(/\.$/, "").toLowerCase() !== "item do empório" && (
             <p className="text-muted-foreground mb-6">{product.description}</p>
           )}

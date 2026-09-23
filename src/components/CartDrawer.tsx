@@ -264,7 +264,7 @@ export function CartDrawer() {
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-sans font-medium text-sm truncate">{sentenceCase(item.product.node.title)}</h4>
+                      <h4 className="font-sans normal-case font-medium text-sm truncate">{sentenceCase(item.product.node.title)}</h4>
                       {item.variantTitle !== "Default Title" && (
                         <p className="text-xs text-muted-foreground">{item.variantTitle}</p>
                       )}
