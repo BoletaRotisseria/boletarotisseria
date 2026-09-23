@@ -23,7 +23,7 @@ const Index = () => {
       {/* Capa – hero fixa */}
       <section className="relative h-[85vh] md:h-screen overflow-hidden">
         <img
-          src={heroHomeBg}
+          src={capaMesaAsset.url}
           alt="Mesa posta com aperitivos e pratos do Boleta"
           className="absolute inset-0 w-full h-full object-cover"
         />
