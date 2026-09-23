@@ -1,22 +1,15 @@
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Flame, Clock, Snowflake } from "lucide-react";
 import heroImage from "@/assets/boleta-cestas.jpg";
-import togoBg from "@/assets/togo-bg.jpg";
-import semanaBg from "@/assets/semana-bg.jpg";
-import rotisseriaBg from "@/assets/rotisseria-bg.jpg";
+import heroHomeBg from "@/assets/hero-home-bg.webp";
+import seloComerBeber from "@/assets/selo-comer-beber.webp";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
 
-const SLIDE_COUNT = 3;
-const AUTO_PLAY_INTERVAL = 5000;
-
 const Index = () => {
   const location = useLocation();
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     if (location.hash) {
@@ -24,128 +17,46 @@ const Index = () => {
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
   }, [location.hash]);
-  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const scrollToSlide = useCallback((index: number) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    el.scrollTo({ left: index * el.clientWidth, behavior: "smooth" });
-  }, []);
-
-  // Auto-rotate — continuous right direction
-  const resetAutoPlay = useCallback(() => {
-    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    autoPlayRef.current = setInterval(() => {
-      setCurrentSlide((prev) => {
-        const next = prev + 1;
-        if (next < SLIDE_COUNT) {
-          scrollToSlide(next);
-          return next;
-        }
-        // At last slide: snap instantly to start, then smooth to slide 1
-        const el = carouselRef.current;
-        if (el) {
-          el.scrollTo({ left: 0, behavior: "instant" as ScrollBehavior });
-        }
-        return 0;
-      });
-    }, AUTO_PLAY_INTERVAL);
-  }, [scrollToSlide]);
-
-  useEffect(() => {
-    resetAutoPlay();
-    return () => { if (autoPlayRef.current) clearInterval(autoPlayRef.current); };
-  }, [resetAutoPlay]);
-
-  useEffect(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const handleScroll = () => {
-      const idx = Math.round(el.scrollLeft / el.clientWidth);
-      setCurrentSlide(idx);
-    };
-    el.addEventListener("scroll", handleScroll, { passive: true });
-    return () => el.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleManualNav = (index: number) => {
-    scrollToSlide(index);
-    resetAutoPlay();
-  };
 
   return (
     <>
-      {/* Capa – Carrossel horizontal */}
-      <section className="relative bg-foreground h-[85vh] md:h-[90vh]">
-        <div
-          ref={carouselRef}
-          className="h-full w-full flex overflow-x-auto horizontal-snap">
+      {/* Capa – hero fixa */}
+      <section className="relative h-[85vh] md:h-[90vh] overflow-hidden">
+        <img
+          src={heroHomeBg}
+          alt="Mesa posta com aperitivos e pratos do Boleta"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/35 via-transparent to-transparent" />
 
-          {/* Slide 1 – Individual */}
-          <Link
-            to="/to-go"
-            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center">
-            <img src={togoBg} alt="Individual" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
-            <div className="relative z-10 text-center px-6">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">Individual</h2>
-              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">Pratos prontos para levar e saborear onde quiser.</p>
+        <div className="relative z-10 h-full flex flex-col justify-end">
+          <div className="container pb-14 md:pb-20">
+            <div className="max-w-xl">
+              <span className="block text-[11px] md:text-xs font-semibold tracking-[0.2em] uppercase text-background/90 mb-3">
+                Rotisseria & Empório
+              </span>
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-[1.05] mb-4 drop-shadow-md">
+                Vamos Boletar?!
+              </h1>
+              <p className="text-background/85 text-base md:text-lg max-w-md mb-6 drop-shadow-sm">
+                Aperitivos, terrines, massas frescas e doces prontos para levar — a rotisseria e empório do chef Roberto Eid Philipp.
+              </p>
+              <Link to="/cardapios">
+                <Button size="lg" className="cta-text rounded-full px-8">
+                  Pedir Agora
+                </Button>
+              </Link>
             </div>
-          </Link>
-
-          {/* Slide 2 – Cardápio Semanal */}
-          <Link
-            to="/semana"
-            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center overflow-hidden">
-            <img src={semanaBg} alt="Cardápio Semanal" className="absolute inset-0 w-full h-full object-cover scale-110 transition-transform duration-500 group-hover:scale-120" />
-            <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
-            <div className="relative z-10 text-center px-6">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-3 drop-shadow-lg">Cardápio Semanal</h2>
-              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">Pratos frescos da semana, prontos para aquecer.</p>
-            </div>
-          </Link>
-
-          {/* Slide 3 – Rotisserie */}
-          <Link
-            to="/rotisserie"
-            className="h-full w-full flex-shrink-0 snap-start relative group flex items-center justify-center overflow-hidden">
-            <img src={rotisseriaBg} alt="Rotisseria" className="absolute inset-0 w-full h-full object-cover scale-110 transition-transform duration-500 group-hover:scale-120" />
-            <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/40 transition-colors duration-300" />
-            <div className="relative z-10 text-center px-6">
-              <h2 className="font-courier lowercase text-4xl md:text-5xl lg:text-6xl font-normal text-background mb-3 drop-shadow-lg">Rotisseria</h2>
-              <p className="text-background/80 text-lg md:text-xl max-w-md mx-auto">Clássicos da casa, empório e muito mais.</p>
-            </div>
-          </Link>
+          </div>
         </div>
 
-        {/* Setas horizontais */}
-        {currentSlide > 0 && (
-          <button
-            onClick={(e) => { e.stopPropagation(); handleManualNav(currentSlide - 1); }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-        )}
-        {currentSlide < 2 && (
-          <button
-            onClick={(e) => { e.stopPropagation(); handleManualNav(currentSlide + 1); }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/20 hover:bg-background/40 backdrop-blur-sm rounded-full p-2 text-background transition-all">
-            <ChevronRight className="h-6 w-6" />
-          </button>
-        )}
-
-        {/* Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-          {[0, 1, 2].map((i) => (
-            <button
-              key={i}
-              onClick={() => handleManualNav(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-all ${
-                currentSlide === i ? "bg-background scale-125" : "bg-background/40 hover:bg-background/60"
-              }`}
-            />
-          ))}
-        </div>
+        {/* Selo do prêmio */}
+        <img
+          src={seloComerBeber}
+          alt="Selo Veja Comer & Beber 2026/2027 — Boleta, melhor rotisseria de São Paulo"
+          className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-10 w-20 md:w-28 lg:w-32 h-auto"
+        />
       </section>
 
       {/* Banner duplo – Peça pelo nosso site */}
