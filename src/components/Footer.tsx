@@ -39,7 +39,7 @@ export function Footer() {
           </div>
 
           <div className="pt-2 md:col-span-3 md:pt-7">
-            <h4 className="font-sans normal-case text-[11px] font-bold tracking-[0.2em] uppercase mb-6">
+            <h4 className="font-serif normal-case text-xl font-normal mb-6">
               Institucional
             </h4>
             <nav className="space-y-3 text-sm md:text-base">
@@ -56,7 +56,7 @@ export function Footer() {
           </div>
 
           <div className="pt-2 sm:col-span-2 md:col-span-5 md:pt-7">
-            <h4 className="font-sans normal-case text-[11px] font-bold tracking-[0.2em] uppercase mb-6">
+            <h4 className="font-serif normal-case text-xl font-normal mb-6">
               Atendimento
             </h4>
             <div className="space-y-3 text-sm text-muted-foreground md:text-base">
