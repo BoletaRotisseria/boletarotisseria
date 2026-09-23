@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import boletaLogo from "@/assets/boleta-rotisseria-logo.jpeg";
+import casinhaAsset from "@/assets/casinha-boleta.png.asset.json";
 
 
 const WHATSAPP_CARDAPIO = "https://wa.me/5511998951900?text=Ol%C3%A1%2C%20quero%20receber%20o%20card%C3%A1pio%20semanal.";
@@ -46,7 +46,7 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_2fr] gap-x-10 gap-y-10">
           {/* Coluna 1 – Logo + Sobre */}
           <div>
-            <img src={boletaLogo} alt="Boleta Rotisseria" className="h-20 rounded mb-4" />
+            <img src={casinhaAsset.url} alt="Boleta Rotisseria" className="h-28 w-auto mb-4" />
             <p className="text-sm text-foreground/60 leading-relaxed mb-6">
               O Boleta oferece uma experiência gastronômica artesanal, com pratos frescos e congelados, fáceis de aquecer e servir.
             </p>
