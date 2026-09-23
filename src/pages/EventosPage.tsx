@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { CalendarDays } from "lucide-react";
 
 export default function EventosPage() {
   const [form, setForm] = useState({ nome: "", email: "", telefone: "", mensagem: "" });
