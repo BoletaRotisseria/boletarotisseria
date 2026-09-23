@@ -4,7 +4,7 @@ import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
-import boletaLogoMark from "@/assets/boleta-logo-mark.png";
+import boletaLogoMark from "@/assets/boleta-logo-mark-trimmed.png";
 
 interface SubItem {
   label: string;
@@ -153,15 +153,17 @@ export function Header() {
           {item.path.includes('#') ? (
             <a
               href={item.path}
-              className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground text-foreground/60`}
+              className={`flex items-center gap-1 ${isHome ? "px-2 md:px-3" : "px-4"} py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+                isHome ? "text-foreground" : "text-foreground/60"
+              }`}
             >
               {item.label}
             </a>
           ) : (
             <Link
               to={item.path}
-              className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
-                location.pathname === item.path ? "text-foreground" : "text-foreground/60"
+              className={`flex items-center gap-1 ${isHome ? "px-2 md:px-3" : "px-4"} py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+                isHome || location.pathname === item.path ? "text-foreground" : "text-foreground/60"
               }`}
             >
               {item.label}
@@ -173,7 +175,7 @@ export function Header() {
           {item.subCategories && openDropdown === item.label && (
             <div
               className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in ${
-                isHome ? "top-[62px] md:top-[70px]" : "top-[56px] md:top-[64px]"
+                isHome ? "top-[88px]" : "top-[56px] md:top-[64px]"
               }`}
               style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
               onMouseEnter={() => handleEnter(item.label)}
@@ -291,7 +293,7 @@ export function Header() {
                 <img
                   src={boletaLogoMark}
                   alt="Boleta"
-                  className={`h-6 w-auto transition-all ${
+                  className={`h-5 w-auto transition-all ${
                     transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
                   }`}
                 />
@@ -299,15 +301,15 @@ export function Header() {
               {desktopNav}
             </div>
             <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
-            {/* Desktop: logo truly centered regardless of nav/icons width */}
+            {/* Desktop: logo truly centered horizontally regardless of nav/icons width; anchored near the top and overflowing down into the photo so it stays large without clipping off the top of the page */}
             <Link
               to="/"
-              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-shrink-0"
+              className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-2 md:top-3 flex-shrink-0"
             >
               <img
                 src={boletaLogoMark}
                 alt="Boleta"
-                className={`h-9 w-auto transition-all ${
+                className={`h-14 md:h-16 w-auto transition-all ${
                   transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
                 }`}
               />
