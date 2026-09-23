@@ -36,12 +36,9 @@ const Index = () => {
               <span className="block text-[11px] md:text-xs font-semibold tracking-[0.2em] uppercase text-background/90 mb-3">
                 Rotisseria & Empório
               </span>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-[1.05] mb-4 drop-shadow-md">
-                Vamos Boletar?!
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-[1.05] mb-6 drop-shadow-md">
+                Comida de verdade, feita para compartilhar. Pronta para aquecer, servir e aproveitar.
               </h1>
-              <p className="text-background/85 text-base md:text-lg max-w-md mb-6 drop-shadow-sm">
-                Aperitivos, terrines, massas frescas e doces prontos para levar — a rotisseria e empório do chef Roberto Eid Philipp.
-              </p>
               <Link to="/cardapios">
                 <Button size="lg" className="cta-text rounded-full px-8">
                   Pedir Agora
