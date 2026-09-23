@@ -32,10 +32,10 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container px-4 py-8 md:py-10">
+      <div className="container px-4 py-5 md:py-6">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-12 md:items-start">
           <div className="flex justify-center sm:justify-start md:col-span-4">
-            <img src={casinhaAsset.url} alt="Fachada da Boleta Rotisseria" className="h-52 w-auto object-contain md:h-60" />
+            <img src={casinhaAsset.url} alt="Fachada da Boleta Rotisseria" className="-mt-10 -mb-6 h-60 w-auto object-contain md:-mt-14 md:-mb-10 md:h-72" />
           </div>
 
           <div className="md:col-span-3">
