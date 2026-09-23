@@ -7,6 +7,7 @@ import { Loader2, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { sentenceCase } from "@/lib/text";
 
 export default function ProductDetailPage() {
   const { handle } = useParams<{ handle: string }>();
@@ -48,7 +49,7 @@ export default function ProductDetailPage() {
       quantity: 1,
       selectedOptions: variant.selectedOptions || [],
     });
-    toast.success("Adicionado ao carrinho", { description: product.title });
+    toast.success("Adicionado ao carrinho", { description: sentenceCase(product.title) });
   };
 
   return (
@@ -65,7 +66,7 @@ export default function ProductDetailPage() {
           {image && <img src={image.url} alt={image.altText || product.title} className="w-full h-full object-cover" />}
         </div>
         <div className="flex flex-col justify-center">
-          <h1 className="font-courier lowercase text-3xl md:text-4xl font-normal mb-4">{product.title}</h1>
+          <h1 className="font-sans text-3xl md:text-4xl font-normal mb-4">{sentenceCase(product.title)}</h1>
           {product.description && product.description.trim().replace(/\.$/, "").toLowerCase() !== "item do empório" && (
             <p className="text-muted-foreground mb-6">{product.description}</p>
           )}
