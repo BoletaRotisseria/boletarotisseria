@@ -38,7 +38,7 @@ export function Footer() {
             <img src={casinhaAsset.url} alt="Fachada da Boleta Rotisseria" className="-mt-12 -mb-8 h-72 w-auto object-contain md:-mt-20 md:-mb-12 md:h-96" />
           </div>
 
-          <div className="md:pt-16">
+          <div className="md:pt-11">
             <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Institucional
             </h4>
@@ -55,7 +55,7 @@ export function Footer() {
             </nav>
           </div>
 
-          <div className="md:pt-16">
+          <div className="md:pt-11">
             <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Atendimento
             </h4>
@@ -71,7 +71,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="md:pt-16">
+          <div className="md:pt-11">
             <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Casinha
             </h4>
