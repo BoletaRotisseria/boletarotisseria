@@ -240,7 +240,7 @@ export function Header() {
           className="p-2 text-foreground hover:text-foreground/70 transition-colors"
           aria-label="Pesquisar"
         >
-          <Search className="h-5 w-5" />
+          <Search className="h-5 w-5" strokeWidth={2.75} />
         </button>
       </div>
       <a
@@ -253,7 +253,7 @@ export function Header() {
             {firstLetter}
           </div>
         ) : (
-          <User className="h-5 w-5" />
+          <User className="h-5 w-5" strokeWidth={2.75} />
         )}
       </a>
       <CartDrawer />
