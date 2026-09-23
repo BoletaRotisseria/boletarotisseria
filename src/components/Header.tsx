@@ -239,8 +239,8 @@ export function Header() {
           <Search className="h-5 w-5" strokeWidth={2.75} />
         </button>
       </div>
-      <a
-        href={ACCOUNT_URL}
+      <Link
+        to={isLoggedIn ? "/minha-conta" : "/entrar"}
         className="p-2 text-foreground hover:text-foreground/70 transition-colors flex items-center justify-center"
         aria-label={isLoggedIn ? "Minha conta" : "Entrar"}
       >
