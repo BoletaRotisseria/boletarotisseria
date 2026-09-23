@@ -181,42 +181,38 @@ export function Header() {
             >
               {/* Invisible bridge to connect nav link to mega-menu */}
               <div className="absolute left-0 right-0 -top-4 h-4" />
-              <div className="container">
-                <div className="flex">
-                  {item.subCategories.map((sub) => (
+              <div className="container py-6">
+                {item.subCategories.map((sub) => (
+                  <div key={sub.label}>
                     <Link
-                      key={sub.label}
                       to={sub.path}
                       onClick={() => setOpenDropdown(null)}
-                      className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/20 last:border-r-0 hover:bg-secondary/50 transition-colors ${
+                      className={`block text-left text-sm font-sans font-bold tracking-[0.14em] uppercase mb-5 hover:text-foreground/70 transition-colors ${
                         sub.highlight ? "text-destructive" : "text-foreground"
                       }`}
                     >
                       {sub.label}
                     </Link>
-                  ))}
-                </div>
-                <div className="flex py-4">
-                  {item.subCategories.map((sub) => (
-                    <div key={sub.label} className="flex-1 px-6">
-                      {sub.items && (
-                        <ul className="space-y-1">
-                          {sub.items.map((si) => (
-                            <li key={si.label}>
-                              <Link
-                                to={si.path}
-                                onClick={() => setOpenDropdown(null)}
-                                className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
-                              >
-                                {si.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    {sub.items && (
+                      <ul
+                        className="grid gap-x-10 gap-y-2 pb-2"
+                        style={{ gridTemplateColumns: `repeat(${Math.ceil(sub.items.length / 5)}, minmax(0, 1fr))` }}
+                      >
+                        {sub.items.map((si) => (
+                          <li key={si.label}>
+                            <Link
+                              to={si.path}
+                              onClick={() => setOpenDropdown(null)}
+                              className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
+                            >
+                              {si.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           )}
