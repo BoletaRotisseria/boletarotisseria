@@ -3,8 +3,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { useCartSync } from "@/hooks/useCartSync";
+import perfectlyNinetiesAsset from "@/assets/perfectly-nineties.otf.asset.json";
 import Index from "./pages/Index";
 import CardapiosPage from "./pages/CardapiosPage";
 import MenuPage from "./pages/MenuPage";
@@ -27,6 +29,12 @@ const queryClient = new QueryClient();
 
 function AppContent() {
   useCartSync();
+
+  useEffect(() => {
+    const font = new FontFace("Perfectly Nineties", `url(${perfectlyNinetiesAsset.url})`);
+    font.load().then((loadedFont) => document.fonts.add(loadedFont)).catch(() => undefined);
+  }, []);
+
   return (
     <Routes>
       <Route element={<Layout />}>
