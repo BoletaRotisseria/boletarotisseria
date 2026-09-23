@@ -11,6 +11,7 @@ import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Gift, Calenda
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
+import { sentenceCase } from "@/lib/text";
 import { useCartStore } from "@/stores/cartStore";
 import { GIFT_WRAP_OPTIONS, GIFT_WRAP_VARIANT_IDS, buildGiftWrapCartItem } from "@/lib/giftWrap";
 
@@ -263,7 +264,7 @@ export function CartDrawer() {
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-sm truncate">{item.product.node.title}</h4>
+                      <h4 className="font-sans normal-case font-medium text-sm truncate">{sentenceCase(item.product.node.title)}</h4>
                       {item.variantTitle !== "Default Title" && (
                         <p className="text-xs text-muted-foreground">{item.variantTitle}</p>
                       )}

@@ -7,6 +7,7 @@ import { ShopifyProduct } from "@/lib/shopify";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { sentenceCase } from "@/lib/text";
 
 
 interface ProductCardProps {
@@ -42,7 +43,7 @@ export function ProductCard({ product }: ProductCardProps) {
         quantity: 1,
         selectedOptions: v.selectedOptions || [],
       });
-      toast.success("Adicionado ao carrinho", { description: node.title });
+      toast.success("Adicionado ao carrinho", { description: sentenceCase(node.title) });
     } finally {
       setIsAdding(false);
       setPickerOpen(false);
@@ -107,7 +108,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
         </div>
-        <h3 className="font-courier lowercase text-lg md:text-xl leading-snug font-normal mt-3 mb-3 line-clamp-2 min-h-[2.6em] flex items-center">{node.title}</h3>
+        <h3 className="font-sans normal-case text-lg md:text-xl leading-snug font-normal mt-3 mb-3 line-clamp-2 min-h-[2.6em] flex items-center">{sentenceCase(node.title)}</h3>
         <div className="flex items-center justify-between gap-2">
           <span className="font-normal">
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
@@ -122,7 +123,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Sheet open={pickerOpen} onOpenChange={setPickerOpen}>
           <SheetContent side="bottom" className="rounded-t-lg">
             <SheetHeader>
-              <SheetTitle className="font-courier lowercase text-xl text-left">{node.title}</SheetTitle>
+              <SheetTitle className="font-sans normal-case text-xl text-left">{sentenceCase(node.title)}</SheetTitle>
               <p className="text-sm text-muted-foreground text-left">Escolha o tamanho:</p>
             </SheetHeader>
             {VariantButtons}
@@ -133,7 +134,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="absolute bottom-full left-0 right-0 mb-2 z-50 bg-background border border-border rounded-md shadow-lg p-4">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <div className="font-courier lowercase text-xl">{node.title}</div>
+                <div className="font-sans text-xl">{sentenceCase(node.title)}</div>
                 <p className="text-sm text-muted-foreground">Escolha o tamanho:</p>
               </div>
               <button
