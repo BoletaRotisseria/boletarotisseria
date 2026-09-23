@@ -32,7 +32,7 @@ export function NoticiasGrid({ noticias }: { noticias: Noticia[] }) {
                   </span>
                 )}
               </div>
-              <h3 className="font-serif text-base font-bold mb-1.5 leading-snug group-hover:text-primary transition-colors">
+              <h3 className="font-serif normal-case text-base font-bold mb-1.5 leading-snug group-hover:text-primary transition-colors">
                 {item.title}
               </h3>
               <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3">{item.excerpt}</p>
