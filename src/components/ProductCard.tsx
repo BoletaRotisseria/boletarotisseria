@@ -94,7 +94,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div ref={cardRef} className="relative overflow-visible">
       <Link to={`/product/${node.handle}`} className="group flex flex-col h-full">
-        <div className="overflow-hidden rounded-md bg-secondary/30 aspect-square mb-2">
+        <div className="relative overflow-hidden rounded-md bg-secondary/30 aspect-square mb-4">
           {image ? (
             <img
               src={image.url}
@@ -107,15 +107,17 @@ export function ProductCard({ product }: ProductCardProps) {
               <ShoppingCart className="h-8 w-8" />
             </div>
           )}
+          <div className="absolute inset-x-0 bottom-0 flex justify-center p-4 opacity-100 md:opacity-0 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300">
+            <Button size="sm" className="cta-text text-xs shadow-md" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
+              {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
+            </Button>
+          </div>
         </div>
-        <h3 className="font-sans normal-case text-lg md:text-xl leading-snug font-normal mb-3 line-clamp-2">{sentenceCase(node.title)}</h3>
-        <div className="flex items-center justify-between gap-2">
+        <h3 className="font-sans normal-case text-center text-lg md:text-xl leading-snug font-normal mb-3 line-clamp-2">{sentenceCase(node.title)}</h3>
+        <div className="flex items-center justify-center">
           <span className="text-lg font-normal leading-none">
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
           </span>
-          <Button size="sm" className="cta-text text-xs bg-primary/60 hover:bg-primary/80" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
-            {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
-          </Button>
         </div>
       </Link>
 
