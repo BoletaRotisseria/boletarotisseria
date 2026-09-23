@@ -179,7 +179,7 @@ export function CartDrawer() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <button className="relative p-2 text-foreground hover:text-foreground/70 transition-colors">
-          <ShoppingCart className="h-5 w-5" />
+          <ShoppingCart className="h-5 w-5" strokeWidth={2.75} />
           {totalItems > 0 && (
             <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
               {totalItems}
