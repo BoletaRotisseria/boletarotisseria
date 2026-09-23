@@ -4,7 +4,7 @@ import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
-import boletaLogoMark from "@/assets/boleta-logo-mark-clean.png";
+import boletaLogoMark from "@/assets/boleta-logo-mark-trimmed.png";
 
 interface SubItem {
   label: string;
