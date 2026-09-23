@@ -287,33 +287,21 @@ export function Header() {
         <>
           <div className="h-[15px] w-full bg-stripe" />
           <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
-            <div className="flex items-center gap-3">
-              {/* Mobile: logo sits left since the nav is hidden below lg */}
-              <Link to="/" className="lg:hidden flex-shrink-0">
-                <img
-                  src={boletaLogoMark}
-                  alt="Boleta"
-                  className={`h-5 w-auto transition-all ${
-                    transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
-                  }`}
-                />
-              </Link>
-              {desktopNav}
-            </div>
-            <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
-            {/* Desktop: logo truly centered horizontally regardless of nav/icons width; anchored near the top and overflowing down into the photo so it stays large without clipping off the top of the page */}
-            <Link
-              to="/"
-              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-shrink-0"
-            >
+            {/* Logo no canto superior esquerdo */}
+            <Link to="/" className="flex-shrink-0 relative z-10">
               <img
                 src={boletaLogoMark}
                 alt="Boleta"
-                className={`h-8 md:h-9 w-auto transition-all ${
+                className={`h-[47px] md:h-[55px] w-auto transition-all ${
                   transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
                 }`}
               />
             </Link>
+            {/* Seções centralizadas */}
+            <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center">
+              {desktopNav}
+            </div>
+            <div className="flex items-center gap-1 md:gap-2 relative z-10">{rightIcons}</div>
           </div>
         </>
       ) : (
