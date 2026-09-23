@@ -50,7 +50,7 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --font-serif: 'Courier Prime', 'Courier New', monospace;
+    --font-serif: 'Perfectly Nineties', Georgia, serif;
     --font-sans: 'Work Sans', system-ui, sans-serif;
   }
 }
@@ -91,7 +91,8 @@
 }
 
 .font-courier {
-  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-family: 'Perfectly Nineties', Georgia, serif;
+  text-transform: none;
 }
 
 .font-perfectly-nineties {

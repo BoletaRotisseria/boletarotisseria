@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaAsset from "@/assets/capa-mesa-enhanced.png.asset.json";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
-import perfectlyNinetiesAsset from "@/assets/perfectly-nineties.otf.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
 
@@ -18,11 +17,6 @@ const Index = () => {
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
   }, [location.hash]);
-
-  useEffect(() => {
-    const font = new FontFace("Perfectly Nineties", `url(${perfectlyNinetiesAsset.url})`);
-    font.load().then((loadedFont) => document.fonts.add(loadedFont)).catch(() => undefined);
-  }, []);
 
   return (
     <>
