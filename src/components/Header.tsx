@@ -174,7 +174,7 @@ export function Header() {
           {item.subCategories && openDropdown === item.label && (
             <div
               className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in ${
-                isHome ? "top-[88px]" : "top-[56px] md:top-[64px]"
+                isHome ? "top-[56px] md:top-[64px]" : "top-[56px] md:top-[64px]"
               }`}
               style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
               onMouseEnter={() => handleEnter(item.label)}
@@ -283,9 +283,7 @@ export function Header() {
     >
       {/* Main bar */}
       {isHome ? (
-        <>
-          <div className="h-[15px] w-full bg-stripe" />
-          <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
+        <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
             <div className="flex items-center gap-3">
               {/* Mobile: logo sits left since the nav is hidden below lg */}
               <Link to="/" className="lg:hidden flex-shrink-0">
@@ -313,8 +311,7 @@ export function Header() {
                 }`}
               />
             </Link>
-          </div>
-        </>
+        </div>
       ) : (
         <div className="container flex items-center justify-between transition-all h-14 md:h-16">
           <Link to="/" className="flex-shrink-0">
