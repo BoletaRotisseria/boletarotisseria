@@ -32,17 +32,17 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container py-8 md:py-10">
+      <div className="container px-4 py-8 md:py-10">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-12 md:items-start">
           <div className="flex justify-center sm:justify-start md:col-span-4">
-            <img src={casinhaAsset.url} alt="Fachada da Boleta Rotisseria" className="h-44 w-auto object-contain md:h-48" />
+            <img src={casinhaAsset.url} alt="Fachada da Boleta Rotisseria" className="h-52 w-auto object-contain md:h-60" />
           </div>
 
-          <div className="pt-2 md:col-span-3 md:pt-7">
-            <h4 className="font-serif normal-case text-xl font-normal mb-6">
+          <div className="md:col-span-3">
+            <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Institucional
             </h4>
-            <nav className="space-y-3 text-sm md:text-base">
+            <nav className="space-y-3 text-sm">
               <Link to="/cafe" className="block text-muted-foreground hover:text-foreground transition-colors">
                 Sobre nós
               </Link>
@@ -55,11 +55,11 @@ export function Footer() {
             </nav>
           </div>
 
-          <div className="pt-2 sm:col-span-2 md:col-span-5 md:pt-7">
-            <h4 className="font-serif normal-case text-xl font-normal mb-6">
+          <div className="sm:col-span-2 md:col-span-5">
+            <h4 className="font-serif normal-case text-2xl font-normal mb-6">
               Atendimento
             </h4>
-            <div className="space-y-3 text-sm text-muted-foreground md:text-base">
+            <div className="space-y-3 text-sm text-muted-foreground">
               <p className="flex items-center gap-3">
                 <Phone className="h-5 w-5 shrink-0" strokeWidth={1.6} />
                 <a href="tel:+5511998951900" className="hover:text-foreground transition-colors">(11) 99895-1900</a>
