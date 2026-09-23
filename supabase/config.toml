@@ -1,13 +1,13 @@
 project_id = "yuavzvlynsqrkbuzmcra"
 
-[functions.shopify-order-webhook]
-verify_jwt = false
-
-[functions.shopify-customer-webhook]
-verify_jwt = false
-
-[functions.bling-oauth-callback]
-verify_jwt = false
-
-[functions.tag-order-by-delivery]
-verify_jwt = false
+[functions]
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.bling-oauth-callback]
+    verify_jwt = false
+  [functions.shopify-customer-webhook]
+    verify_jwt = false
+  [functions.shopify-order-webhook]
+    verify_jwt = false
+  [functions.tag-order-by-delivery]
+    verify_jwt = false
