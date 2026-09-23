@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaAsset from "@/assets/capa-mesa.jpg.asset.json";
-import seloComerBeber from "@/assets/selo-comer-beber.webp";
+import seloComerBeber from "@/assets/selo-comer-beber.png";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
 
@@ -55,7 +55,7 @@ const Index = () => {
         <img
           src={seloComerBeber}
           alt="Selo Veja Comer & Beber 2026/2027 — Boleta, melhor rotisseria de São Paulo"
-          className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-10 w-20 md:w-28 lg:w-32 h-auto"
+          className="absolute bottom-14 right-4 md:bottom-20 md:right-8 z-10 w-28 md:w-40 lg:w-48 h-auto"
         />
       </section>
 
