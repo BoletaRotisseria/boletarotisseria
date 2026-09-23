@@ -18,6 +18,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore(state => state.addItem);
   const [isAdding, setIsAdding] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [hoveredVariantId, setHoveredVariantId] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const { node } = product;
   const image = node.images.edges[0]?.node;
@@ -28,6 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const variantPrices = variants.map(v => parseFloat(v.price.amount));
   const hasMultiplePrices = variantPrices.length > 1 && new Set(variantPrices).size > 1;
   const hasMultipleVariants = variants.length > 1;
+  const hoveredVariant = variants.find(v => v.id === hoveredVariantId) || variant;
 
   const formatPrice = (v: number) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency }).format(v);
@@ -107,9 +109,44 @@ export function ProductCard({ product }: ProductCardProps) {
               <ShoppingCart className="h-8 w-8" />
             </div>
           )}
-          <div className="absolute inset-x-0 bottom-0 flex justify-center p-4 opacity-100 md:opacity-0 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300">
+          <div className="absolute inset-x-0 bottom-0 flex justify-center p-4 md:hidden">
             <Button size="sm" className="cta-text text-xs shadow-md" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
               {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
+            </Button>
+          </div>
+          <div className="absolute inset-x-0 bottom-0 hidden md:flex flex-col gap-2 bg-background/95 p-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+            {hasMultipleVariants && (
+              <div className="flex flex-wrap justify-center gap-1.5">
+                {variants.map(v => (
+                  <Button
+                    key={v.id}
+                    type="button"
+                    size="sm"
+                    variant={hoveredVariant?.id === v.id ? "default" : "outline"}
+                    className="h-8 px-3 font-sans normal-case text-xs"
+                    disabled={!v.availableForSale}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setHoveredVariantId(v.id);
+                    }}
+                  >
+                    {v.title}
+                  </Button>
+                ))}
+              </div>
+            )}
+            <Button
+              size="sm"
+              className="cta-text w-full text-xs"
+              disabled={isAdding || !hoveredVariant?.availableForSale}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (hoveredVariant) void addVariant(hoveredVariant);
+              }}
+            >
+              {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : "Comprar"}
             </Button>
           </div>
         </div>
