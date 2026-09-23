@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaAsset from "@/assets/capa-mesa.jpg.asset.json";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
+import perfectlyNinetiesAsset from "@/assets/perfectly-nineties.otf.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
 
@@ -17,6 +18,11 @@ const Index = () => {
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
   }, [location.hash]);
+
+  useEffect(() => {
+    const font = new FontFace("Perfectly Nineties", `url(${perfectlyNinetiesAsset.url})`);
+    font.load().then((loadedFont) => document.fonts.add(loadedFont)).catch(() => undefined);
+  }, []);
 
   return (
     <>
@@ -36,7 +42,7 @@ const Index = () => {
               <span className="block text-[11px] md:text-xs font-medium tracking-[0.25em] uppercase text-background/90 mb-4">
                 Rotisseria & Empório
               </span>
-              <h1 className="font-serif text-[18px] sm:text-2xl md:text-3xl font-light text-background leading-[1.2] mb-8 drop-shadow-md">
+              <h1 className="font-perfectly-nineties text-[18px] sm:text-2xl md:text-3xl font-light text-background leading-[1.2] mb-8 drop-shadow-md">
                 <span className="block whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
                 <span className="block whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
               </h1>
