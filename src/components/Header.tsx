@@ -304,12 +304,12 @@ export function Header() {
             {/* Desktop: logo truly centered horizontally regardless of nav/icons width; anchored near the top and overflowing down into the photo so it stays large without clipping off the top of the page */}
             <Link
               to="/"
-              className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-2 md:top-3 flex-shrink-0"
+              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-shrink-0"
             >
               <img
                 src={boletaLogoMark}
                 alt="Boleta"
-                className={`h-14 md:h-16 w-auto transition-all ${
+                className={`h-8 md:h-9 w-auto transition-all ${
                   transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
                 }`}
               />
