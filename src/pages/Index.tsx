@@ -68,7 +68,7 @@ const Index = () => {
         </div>
         <div className="bg-primary flex flex-col justify-center p-8 md:p-12 lg:p-16">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground leading-[1.1] mb-4">
-            Peça pelo<br />nosso site!
+            Peça pelo<br />nosso <span className="normal-case">Site</span>!
           </h2>
           <p className="text-primary-foreground/80 text-base md:text-lg mb-4 max-w-sm">
             Monte seu pedido online, agende a entrega e receba tudo na sua casa.
