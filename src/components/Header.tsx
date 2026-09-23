@@ -152,7 +152,7 @@ export function Header() {
             <a
               href={item.path}
               className={`flex items-center gap-1 px-2 md:px-3 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
-                isHome ? "text-foreground" : "text-foreground/60"
+                "text-foreground"
               }`}
             >
               {item.label}
@@ -161,7 +161,7 @@ export function Header() {
             <Link
               to={item.path}
               className={`flex items-center gap-1 px-2 md:px-3 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
-                isHome || location.pathname === item.path ? "text-foreground" : "text-foreground/60"
+                "text-foreground"
               }`}
             >
               {item.label}
