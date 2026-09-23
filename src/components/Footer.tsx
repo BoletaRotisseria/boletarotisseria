@@ -73,7 +73,7 @@ export function Footer() {
 
           <div className="md:pt-11">
             <h4 className="font-serif normal-case text-2xl font-normal mb-6">
-              Casinha
+              Endereço
             </h4>
             <div className="space-y-3 text-sm text-muted-foreground">
               <p className="flex items-center gap-3">
