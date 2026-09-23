@@ -251,7 +251,7 @@ export function Header() {
         ) : (
           <User className="h-5 w-5" strokeWidth={2.75} />
         )}
-      </a>
+      </Link>
       <CartDrawer />
       <div
         onMouseEnter={handleMobileEnter}
