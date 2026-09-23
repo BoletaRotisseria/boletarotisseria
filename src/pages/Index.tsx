@@ -46,7 +46,7 @@ const Index = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="cta-text rounded-none border border-background/90 bg-transparent text-background tracking-[0.2em] uppercase px-10 hover:bg-background/10"
+                  className="cta-text rounded-none border border-background/90 bg-transparent text-background tracking-[0.2em] uppercase px-5 py-2 h-auto text-[11px] md:px-10 md:py-3 md:text-sm hover:bg-background/10"
                 >
                   Pedir Agora
                 </Button>
@@ -59,7 +59,7 @@ const Index = () => {
         <img
           src={seloAsset.url}
           alt="Selo Veja Comer & Beber 2026/2027 — Boleta, melhor rotisseria de São Paulo"
-          className="absolute bottom-14 right-4 md:bottom-20 md:right-8 z-10 w-28 md:w-40 lg:w-48 h-auto"
+          className="absolute top-24 right-4 md:top-auto md:bottom-20 md:right-8 z-10 w-16 md:w-40 lg:w-48 h-auto"
         />
       </section>
 
