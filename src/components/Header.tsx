@@ -173,7 +173,7 @@ export function Header() {
           {/* Mega-menu rendered inside the nav item for seamless hover */}
           {item.subCategories && openDropdown === item.label && (
             <div
-              className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-[fade-in_0.3s_ease-out] ${
+              className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-menu-fade ${
                 isHome && scrolled ? "top-[75px] md:top-[83px]" : "top-[87px] md:top-[95px]"
               }`}
               style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
