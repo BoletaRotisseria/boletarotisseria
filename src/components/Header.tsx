@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
-import boletaLogo from "@/assets/boleta-logo.jpeg";
 import boletaLogoMark from "@/assets/boleta-logo-mark-trimmed.png";
 
 interface SubItem {
@@ -141,7 +140,7 @@ export function Header() {
   }, [location.pathname]);
 
   const desktopNav = (
-    <nav className={`hidden lg:flex items-center gap-0 ${isHome ? "" : "flex-1 justify-center"}`}>
+    <nav className="hidden lg:flex items-center gap-0">
       {navItems.map((item) => (
         <div
           key={item.label}
@@ -152,7 +151,7 @@ export function Header() {
           {item.path.includes('#') ? (
             <a
               href={item.path}
-              className={`flex items-center gap-1 ${isHome ? "px-2 md:px-3" : "px-4"} py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+              className={`flex items-center gap-1 px-2 md:px-3 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
                 isHome ? "text-foreground" : "text-foreground/60"
               }`}
             >
@@ -161,7 +160,7 @@ export function Header() {
           ) : (
             <Link
               to={item.path}
-              className={`flex items-center gap-1 ${isHome ? "px-2 md:px-3" : "px-4"} py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+              className={`flex items-center gap-1 px-2 md:px-3 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
                 isHome || location.pathname === item.path ? "text-foreground" : "text-foreground/60"
               }`}
             >
@@ -286,46 +285,34 @@ export function Header() {
         aria-hidden="true"
       />
 
-      {/* Main bar */}
-      {isHome ? (
-        <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
-            <div className="flex items-center gap-3">
-              {/* Mobile: logo sits left since the nav is hidden below lg */}
-              <Link to="/" className="lg:hidden flex-shrink-0">
-                <img
-                  src={boletaLogoMark}
-                  alt="Boleta"
-                  className={`h-5 w-auto transition-all ${
-                    transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
-                  }`}
-                />
-              </Link>
-              {desktopNav}
-            </div>
-            <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
-            {/* Desktop: logo centralizado na barra */}
-            <Link
-              to="/"
-              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[calc(50%-5px)] flex-shrink-0"
-            >
-              <img
-                src={boletaLogoMark}
-                alt="Boleta"
-                className={`h-10 md:h-11 w-auto transition-all ${
-                  transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
-                }`}
-              />
-            </Link>
-        </div>
-      ) : (
-        <div className="container flex items-center justify-between transition-all h-14 md:h-16">
-          <Link to="/" className="flex-shrink-0">
-            <img src={boletaLogo} alt="Boleta" className="rounded relative z-50 transition-all h-16 md:h-20 -mb-8 mt-2" />
+      {/* Main bar — same editorial composition on every page */}
+      <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
+        <div className="flex items-center gap-3">
+          <Link to="/" className="lg:hidden flex-shrink-0">
+            <img
+              src={boletaLogoMark}
+              alt="Boleta"
+              className={`h-5 w-auto transition-all ${
+                transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
+              }`}
+            />
           </Link>
           {desktopNav}
-          <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
         </div>
-      )}
+        <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
+        <Link
+          to="/"
+          className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[calc(50%-5px)] flex-shrink-0"
+        >
+          <img
+            src={boletaLogoMark}
+            alt="Boleta"
+            className={`h-10 md:h-11 w-auto transition-all ${
+              transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
+            }`}
+          />
+        </Link>
+      </div>
 
       {/* Search bar */}
       {searchOpen && (
@@ -335,7 +322,7 @@ export function Header() {
           onMouseEnter={handleSearchEnter}
           onMouseLeave={handleSearchLeave}
         >
-          <div className={`container py-[15px] ${isHome ? "" : "pl-28 md:pl-32"}`}>
+          <div className="container py-[15px]">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
