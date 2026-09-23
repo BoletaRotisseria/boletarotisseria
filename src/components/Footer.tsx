@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import boletaLogo from "@/assets/boleta-rotisseria-logo.jpeg";
-import quadriculadoBg from "@/assets/quadriculado-bg.jpg";
+
 
 const WHATSAPP_CARDAPIO = "https://wa.me/5511998951900?text=Ol%C3%A1%2C%20quero%20receber%20o%20card%C3%A1pio%20semanal.";
 const WHATSAPP_CONTATO = "https://wa.me/5511998951900";
