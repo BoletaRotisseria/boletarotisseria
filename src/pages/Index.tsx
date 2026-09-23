@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaAsset from "@/assets/capa-mesa.jpg.asset.json";
-import seloAsset from "@/assets/selo-comer-beber-novo.png.asset.json";
+import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
 
