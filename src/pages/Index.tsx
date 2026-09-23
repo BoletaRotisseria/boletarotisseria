@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaAsset from "@/assets/capa-mesa.jpg.asset.json";
-import seloComerBeber from "@/assets/selo-comer-beber.png";
+import seloAsset from "@/assets/selo-comer-beber-novo.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
 
@@ -53,7 +53,7 @@ const Index = () => {
 
         {/* Selo do prêmio */}
         <img
-          src={seloComerBeber}
+          src={seloAsset.url}
           alt="Selo Veja Comer & Beber 2026/2027 — Boleta, melhor rotisseria de São Paulo"
           className="absolute bottom-14 right-4 md:bottom-20 md:right-8 z-10 w-28 md:w-40 lg:w-48 h-auto"
         />
