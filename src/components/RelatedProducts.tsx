@@ -77,7 +77,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
       <section className="border-t border-border/60 mt-16 md:mt-24 pt-12 md:pt-20">
         <div className="container">
           <div className="text-center mb-10 md:mb-14">
-            <p className="font-serif tracking-[0.3em] text-xs md:text-sm text-muted-foreground uppercase mb-3">
+            <p className="font-sans tracking-[0.3em] text-xs md:text-sm text-muted-foreground uppercase mb-3">
               Combine com…
             </p>
             <h2 className="font-courier lowercase text-2xl md:text-4xl font-normal">{specific.title}</h2>
@@ -102,7 +102,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
     <section className="border-t border-border/60 mt-16 md:mt-24 pt-12 md:pt-20">
       <div className="container">
         <div className="text-center mb-10 md:mb-14">
-          <p className="font-serif tracking-[0.3em] text-xs md:text-sm text-muted-foreground uppercase mb-3">
+          <p className="font-sans tracking-[0.3em] text-xs md:text-sm text-muted-foreground uppercase mb-3">
             Combine com…
           </p>
           <h2 className="font-courier lowercase text-2xl md:text-4xl font-normal">{rule.title}</h2>
