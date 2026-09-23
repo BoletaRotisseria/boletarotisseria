@@ -94,6 +94,11 @@
   font-family: 'Courier Prime', 'Courier New', monospace;
 }
 
+.font-perfectly-nineties {
+  font-family: 'Perfectly Nineties', Georgia, serif;
+  text-transform: none;
+}
+
 .cta-text {
   font-family: var(--font-sans);
   text-transform: uppercase;
