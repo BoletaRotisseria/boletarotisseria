@@ -174,7 +174,7 @@ export function Header() {
           {item.subCategories && openDropdown === item.label && (
             <div
               className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in ${
-                isHome ? "top-[56px] md:top-[64px]" : "top-[56px] md:top-[64px]"
+                isHome ? "top-[68px] md:top-[76px]" : "top-[68px] md:top-[76px]"
               }`}
               style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
               onMouseEnter={() => handleEnter(item.label)}
@@ -281,6 +281,8 @@ export function Header() {
         ...(transparent ? { ["--foreground" as unknown as string]: "0 0% 100%" } : {}),
       }}
     >
+      <div className="h-3 bg-stripe" aria-hidden="true" />
+
       {/* Main bar */}
       {isHome ? (
         <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
