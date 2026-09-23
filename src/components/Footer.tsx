@@ -33,7 +33,7 @@ export function Footer() {
       </div>
 
       <div className="container px-4 py-5 md:py-6">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 md:items-start md:gap-x-12 lg:gap-x-16">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 md:items-start md:gap-x-6 lg:gap-x-8">
           <div className="flex justify-center sm:justify-start">
             <img src={casinhaAsset.url} alt="Fachada da Boleta Rotisseria" className="-mt-10 -mb-6 h-60 w-auto object-contain md:-mt-14 md:-mb-10 md:h-72" />
           </div>
