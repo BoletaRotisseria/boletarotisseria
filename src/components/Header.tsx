@@ -303,12 +303,12 @@ export function Header() {
             {/* Desktop: logo centralizado na barra */}
             <Link
               to="/"
-              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-shrink-0"
+              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[calc(50%-5px)] flex-shrink-0"
             >
               <img
                 src={boletaLogoMark}
                 alt="Boleta"
-                className={`h-8 md:h-9 w-auto transition-all ${
+                className={`h-10 md:h-11 w-auto transition-all ${
                   transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
                 }`}
               />
