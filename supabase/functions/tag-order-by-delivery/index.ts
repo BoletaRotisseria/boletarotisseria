@@ -1,6 +1,6 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 
-const SHOP_DOMAIN = 'boletarotisseria.myshopify.com';
+const SHOP_DOMAIN = 'boleta-direct-8l7a1.myshopify.com';
 const API_VERSION = '2025-07';
 
 Deno.serve(async (req) => {
