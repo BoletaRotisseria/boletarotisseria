@@ -7,6 +7,9 @@ import capaMesaBg from "@/assets/hero-home-bg-2.jpg";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
+import { Link } from "react-router-dom";
+import { NOTICIAS } from "@/lib/noticias";
+import { NoticiasGrid } from "@/components/NoticiasGrid";
 
 const Index = () => {
   const location = useLocation();
@@ -123,57 +126,14 @@ const Index = () => {
               <span className="text-destructive">★★★★</span> no Guia Comer & Beber da Veja São Paulo
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                source: "VEJA SÃO PAULO",
-                title: "Roberto Eid Philipp, da Boleta, participa de evento na França",
-                excerpt: "Único paulistano a integrar o festival no Carreau du Temple, em Paris, levando cuscuz paulista e manjar de coco.",
-                link: "https://vejasp.abril.com.br/coluna/delicia-de-conta/comer-e-beber-chef-rotisseria-boleta-participa-de-evento-na-franca/",
-                image: "https://vejasp.abril.com.br/wp-content/uploads/2025/09/Roberto-Eid-Phillip.jpg?quality=70&strip=info&w=600&h=400&crop=1",
-                imagePosition: "center top",
-              },
-              {
-                source: "VEJA SÃO PAULO",
-                title: "Boleta também vende pratos para viagem em Pinheiros",
-                excerpt: "No misto de empório e rotisseria, Roberto Eid Philipp assina as receitas e faz a curadoria dos itens à venda.",
-                link: "https://vejasp.abril.com.br/comer-e-beber/boleta-pinheiros-critica/",
-                image: "https://vejasp.abril.com.br/wp-content/uploads/2023/07/Boleta_ambiente_credito_Helson-Gomes_divulgacao.JPG.jpg?quality=70&strip=info&w=600&h=400&crop=1",
-              },
-            ].map((item, i) => (
-              <a
-                key={i}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-background rounded-2xl border border-border/50 p-5 flex flex-col gap-3 hover:shadow-md transition-shadow"
-              >
-                <div className="w-full h-40 rounded-xl overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" style={"imagePosition" in item ? { objectPosition: item.imagePosition as string } : undefined} loading="lazy" />
-                </div>
-                <div className="flex flex-col justify-between flex-1 min-w-0">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-foreground">
-                        {item.source}
-                      </span>
-                      {"isNew" in item && item.isNew && (
-                        <span className="text-[9px] font-bold tracking-wider uppercase bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded-full">
-                          Novo
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="font-serif text-base font-bold mb-1.5 leading-snug group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3">{item.excerpt}</p>
-                  </div>
-                  <span className="mt-3 text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                    Vem ler tudo aqui →
-                  </span>
-                </div>
-              </a>
-            ))}
+          <NoticiasGrid noticias={NOTICIAS.slice(0, 2)} />
+          <div className="mt-6 text-center">
+            <Link
+              to="/cafe#na-midia"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors underline underline-offset-4"
+            >
+              Ver todas as notícias
+            </Link>
           </div>
         </div>
       </section>

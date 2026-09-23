@@ -1,4 +1,6 @@
 import chefImage from "@/assets/boleta-chef.jpg";
+import { NOTICIAS } from "@/lib/noticias";
+import { NoticiasGrid } from "@/components/NoticiasGrid";
 
 export default function CafePage() {
   return (
@@ -33,6 +35,14 @@ export default function CafePage() {
           <p className="text-foreground/80 text-sm md:text-base leading-relaxed">
             Rotisseria e empório com a assinatura do chef Roberto Eid Philipp, o Boleta. Aperitivos, terrines, massas frescas, assados e doces prontos para levar para casa, além de produtos artesanais para acompanhar ou presentear.
           </p>
+        </div>
+
+        <div id="na-midia" className="clear-both mt-16 scroll-mt-24">
+          <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">Na mídia</h2>
+          <p className="text-foreground/80 text-sm md:text-base leading-relaxed mb-6">
+            Todas as notícias e prêmios do Boleta na imprensa.
+          </p>
+          <NoticiasGrid noticias={NOTICIAS} />
         </div>
       </div>
     </div>
