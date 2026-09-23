@@ -6,6 +6,7 @@ import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaBg from "@/assets/hero-home-bg-2.jpg";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
+import losangoBgAsset from "@/assets/padronagem-losango.png.asset.json";
 import quadriculadoMidiaBgAsset from "@/assets/padronagem-grade.png.asset.json";
 import { NOTICIAS } from "@/lib/noticias";
 import { NoticiasGrid } from "@/components/NoticiasGrid";
