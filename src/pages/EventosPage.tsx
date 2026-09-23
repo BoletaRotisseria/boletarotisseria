@@ -15,11 +15,22 @@ export default function EventosPage() {
 
   return (
     <div className="container py-10 md:py-16">
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 max-w-3xl mx-auto">
         <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">Eventos</h1>
-        <p className="text-muted-foreground max-w-lg mx-auto">
-          Encomendas maiores e corporativas. Conte com a qualidade Boleta para o seu evento.
-        </p>
+        <div className="space-y-5 text-muted-foreground text-sm md:text-base leading-relaxed">
+          <p>
+            Seja para um jantar entre amigos ou uma grande festa, adoraríamos fazer parte do seu evento. Queremos levar a alegria e os sabores da Boleta até você, onde quer que esteja.
+          </p>
+          <p>
+            À frente da nossa cozinha está o chef Roberto Eid Philipp, que construiu sua trajetória ao lado da banqueteira Neka Menna Barreto e, mais tarde, como fundador e ex-sócio do Buffet Balsâmico. Hoje, traz toda essa experiência para a Boleta e para cada evento que realizamos.
+          </p>
+          <p>
+            Personalizamos cada ocasião, criando um cardápio pensado especialmente para você, com uma seleção dos seus pratos favoritos e tudo o que é preciso para tornar o momento especial e inesquecível para seus convidados.
+          </p>
+          <p>
+            Conte um pouco sobre o seu evento no formulário abaixo. Entraremos em contato para pensar todos os detalhes com você.
+          </p>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto space-y-4">
