@@ -86,8 +86,8 @@ const Index = () => {
 
       {/* Dicas de Preparo */}
       <section className="relative bg-background">
-        <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.37 }} />
-        <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${papelSedaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.37 }} />
+        <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${losangoBgAsset.url})`, backgroundSize: '480px', backgroundRepeat: 'repeat', opacity: 0.25 }} />
+        <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${losangoBgAsset.url})`, backgroundSize: '480px', backgroundRepeat: 'repeat', opacity: 0.25 }} />
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 h-[85vh] md:h-[90vh]">
           {/* Texto à esquerda */}
           <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
