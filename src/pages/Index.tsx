@@ -32,12 +32,13 @@ const Index = () => {
 
         <div className="relative z-10 h-full flex flex-col justify-end">
           <div className="container pb-14 md:pb-20">
-            <div className="max-w-xl">
+            <div className="max-w-2xl">
               <span className="block text-[11px] md:text-xs font-medium tracking-[0.25em] uppercase text-background/90 mb-4">
                 Rotisseria & Empório
               </span>
-              <h1 className="font-serif text-3xl md:text-5xl lg:text-[3.4rem] font-light text-background leading-[1.15] mb-8 drop-shadow-md">
-                Comida de verdade, feita para compartilhar. Pronta para aquecer, servir e aproveitar.
+              <h1 className="font-serif text-2xl md:text-4xl font-light text-background leading-[1.2] mb-8 drop-shadow-md">
+                Comida de verdade, feita para compartilhar.<br />
+                Pronta para aquecer, servir e aproveitar.
               </h1>
               <Link to="/cardapios">
                 <Button
