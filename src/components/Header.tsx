@@ -85,7 +85,6 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoggedIn, customer } = useShopifyCustomer();
-  const ACCOUNT_URL = 'https://shopify.com/73655975981/account';
   const firstLetter = customer?.firstName?.[0] || customer?.email?.[0] || '';
 
   const isHome = location.pathname === "/";
@@ -239,8 +238,8 @@ export function Header() {
           <Search className="h-5 w-5" strokeWidth={2.75} />
         </button>
       </div>
-      <a
-        href={ACCOUNT_URL}
+      <Link
+        to={isLoggedIn ? "/minha-conta" : "/entrar"}
         className="p-2 text-foreground hover:text-foreground/70 transition-colors flex items-center justify-center"
         aria-label={isLoggedIn ? "Minha conta" : "Entrar"}
       >
@@ -251,7 +250,7 @@ export function Header() {
         ) : (
           <User className="h-5 w-5" strokeWidth={2.75} />
         )}
-      </a>
+      </Link>
       <CartDrawer />
       <div
         onMouseEnter={handleMobileEnter}
