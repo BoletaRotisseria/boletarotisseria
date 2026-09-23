@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
-import capaMesaAsset from "@/assets/capa-mesa.jpg.asset.json";
+import capaMesaAsset from "@/assets/capa-mesa-enhanced.png.asset.json";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import perfectlyNinetiesAsset from "@/assets/perfectly-nineties.otf.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
