@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import boletaLogo from "@/assets/boleta-rotisseria-logo.jpeg";
-import quadriculadoBg from "@/assets/quadriculado-bg.jpg";
+
 
 const WHATSAPP_CARDAPIO = "https://wa.me/5511998951900?text=Ol%C3%A1%2C%20quero%20receber%20o%20card%C3%A1pio%20semanal.";
 const WHATSAPP_CONTATO = "https://wa.me/5511998951900";
@@ -9,11 +9,9 @@ const INSTAGRAM_URL = "https://www.instagram.com/boleta.rotisseria?utm_source=ig
 export function Footer() {
   return (
     <footer className="relative text-foreground">
-      {/* Background texture */}
-      <div
-        className="absolute inset-0 bg-repeat bg-center opacity-10"
-        style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }}
-      />
+      {/* Fundo liso do rodapé */}
+      <div className="absolute inset-0 bg-footer" />
+
 
       {/* Thin textured strip – same pattern as footer body */}
       <div className="relative z-10 h-6" />
