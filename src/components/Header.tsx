@@ -286,7 +286,7 @@ export function Header() {
       />
 
       {/* Main bar — same editorial composition on every page */}
-      <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
+      <div className="container relative flex items-center justify-between transition-all h-20 md:h-24">
         <div className="flex items-center gap-3">
           <Link to="/" className="lg:hidden flex-shrink-0">
             <img
@@ -302,7 +302,7 @@ export function Header() {
         <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
         <Link
           to="/"
-          className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[calc(50%-5px)] flex-shrink-0"
+          className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-shrink-0"
         >
           <img
             src={boletaLogoMark}
