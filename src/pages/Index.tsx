@@ -59,7 +59,7 @@ const Index = () => {
         <img
           src={seloAsset.url}
           alt="Selo Veja Comer & Beber 2026/2027 — Boleta, melhor rotisseria de São Paulo"
-          className="absolute top-24 right-4 md:top-16 md:right-8 lg:top-auto lg:bottom-20 z-10 w-24 md:w-36 lg:w-48 h-auto"
+          className="absolute top-24 right-4 md:top-[84px] md:right-8 lg:top-auto lg:bottom-20 z-10 w-24 md:w-36 lg:w-48 h-auto"
         />
       </section>
 
