@@ -42,11 +42,11 @@ export function Footer() {
       </div>
 
       {/* Corpo do rodapé – 3 colunas */}
-      <div className="container relative z-10 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_2fr] gap-x-10 gap-y-10">
+      <div className="container relative z-10 py-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_2fr] gap-x-10 gap-y-8">
           {/* Coluna 1 – Logo + Sobre */}
           <div>
-            <img src={casinhaAsset.url} alt="Boleta Rotisseria" className="h-28 w-auto mb-4" />
+            <img src={casinhaAsset.url} alt="Boleta Rotisseria" className="h-32 w-auto mb-3" />
             <p className="text-sm text-foreground/60 leading-relaxed mb-6">
               O Boleta oferece uma experiência gastronômica artesanal, com pratos frescos e congelados, fáceis de aquecer e servir.
             </p>
