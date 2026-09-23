@@ -108,9 +108,9 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
         </div>
-        <h3 className="font-sans normal-case text-lg md:text-xl leading-snug font-normal mb-4 line-clamp-2">{sentenceCase(node.title)}</h3>
+        <h3 className="font-sans normal-case text-lg md:text-xl leading-snug font-normal mb-3 line-clamp-2">{sentenceCase(node.title)}</h3>
         <div className="flex items-center justify-between gap-2">
-          <span className="font-normal">
+          <span className="text-lg font-normal leading-none">
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
           </span>
           <Button size="sm" className="cta-text text-xs bg-primary/60 hover:bg-primary/80" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
