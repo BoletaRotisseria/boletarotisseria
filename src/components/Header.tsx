@@ -174,14 +174,14 @@ export function Header() {
           {item.subCategories && openDropdown === item.label && (
             <div
               className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in ${
-                isHome && scrolled ? "top-[56px] md:top-[64px]" : "top-[68px] md:top-[76px]"
+                isHome && scrolled ? "top-[75px] md:top-[83px]" : "top-[87px] md:top-[95px]"
               }`}
               style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
               onMouseEnter={() => handleEnter(item.label)}
               onMouseLeave={handleLeave}
             >
               {/* Invisible bridge to connect nav link to mega-menu */}
-              <div className="absolute left-0 right-0 -top-4 h-4" />
+              <div className="absolute left-0 right-0 -top-6 h-6" />
               <div className="container py-6">
                 {item.subCategories.map((sub) => (
                   <div key={sub.label}>
