@@ -34,10 +34,14 @@ export const SPECIFIC_RECOMMENDATIONS: Record<string, SpecificRecommendation> = 
     ],
     title: "Combine com Mel Mini ou Geleia de Damasco",
   },
-  // Capeletti de Carne Mini → Capeletti in Brodo (preparação em brodo)
+  // Capeletti de Carne Mini ↔ Brodo
   "gid://shopify/Product/8404951236653": {
-    productIds: ["gid://shopify/Product/8404951269421"],
+    productIds: ["gid://shopify/Product/8404952449069"],
     title: "Combine com Brodo",
+  },
+  "gid://shopify/Product/8404952449069": {
+    productIds: ["gid://shopify/Product/8404951236653"],
+    title: "Combine com Capeletti de Carne Mini",
   },
   // Grand Gateau de Chocolate → Creme Anglaise
   "gid://shopify/Product/8404952645677": {
