@@ -42,7 +42,7 @@ const Index = () => {
               <span className="block text-[11px] md:text-xs font-medium tracking-[0.25em] uppercase text-background/90 mb-4">
                 Rotisseria & Empório
               </span>
-              <h1 className="font-perfectly-nineties text-[20px] sm:text-3xl md:text-4xl font-light text-background leading-[1.2] mb-8 drop-shadow-md">
+              <h1 className="font-perfectly-nineties text-2xl sm:text-4xl md:text-5xl font-light text-background leading-[1.15] mb-8 drop-shadow-md">
                 <span className="block whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
                 <span className="block whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
               </h1>
