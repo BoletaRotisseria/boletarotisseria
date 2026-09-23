@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
-import heroHomeBg from "@/assets/hero-home-bg.webp";
+import capaMesaAsset from "@/assets/capa-mesa.jpg.asset.json";
 import seloComerBeber from "@/assets/selo-comer-beber.webp";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
