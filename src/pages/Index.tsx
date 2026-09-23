@@ -21,7 +21,7 @@ const Index = () => {
   return (
     <>
       {/* Capa – hero fixa */}
-      <section className="relative h-[85vh] md:h-[90vh] overflow-hidden">
+      <section className="relative h-[85vh] md:h-screen overflow-hidden">
         <img
           src={heroHomeBg}
           alt="Mesa posta com aperitivos e pratos do Boleta"
