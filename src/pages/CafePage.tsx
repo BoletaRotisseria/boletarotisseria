@@ -1,4 +1,5 @@
 import chefImage from "@/assets/boleta-chef.jpg";
+import vamosBoletarAsset from "@/assets/vamos-boletar.svg.asset.json";
 import { NOTICIAS } from "@/lib/noticias";
 import { NoticiasGrid } from "@/components/NoticiasGrid";
 
@@ -25,9 +26,11 @@ export default function CafePage() {
           <p>
             Cosmopolita como São Paulo, nosso repertório reúne inspirações de diversas partes do mundo e também minhas memórias de família - árabe de um lado, judaico-alemã de outro. Ainda temos influências do tempo em que morei em Paris, quando estudei na Le Cordon Bleu e trabalhei em cozinhas prestigiadas como Fauchon, Taillevent e George V. E dos anos em que chefiei o buffet da banqueteira Neka Menna Barreto, que me introduziu no universo dos eventos e festas.
           </p>
-          <p className="font-serif text-lg md:text-xl font-bold text-foreground">
-            Vamos Boletar?!
-          </p>
+          <img
+            src={vamosBoletarAsset.url}
+            alt="Vamos Boletar?!"
+            className="h-auto w-52 md:w-64"
+          />
         </div>
 
         <div className="clear-both mt-16">
