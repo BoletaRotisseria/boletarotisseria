@@ -6,7 +6,7 @@ import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaBg from "@/assets/hero-home-bg-2.jpg";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
-import quadriculadoMidiaBg from "@/assets/quadriculado-midia-bg.jpg";
+import quadriculadoMidiaBgAsset from "@/assets/padronagem-grade.png.asset.json";
 import { NOTICIAS } from "@/lib/noticias";
 import { NoticiasGrid } from "@/components/NoticiasGrid";
 
@@ -116,7 +116,7 @@ const Index = () => {
 
       {/* Na Mídia */}
       <section id="na-midia" className="relative py-10 md:py-14 bg-background scroll-mt-20">
-        <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'repeat', opacity: 0.9 }} />
+        <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'repeat', opacity: 0.9 }} />
         
         <div className="relative z-10 container">
           <div className="bg-background rounded-2xl px-6 py-4 md:px-8 md:py-5 inline-block mb-6">
