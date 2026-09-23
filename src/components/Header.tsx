@@ -90,7 +90,8 @@ export function Header() {
 
   const isHome = location.pathname === "/";
   const [scrolled, setScrolled] = useState(false);
-  const transparent = isHome && !scrolled;
+  const menuOpen = openDropdown !== null || searchOpen || mobileOpen;
+  const transparent = isHome && !scrolled && !menuOpen;
 
   useEffect(() => {
     if (!isHome) {
