@@ -285,7 +285,7 @@ export function Header() {
       {/* Main bar */}
       {isHome ? (
         <>
-          <div className="h-1.5 w-full bg-primary" />
+          <div className="h-[15px] w-full bg-stripe" />
           <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
             <div className="flex items-center gap-3">
               {/* Mobile: logo sits left since the nav is hidden below lg */}
