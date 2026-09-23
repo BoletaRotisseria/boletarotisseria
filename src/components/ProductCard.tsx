@@ -94,7 +94,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div ref={cardRef} className="relative overflow-visible">
       <Link to={`/product/${node.handle}`} className="group flex flex-col h-full">
-        <div className="overflow-hidden rounded-md bg-secondary/30 aspect-square mb-3">
+        <div className="overflow-hidden rounded-md bg-secondary/30 aspect-square mb-2">
           {image ? (
             <img
               src={image.url}
@@ -108,7 +108,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
         </div>
-        <h3 className="font-sans normal-case text-lg md:text-xl leading-snug font-normal mt-3 mb-3 line-clamp-2 min-h-[2.6em] flex items-center">{sentenceCase(node.title)}</h3>
+        <h3 className="font-sans normal-case text-lg md:text-xl leading-snug font-normal mb-4 line-clamp-2">{sentenceCase(node.title)}</h3>
         <div className="flex items-center justify-between gap-2">
           <span className="font-normal">
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
