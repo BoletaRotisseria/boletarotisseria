@@ -188,7 +188,7 @@ export function Header() {
                     <Link
                       to={sub.path}
                       onClick={() => setOpenDropdown(null)}
-                      className={`block text-left text-sm font-sans font-bold tracking-[0.14em] uppercase mb-5 hover:text-foreground/70 transition-colors ${
+                      className={`block text-left text-base font-sans font-bold tracking-[0.14em] uppercase mb-5 hover:text-foreground/70 transition-colors ${
                         sub.highlight ? "text-destructive" : "text-foreground"
                       }`}
                     >
@@ -204,7 +204,7 @@ export function Header() {
                             <Link
                               to={si.path}
                               onClick={() => setOpenDropdown(null)}
-                              className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
+                              className="text-xs font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
                             >
                               {si.label}
                             </Link>
