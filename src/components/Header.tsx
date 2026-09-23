@@ -4,6 +4,7 @@ import { Menu, X, ShoppingCart, ChevronDown, Search, User } from "lucide-react";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useShopifyCustomer } from "@/hooks/useShopifyCustomer";
 import boletaLogo from "@/assets/boleta-logo.jpeg";
+import boletaLogoMark from "@/assets/boleta-logo-mark.png";
 
 interface SubItem {
   label: string;
@@ -89,6 +90,21 @@ export function Header() {
   const ACCOUNT_URL = 'https://shopify.com/73655975981/account';
   const firstLetter = customer?.firstName?.[0] || customer?.email?.[0] || '';
 
+  const isHome = location.pathname === "/";
+  const [scrolled, setScrolled] = useState(false);
+  const transparent = isHome && !scrolled;
+
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(true);
+      return;
+    }
+    const handleHeaderScroll = () => setScrolled(window.scrollY > 40);
+    handleHeaderScroll();
+    window.addEventListener("scroll", handleHeaderScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleHeaderScroll);
+  }, [isHome]);
+
   const handleEnter = (label: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpenDropdown(label);
@@ -125,147 +141,198 @@ export function Header() {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  return (
-    <header className="sticky top-0 z-50 bg-background border-b border-border/40" style={{ zIndex: 50 }}>
-      {/* Main bar */}
-      <div className="container flex items-center justify-between transition-all h-14 md:h-16">
-        <Link to="/" className="flex-shrink-0">
-          <img src={boletaLogo} alt="Boleta" className="rounded relative z-50 transition-all h-16 md:h-20 -mb-8 mt-2" />
-        </Link>
+  const desktopNav = (
+    <nav className={`hidden lg:flex items-center gap-0 ${isHome ? "" : "flex-1 justify-center"}`}>
+      {navItems.map((item) => (
+        <div
+          key={item.label}
+          className="relative"
+          onMouseEnter={() => item.subCategories && handleEnter(item.label)}
+          onMouseLeave={handleLeave}
+        >
+          {item.path.includes('#') ? (
+            <a
+              href={item.path}
+              className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground text-foreground/60`}
+            >
+              {item.label}
+            </a>
+          ) : (
+            <Link
+              to={item.path}
+              className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
+                location.pathname === item.path ? "text-foreground" : "text-foreground/60"
+              }`}
+            >
+              {item.label}
+              {item.subCategories && <ChevronDown className="h-3 w-3" strokeWidth={2} />}
+            </Link>
+          )}
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-0 flex-1 justify-center">
-          {navItems.map((item) => (
+          {/* Mega-menu rendered inside the nav item for seamless hover */}
+          {item.subCategories && openDropdown === item.label && (
             <div
-              key={item.label}
-              className="relative"
-              onMouseEnter={() => item.subCategories && handleEnter(item.label)}
+              className={`fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in ${
+                isHome ? "top-[62px] md:top-[70px]" : "top-[56px] md:top-[64px]"
+              }`}
+              style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
+              onMouseEnter={() => handleEnter(item.label)}
               onMouseLeave={handleLeave}
             >
-              {item.path.includes('#') ? (
-                <a
-                  href={item.path}
-                  className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground text-foreground/60`}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link
-                  to={item.path}
-                  className={`flex items-center gap-1 px-4 py-2 text-[13px] font-sans font-semibold tracking-[0.14em] uppercase transition-colors hover:text-foreground ${
-                    location.pathname === item.path ? "text-foreground" : "text-foreground/60"
-                  }`}
-                >
-                  {item.label}
-                  {item.subCategories && <ChevronDown className="h-3 w-3" strokeWidth={2} />}
-                </Link>
-              )}
-
-              {/* Mega-menu rendered inside the nav item for seamless hover */}
-              {item.subCategories && openDropdown === item.label && (
-                <div
-                  className="fixed left-0 right-0 z-40 bg-background border-b border-border/40 shadow-md animate-fade-in top-[56px] md:top-[64px]"
-                  onMouseEnter={() => handleEnter(item.label)}
-                  onMouseLeave={handleLeave}
-                >
-                  {/* Invisible bridge to connect nav link to mega-menu */}
-                  <div className="absolute left-0 right-0 -top-4 h-4" />
-                  <div className="container">
-                    <div className="flex">
-                      {item.subCategories.map((sub) => (
-                        <Link
-                          key={sub.label}
-                          to={sub.path}
-                          onClick={() => setOpenDropdown(null)}
-                          className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/20 last:border-r-0 hover:bg-secondary/50 transition-colors ${
-                            sub.highlight ? "text-destructive" : "text-foreground"
-                          }`}
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="flex py-4">
-                      {item.subCategories.map((sub) => (
-                        <div key={sub.label} className="flex-1 px-6">
-                          {sub.items && (
-                            <ul className="space-y-1">
-                              {sub.items.map((si) => (
-                                <li key={si.label}>
-                                  <Link
-                                    to={si.path}
-                                    onClick={() => setOpenDropdown(null)}
-                                    className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
-                                  >
-                                    {si.label}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              {/* Invisible bridge to connect nav link to mega-menu */}
+              <div className="absolute left-0 right-0 -top-4 h-4" />
+              <div className="container">
+                <div className="flex">
+                  {item.subCategories.map((sub) => (
+                    <Link
+                      key={sub.label}
+                      to={sub.path}
+                      onClick={() => setOpenDropdown(null)}
+                      className={`flex-1 px-6 py-3 text-xs font-sans font-bold tracking-[0.14em] uppercase text-center border-r border-border/20 last:border-r-0 hover:bg-secondary/50 transition-colors ${
+                        sub.highlight ? "text-destructive" : "text-foreground"
+                      }`}
+                    >
+                      {sub.label}
+                    </Link>
+                  ))}
                 </div>
-              )}
-            </div>
-          ))}
-        </nav>
-
-        {/* Right icons */}
-        <div className="flex items-center gap-1 md:gap-2">
-          <div
-            onMouseEnter={handleSearchEnter}
-            onMouseLeave={handleSearchLeave}
-          >
-            <button
-              onClick={() => {
-                if (searchOpen) searchClosedByClick.current = true;
-                setSearchOpen(!searchOpen);
-              }}
-              className="p-2 text-foreground hover:text-foreground/70 transition-colors"
-              aria-label="Pesquisar"
-            >
-              <Search className="h-5 w-5" />
-            </button>
-          </div>
-          <a
-            href={ACCOUNT_URL}
-            className="p-2 text-foreground hover:text-foreground/70 transition-colors flex items-center justify-center"
-            aria-label={isLoggedIn ? "Minha conta" : "Entrar"}
-          >
-            {isLoggedIn && firstLetter ? (
-              <div className="h-7 w-7 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-700 uppercase">
-                {firstLetter}
+                <div className="flex py-4">
+                  {item.subCategories.map((sub) => (
+                    <div key={sub.label} className="flex-1 px-6">
+                      {sub.items && (
+                        <ul className="space-y-1">
+                          {sub.items.map((si) => (
+                            <li key={si.label}>
+                              <Link
+                                to={si.path}
+                                onClick={() => setOpenDropdown(null)}
+                                className="text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground transition-colors"
+                              >
+                                {si.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
-            ) : (
-              <User className="h-5 w-5" />
-            )}
-          </a>
-          <CartDrawer />
-          <div
-            onMouseEnter={handleMobileEnter}
-            onMouseLeave={handleMobileLeave}
-          >
-            <button className="lg:hidden p-2 text-foreground hover:text-foreground/70 transition-colors" onClick={() => {
-              if (mobileOpen) mobileClosedByClick.current = true;
-              setMobileOpen(!mobileOpen);
-            }}>
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
+            </div>
+          )}
         </div>
+      ))}
+    </nav>
+  );
+
+  const rightIcons = (
+    <>
+      <div
+        onMouseEnter={handleSearchEnter}
+        onMouseLeave={handleSearchLeave}
+      >
+        <button
+          onClick={() => {
+            if (searchOpen) searchClosedByClick.current = true;
+            setSearchOpen(!searchOpen);
+          }}
+          className="p-2 text-foreground hover:text-foreground/70 transition-colors"
+          aria-label="Pesquisar"
+        >
+          <Search className="h-5 w-5" />
+        </button>
       </div>
+      <a
+        href={ACCOUNT_URL}
+        className="p-2 text-foreground hover:text-foreground/70 transition-colors flex items-center justify-center"
+        aria-label={isLoggedIn ? "Minha conta" : "Entrar"}
+      >
+        {isLoggedIn && firstLetter ? (
+          <div className="h-7 w-7 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-700 uppercase">
+            {firstLetter}
+          </div>
+        ) : (
+          <User className="h-5 w-5" />
+        )}
+      </a>
+      <CartDrawer />
+      <div
+        onMouseEnter={handleMobileEnter}
+        onMouseLeave={handleMobileLeave}
+      >
+        <button className="lg:hidden p-2 text-foreground hover:text-foreground/70 transition-colors" onClick={() => {
+          if (mobileOpen) mobileClosedByClick.current = true;
+          setMobileOpen(!mobileOpen);
+        }}>
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+    </>
+  );
+
+  return (
+    <header
+      className={`${isHome ? "fixed" : "sticky"} top-0 left-0 right-0 z-50 border-b transition-colors duration-300 ${
+        transparent ? "bg-transparent border-transparent" : "bg-background border-border/40"
+      }`}
+      style={{
+        zIndex: 50,
+        ...(transparent ? { ["--foreground" as unknown as string]: "0 0% 100%" } : {}),
+      }}
+    >
+      {/* Main bar */}
+      {isHome ? (
+        <>
+          <div className="h-1.5 w-full bg-primary" />
+          <div className="container relative flex items-center justify-between transition-all h-14 md:h-16">
+            <div className="flex items-center gap-3">
+              {/* Mobile: logo sits left since the nav is hidden below lg */}
+              <Link to="/" className="lg:hidden flex-shrink-0">
+                <img
+                  src={boletaLogoMark}
+                  alt="Boleta"
+                  className={`h-6 w-auto transition-all ${
+                    transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
+                  }`}
+                />
+              </Link>
+              {desktopNav}
+            </div>
+            <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
+            {/* Desktop: logo truly centered regardless of nav/icons width */}
+            <Link
+              to="/"
+              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-shrink-0"
+            >
+              <img
+                src={boletaLogoMark}
+                alt="Boleta"
+                className={`h-9 w-auto transition-all ${
+                  transparent ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]" : ""
+                }`}
+              />
+            </Link>
+          </div>
+        </>
+      ) : (
+        <div className="container flex items-center justify-between transition-all h-14 md:h-16">
+          <Link to="/" className="flex-shrink-0">
+            <img src={boletaLogo} alt="Boleta" className="rounded relative z-50 transition-all h-16 md:h-20 -mb-8 mt-2" />
+          </Link>
+          {desktopNav}
+          <div className="flex items-center gap-1 md:gap-2">{rightIcons}</div>
+        </div>
+      )}
 
       {/* Search bar */}
       {searchOpen && (
         <div
           className="border-t border-border/40 bg-background animate-fade-in"
+          style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
           onMouseEnter={handleSearchEnter}
           onMouseLeave={handleSearchLeave}
         >
-          <div className="container py-[15px] pl-28 md:pl-32">
+          <div className={`container py-[15px] ${isHome ? "" : "pl-28 md:pl-32"}`}>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -304,6 +371,7 @@ export function Header() {
       {mobileOpen && (
         <nav
           className="lg:hidden border-t border-border/40 bg-background px-6 pt-8 pb-1 space-y-1 animate-fade-in max-h-[80vh] overflow-y-auto"
+          style={{ ["--foreground" as unknown as string]: "0 0% 10%" }}
           onMouseEnter={handleMobileEnter}
           onMouseLeave={handleMobileLeave}
         >
