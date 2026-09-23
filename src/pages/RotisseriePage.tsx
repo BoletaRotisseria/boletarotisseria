@@ -39,7 +39,9 @@ export default function RotisseriePage() {
         <div className="relative z-10 text-center text-white">
           <h1 className="font-courier lowercase text-3xl md:text-5xl font-normal mb-3">Rotisseria</h1>
           <p className="text-white/80 max-w-xl mx-auto text-sm md:text-base">
-            Aperitivos, entradas, tortas, massas, molhos, carnes e sobremesas para levar para casa, fáceis de aquecer e servir. Preparados em nossa cozinha e embalados à vácuo para manter a qualidade e o sabor. São mais de 100 itens para você escolher!
+            Aperitivos, entradas, tortas, massas, molhos, carnes e sobremesas para levar para casa, fáceis de aquecer e servir.<br />
+            Preparados em nossa cozinha e embalados à vácuo para manter a qualidade e o sabor.<br />
+            São mais de 100 itens para você escolher!
           </p>
         </div>
       </div>
