@@ -9,11 +9,9 @@ const INSTAGRAM_URL = "https://www.instagram.com/boleta.rotisseria?utm_source=ig
 export function Footer() {
   return (
     <footer className="relative text-foreground">
-      {/* Background texture */}
-      <div
-        className="absolute inset-0 bg-repeat bg-center opacity-10"
-        style={{ backgroundImage: `url(${quadriculadoBg})`, backgroundSize: "400px" }}
-      />
+      {/* Fundo liso do rodapé */}
+      <div className="absolute inset-0 bg-footer" />
+
 
       {/* Thin textured strip – same pattern as footer body */}
       <div className="relative z-10 h-6" />
