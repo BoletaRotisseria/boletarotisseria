@@ -1,9 +1,23 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import chefImage from "@/assets/boleta-chef.jpg";
 import vamosBoletarAsset from "@/assets/vamos-boletar.svg.asset.json";
 import { NOTICIAS } from "@/lib/noticias";
 import { NoticiasGrid } from "@/components/NoticiasGrid";
 
 export default function CafePage() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash !== "#na-midia") return;
+
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById("na-midia")?.scrollIntoView({ block: "start" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash]);
+
   return (
     <div className="container py-10 md:py-16">
       <div className="w-full max-w-6xl mx-auto">
