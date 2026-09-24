@@ -61,15 +61,16 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/35 via-transparent to-transparent" />
 
         <div className="relative z-10 h-full flex flex-col justify-end">
-          <div className="container pb-14 md:pb-20">
+          <div className="container pb-10 md:pb-20">
             <div className="max-w-2xl">
-              <span className="block text-[11px] md:text-xs font-medium tracking-[0.25em] uppercase text-background/90 mb-4">
+              <span className="block text-[10px] md:text-xs font-medium tracking-[0.2em] md:tracking-[0.25em] uppercase text-background/90 mb-2 md:mb-4">
                 Rotisseria & Empório
               </span>
-              <h1 className="font-perfectly-nineties text-2xl sm:text-4xl md:text-5xl font-light text-background leading-[1.15] mb-8 drop-shadow-md">
-                <span className="block whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
-                <span className="block whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
+              <h1 className="font-perfectly-nineties text-[26px] sm:text-4xl md:text-5xl font-light text-background leading-[1.2] md:leading-[1.15] mb-6 md:mb-8 drop-shadow-md">
+                <span className="block sm:whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
+                <span className="block sm:whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
               </h1>
+
               <Link to="/cardapios">
                 <Button
                   size="lg"
