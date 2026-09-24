@@ -7,7 +7,6 @@ import capaMesaBg from "@/assets/hero-home-bg-2.jpg";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import preparoBgAsset from "@/assets/padronagem-preparo.png.asset.json";
-import midiaBgAsset from "@/assets/padronagem-na-midia.png.asset.json";
 import { NOTICIAS } from "@/lib/noticias";
 import { NoticiasGrid } from "@/components/NoticiasGrid";
 
@@ -116,9 +115,7 @@ const Index = () => {
       </section>
 
       {/* Na Mídia */}
-      <section id="na-midia" className="relative py-10 md:py-14 bg-background scroll-mt-20">
-        <div className="absolute inset-0" style={{ backgroundImage: `url(${midiaBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25 }} />
-        
+      <section id="na-midia" className="relative py-10 md:py-14 bg-primary scroll-mt-20">
         <div className="relative z-10 container">
           <div className="mb-6">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Na mídia</h2>
