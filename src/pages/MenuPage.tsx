@@ -13,7 +13,7 @@ export default function MenuPage() {
   return (
     <div className="container py-10 md:py-16">
       <div className="text-center mb-12">
-        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">Menu</h1>
+        <h1 className="font-serif text-2xl md:text-3xl font-bold mb-4">Cardápio</h1>
         <p className="text-muted-foreground max-w-lg mx-auto">
           Pratos frescos e congelados, feitos com carinho na nossa cozinha artesanal.
         </p>
@@ -22,7 +22,7 @@ export default function MenuPage() {
       {/* Category pills */}
       <div className="flex flex-wrap justify-center gap-2 mb-10">
         {categories.map((cat) => (
-          <span key={cat} className="px-4 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
+          <span key={cat} className="px-4 py-1.5 rounded-none text-sm font-medium bg-secondary text-secondary-foreground">
             {cat}
           </span>
         ))}
