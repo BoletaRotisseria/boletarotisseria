@@ -53,7 +53,7 @@ export default function RotisseriePage() {
               <button
                 key={cat.slug}
                 onClick={() => setActiveSlug(cat.slug)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                className={`px-4 py-1.5 rounded-none text-sm font-medium transition-colors ${
                   activeSlug === cat.slug
                     ? "bg-primary text-primary-foreground"
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
