@@ -1,6 +1,6 @@
 import type { Noticia } from "@/lib/noticias";
 
-export function NoticiasGrid({ noticias }: { noticias: Noticia[] }) {
+export function NoticiasGrid({ noticias, lightHover = false }: { noticias: Noticia[]; lightHover?: boolean }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {noticias.map((item, i) => (
@@ -32,12 +32,12 @@ export function NoticiasGrid({ noticias }: { noticias: Noticia[] }) {
                   </span>
                 )}
               </div>
-              <h3 className="font-serif normal-case text-base font-bold mb-1.5 leading-snug group-hover:text-primary transition-colors">
+              <h3 className={`font-serif normal-case text-base font-bold mb-1.5 leading-snug transition-colors ${lightHover ? "group-hover:text-background" : "group-hover:text-primary"}`}>
                 {item.title}
               </h3>
               <p className="text-muted-foreground text-xs leading-relaxed line-clamp-3">{item.excerpt}</p>
             </div>
-            <span className="mt-3 text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+            <span className={`mt-3 text-sm font-medium text-foreground transition-colors ${lightHover ? "group-hover:text-background" : "group-hover:text-primary"}`}>
               Vem ler tudo aqui →
             </span>
           </div>

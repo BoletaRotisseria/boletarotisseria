@@ -118,12 +118,9 @@ const Index = () => {
       <section id="na-midia" className="relative py-10 md:py-14 bg-primary scroll-mt-20">
         <div className="relative z-10 container">
           <div className="mb-6">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-background">Na mídia</h2>
-            <p className="text-muted-foreground text-sm md:text-base mt-1">
-              <span className="text-destructive">★★★★</span> no Guia Comer & Beber da Veja São Paulo
-            </p>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Na mídia</h2>
           </div>
-          <NoticiasGrid noticias={NOTICIAS.slice(0, 2)} />
+          <NoticiasGrid noticias={NOTICIAS.slice(0, 2)} lightHover />
           <div className="mt-6 text-center">
             <Link
               to="/cafe#na-midia"
