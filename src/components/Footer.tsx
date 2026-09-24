@@ -21,7 +21,7 @@ export function Footer() {
           <p className="text-sm text-foreground text-center shrink-0">
             Inscreva-se e fique por dentro das novidades.
           </p>
-          <Button asChild className="h-auto rounded-none px-6 py-3 text-xs tracking-[0.14em] uppercase shrink-0">
+          <Button asChild className="h-auto rounded-none px-6 py-3 text-xs text-foreground tracking-[0.14em] uppercase shrink-0">
             <a
               href={WHATSAPP_CARDAPIO}
               target="_blank"
