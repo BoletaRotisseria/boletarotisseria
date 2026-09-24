@@ -84,7 +84,7 @@ export function ProductCard({ product }: ProductCardProps) {
           variant="outline"
           disabled={isAdding || !v.availableForSale}
           onClick={() => addVariant(v)}
-          className="justify-between h-auto py-3 px-4 hover:bg-[#F5B700] hover:text-black active:bg-[#F5B700] active:text-black focus-visible:bg-[#F5B700] focus-visible:text-black"
+          className="justify-between h-auto py-3 px-4 hover:bg-primary hover:text-primary-foreground active:bg-primary active:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground"
         >
           <span className="lowercase">{v.title}</span>
           <span>{formatPrice(parseFloat(v.price.amount))}</span>
