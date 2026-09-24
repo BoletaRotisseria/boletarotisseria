@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,8 @@ import { NoticiasGrid } from "@/components/NoticiasGrid";
 
 const Index = () => {
   const location = useLocation();
+  const preparoSectionRef = useRef<HTMLElement>(null);
+  const preparoVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (location.hash) {
@@ -19,6 +21,32 @@ const Index = () => {
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
   }, [location.hash]);
+
+  useEffect(() => {
+    const section = preparoSectionRef.current;
+    if (!section) return;
+
+    let wasVisible = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+
+        if (entry.isIntersecting && !wasVisible) {
+          const video = preparoVideoRef.current;
+          if (video) {
+            video.currentTime = 0;
+            void video.play().catch(() => undefined);
+          }
+        }
+
+        wasVisible = entry.isIntersecting;
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -84,7 +112,7 @@ const Index = () => {
       </section>
 
       {/* Dicas de Preparo */}
-      <section className="relative bg-background">
+      <section ref={preparoSectionRef} className="relative bg-background">
         <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${preparoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.55 }} />
         <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${preparoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.55 }} />
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 h-[85vh] md:h-[90vh]">
@@ -103,6 +131,7 @@ const Index = () => {
           {/* Vídeo à direita */}
           <div className="min-h-[40vh] md:min-h-full bg-muted flex items-center justify-center overflow-hidden">
             <video
+              ref={preparoVideoRef}
               src="/videos/preparo.mp4"
               className="w-full h-full object-cover"
               autoPlay
