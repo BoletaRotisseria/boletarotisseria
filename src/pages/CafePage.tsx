@@ -6,7 +6,7 @@ import { NoticiasGrid } from "@/components/NoticiasGrid";
 export default function CafePage() {
   return (
     <div className="container py-10 md:py-16">
-      <div className="max-w-3xl mx-auto">
+      <div className="w-full max-w-6xl mx-auto">
         <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">Nossa História</h1>
 
         <div className="md:float-right md:ml-8 md:mb-6 md:w-72 lg:w-80 mb-6">
