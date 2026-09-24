@@ -18,7 +18,7 @@ export function Footer() {
           <h3 className="font-serif normal-case text-2xl text-center shrink-0">
             Cardápio semanal
           </h3>
-          <p className="text-sm text-muted-foreground text-center shrink-0">
+          <p className="text-sm text-foreground text-center shrink-0">
             Inscreva-se e fique por dentro das novidades.
           </p>
           <Button asChild className="h-auto rounded-none px-6 py-3 text-xs tracking-[0.14em] uppercase shrink-0">
