@@ -120,7 +120,7 @@ const Index = () => {
         <div className="absolute inset-0" style={{ backgroundImage: `url(${quadriculadoMidiaBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'repeat', opacity: 0.9 }} />
         
         <div className="relative z-10 container">
-          <div className="bg-background rounded-2xl px-6 py-4 md:px-8 md:py-5 inline-block mb-6">
+          <div className="mb-6">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Na mídia</h2>
             <p className="text-muted-foreground text-sm md:text-base mt-1">
               <span className="text-destructive">★★★★</span> no Guia Comer & Beber da Veja São Paulo

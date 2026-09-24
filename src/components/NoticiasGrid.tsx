@@ -9,9 +9,9 @@ export function NoticiasGrid({ noticias }: { noticias: Noticia[] }) {
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="group bg-background rounded-2xl border border-border/50 p-5 flex flex-col gap-3 hover:shadow-md transition-shadow"
+          className="group flex flex-col gap-3"
         >
-          <div className="w-full h-40 rounded-xl overflow-hidden">
+          <div className="w-full h-40 overflow-hidden">
             <img
               src={item.image}
               alt={item.title}
