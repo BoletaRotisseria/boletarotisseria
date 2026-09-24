@@ -6,7 +6,7 @@ import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaBg from "@/assets/hero-home-bg-2.jpg";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
-import losangoBgAsset from "@/assets/padronagem-losango.png.asset.json";
+import preparoBgAsset from "@/assets/padronagem-preparo.png.asset.json";
 import midiaBgAsset from "@/assets/padronagem-na-midia.png.asset.json";
 import { NOTICIAS } from "@/lib/noticias";
 import { NoticiasGrid } from "@/components/NoticiasGrid";
@@ -86,8 +86,8 @@ const Index = () => {
 
       {/* Dicas de Preparo */}
       <section className="relative bg-background">
-        <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${losangoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25 }} />
-        <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${losangoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25 }} />
+        <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${preparoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25 }} />
+        <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${preparoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25 }} />
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 h-[85vh] md:h-[90vh]">
           {/* Texto à esquerda */}
           <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
