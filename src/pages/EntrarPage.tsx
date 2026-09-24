@@ -4,7 +4,7 @@ const SHOPIFY_ACCOUNT = 'https://boletarotisseria.myshopify.com/account';
 
 export default function EntrarPage() {
   return (
-    <div className="min-h-[80vh] bg-[#FAF8F2] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[80vh] bg-background flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm space-y-6 animate-[fadeIn_0.4s_ease-out]">
         <div className="text-center space-y-3">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-border/60 bg-background">
@@ -17,7 +17,7 @@ export default function EntrarPage() {
         <div className="space-y-3">
           <a
             href={`${SHOPIFY_ACCOUNT}/login`}
-            className="w-full h-11 flex items-center justify-center rounded-md font-semibold bg-[#F5B700] hover:bg-[#e0a800] text-black transition-colors text-sm"
+            className="w-full h-11 flex items-center justify-center rounded-md font-semibold bg-primary hover:bg-primary text-primary-foreground transition-colors text-sm"
           >
             Entrar com email
           </a>
@@ -27,7 +27,7 @@ export default function EntrarPage() {
               <span className="w-full border-t border-border/50" />
             </div>
             <div className="relative flex justify-center text-xs uppercase tracking-[0.15em]">
-              <span className="bg-[#FAF8F2] px-3 text-muted-foreground">ou</span>
+              <span className="bg-background px-3 text-muted-foreground">ou</span>
             </div>
           </div>
 
