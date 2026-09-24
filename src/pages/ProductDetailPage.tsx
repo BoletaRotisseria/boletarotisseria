@@ -70,7 +70,7 @@ export default function ProductDetailPage() {
           {product.description && product.description.trim().replace(/\.$/, "").toLowerCase() !== "item do empório" && (
             <p className="text-muted-foreground mb-6">{product.description}</p>
           )}
-          <p className="text-3xl font-bold mb-6">{formatPrice(price)}</p>
+          <p className="text-3xl font-normal mb-6">{formatPrice(price)}</p>
 
           {product.variants.edges.length > 1 && (
             <div className="mb-6">
