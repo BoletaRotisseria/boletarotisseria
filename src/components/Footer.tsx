@@ -50,11 +50,8 @@ export function Footer() {
               <Link to="/cafe" className="block text-muted-foreground hover:text-foreground transition-colors">
                 Sobre nós
               </Link>
-              <Link to="/semana" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Cardápio da semana
-              </Link>
               <Link to="/menu" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Nossa cozinha
+                Nosso cardápio
               </Link>
             </nav>
           </div>
