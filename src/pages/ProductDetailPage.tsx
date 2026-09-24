@@ -38,6 +38,9 @@ export default function ProductDetailPage() {
   const price = parseFloat(variant?.price.amount || "0");
   const currency = variant?.price.currencyCode || "BRL";
   const formatPrice = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency }).format(v);
+  const descriptionWithoutWeight = product.description
+    ?.replace(/\s*Peso(?:\s+aproximado)?\s*:\s*[^.]+\.?/gi, "")
+    .trim();
 
   const handleAddToCart = async () => {
     if (!variant) return;
@@ -67,8 +70,8 @@ export default function ProductDetailPage() {
         </div>
         <div className="flex flex-col justify-center">
           <h1 className="font-sans normal-case text-3xl md:text-4xl font-normal mb-4">{sentenceCase(product.title)}</h1>
-          {product.description && product.description.trim().replace(/\.$/, "").toLowerCase() !== "item do empório" && (
-            <p className="text-muted-foreground mb-6">{product.description}</p>
+          {descriptionWithoutWeight && descriptionWithoutWeight.replace(/\.$/, "").toLowerCase() !== "item do empório" && (
+            <p className="text-muted-foreground mb-6">{descriptionWithoutWeight}</p>
           )}
           <p className="text-3xl font-normal mb-6">{formatPrice(price)}</p>
 
