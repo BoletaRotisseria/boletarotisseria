@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import casinhaAsset from "@/assets/casinha-boleta.png.asset.json";
+import listrasAsset from "@/assets/padronagem-listras.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Clock3, Instagram, MapPin, Phone } from "lucide-react";
 
@@ -9,7 +10,10 @@ const INSTAGRAM_URL = "https://www.instagram.com/boleta.rotisseria?utm_source=ig
 export function Footer() {
   return (
     <footer className="bg-footer text-foreground">
-      <div className="border-y border-border/60 bg-background/70">
+      <div
+        className="border-y border-border/60 bg-background bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${listrasAsset.url})` }}
+      >
         <div className="container flex flex-col items-center justify-center gap-4 px-4 py-6 md:flex-row md:gap-8">
           <h3 className="font-serif normal-case text-2xl text-center shrink-0">
             Cardápio semanal
