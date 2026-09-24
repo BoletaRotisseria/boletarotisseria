@@ -66,9 +66,9 @@ const Index = () => {
               <span className="block text-[10px] md:text-xs font-medium tracking-[0.2em] md:tracking-[0.25em] uppercase text-background/90 mb-2 md:mb-4">
                 Rotisseria & Empório
               </span>
-              <h1 className="font-perfectly-nineties text-[26px] sm:text-4xl md:text-5xl font-light text-background leading-[1.2] md:leading-[1.15] mb-6 md:mb-8 drop-shadow-md">
-                <span className="block sm:whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
-                <span className="block sm:whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
+              <h1 className="font-perfectly-nineties text-[26px] sm:text-3xl md:text-4xl lg:text-5xl font-light text-background leading-[1.2] md:leading-[1.15] mb-6 md:mb-8 drop-shadow-md">
+                <span className="block lg:whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
+                <span className="block lg:whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
               </h1>
 
               <Link to="/cardapios">
