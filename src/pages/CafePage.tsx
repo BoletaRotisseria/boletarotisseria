@@ -23,9 +23,6 @@ export default function CafePage() {
           <p>
             São aperitivos, terrines, assados, massas frescas e doces prontos para levar para casa, fáceis de aquecer e servir. Entre os carros-chefes estão a clássica Terrine de pato com pistache, a delicada Lasanha de alcachofra e a Cocada cremosa de forno. Um menu da semana traz sempre novidades. E na entrada do Boleta, temos um empório com vinhos, queijos, geleias e outros produtos artesanais que estou sempre pesquisando, ótimas opções para acompanhar e presentear.
           </p>
-          <p>
-            Cosmopolita como São Paulo, nosso repertório reúne inspirações de diversas partes do mundo e também minhas memórias de família - árabe de um lado, judaico-alemã de outro. Ainda temos influências do tempo em que morei em Paris, quando estudei na Le Cordon Bleu e trabalhei em cozinhas prestigiadas como Fauchon, Taillevent e George V. E dos anos em que chefiei o buffet da banqueteira Neka Menna Barreto, que me introduziu no universo dos eventos e festas.
-          </p>
           <img
             src={vamosBoletarAsset.url}
             alt="Vamos Boletar?!"
@@ -33,14 +30,7 @@ export default function CafePage() {
           />
         </div>
 
-        <div className="clear-both mt-16">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">Sobre o Boleta</h2>
-          <p className="text-foreground/80 text-sm md:text-base leading-relaxed">
-            Rotisseria e empório com a assinatura do chef Roberto Eid Philipp, o Boleta. Aperitivos, terrines, massas frescas, assados e doces prontos para levar para casa, além de produtos artesanais para acompanhar ou presentear.
-          </p>
-        </div>
-
-        <section className="mt-16">
+        <section className="clear-both mt-16">
           <h2 className="font-serif normal-case text-2xl md:text-3xl font-bold text-foreground mb-4">Roberto</h2>
           <div className="space-y-5 text-foreground/80 text-sm md:text-base leading-relaxed">
             <p>
