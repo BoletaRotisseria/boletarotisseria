@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import casinhaAsset from "@/assets/casinha-boleta.png.asset.json";
-import listrasAsset from "@/assets/padronagem-listras.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Clock3, Instagram, MapPin, Phone } from "lucide-react";
 
@@ -11,8 +10,11 @@ export function Footer() {
   return (
     <footer className="bg-footer text-foreground">
       <div
-        className="border-y border-border/60 bg-background bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${listrasAsset.url})` }}
+        className="border-y border-border/60"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(90deg, hsl(var(--primary)) 0 4px, #FEF3C7 4px 8px)",
+        }}
       >
         <div className="container flex flex-col items-center justify-center gap-4 px-4 py-6 md:flex-row md:gap-8">
           <h3 className="font-serif normal-case text-2xl text-center shrink-0">
