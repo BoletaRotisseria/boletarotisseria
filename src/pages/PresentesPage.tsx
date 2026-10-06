@@ -1,5 +1,7 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
+import { ColunasToggle } from "@/components/ColunasToggle";
+import { useColunasMobile, classeColunasMobile } from "@/hooks/useColunasMobile";
 import { Loader2, Gift } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 
@@ -46,12 +48,14 @@ export default function PresentesPage() {
         ))}
       </div>
 
+      <ColunasToggle />
       <PresentesProducts activeTag={activeTag} />
     </div>
   );
 }
 
 function PresentesProducts({ activeTag }: { activeTag: string }) {
+  const [colunas] = useColunasMobile();
   const query = activeTag
     ? `tag:'${activeTag}' AND -tag:oculto`
     : "(tag:presentes OR product_type:Presentes) AND -tag:oculto";
@@ -67,7 +71,7 @@ function PresentesProducts({ activeTag }: { activeTag: string }) {
 
   if (products && products.length > 0) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={`grid ${classeColunasMobile(colunas)} sm:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-6 sm:gap-6`}>
         {products.map((product) => (
           <ProductCard key={product.node.id} product={product} />
         ))}
