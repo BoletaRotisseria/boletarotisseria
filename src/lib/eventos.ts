@@ -7,47 +7,19 @@ export interface SolicitacaoEventos {
   mensagem: string;
 }
 
-export const TEMPLATE_PROPOSTA_LOJA = "evento-proposta-loja";
-export const TEMPLATE_CONFIRMACAO_CLIENTE = "evento-confirmacao-cliente";
+export const FUNCAO_PROPOSTA_EVENTO = "enviar-proposta-evento";
 
 /**
  * Envia a solicitação de orçamento da página de Eventos.
- * A cópia para a loja tem destino fixo no template (vendas@boletarotisseria.com.br),
- * então o endereço de destino não pode ser alterado por quem preenche o formulário.
+ * O servidor manda a proposta para a caixa fixa da loja
+ * (vendas@boletarotisseria.com.br) e uma confirmação ao cliente.
  */
 export async function enviarSolicitacaoEventos(
   dados: SolicitacaoEventos
 ): Promise<void> {
-  const carimbo = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-  const enviadoEm = new Date().toLocaleString("pt-BR", {
-    timeZone: "America/Sao_Paulo",
+  const chave = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  const { error } = await supabase.functions.invoke(FUNCAO_PROPOSTA_EVENTO, {
+    body: { ...dados, chave },
   });
-
-  const { error: erroLoja } = await supabase.functions.invoke(
-    "send-transactional-email",
-    {
-      body: {
-        templateName: TEMPLATE_PROPOSTA_LOJA,
-        idempotencyKey: `eventos-proposta-${carimbo}`,
-        templateData: { ...dados, enviadoEm },
-      },
-    }
-  );
-
-  if (erroLoja) throw erroLoja;
-
-  // A confirmação ao cliente é secundária: se falhar, a loja já recebeu a solicitação.
-  await supabase.functions.invoke("send-transactional-email", {
-    body: {
-      templateName: TEMPLATE_CONFIRMACAO_CLIENTE,
-      recipientEmail: dados.email,
-      idempotencyKey: `eventos-confirmacao-${carimbo}`,
-      templateData: {
-        nome: dados.nome,
-        email: dados.email,
-        telefone: dados.telefone,
-        mensagem: dados.mensagem,
-      },
-    },
-  });
+  if (error) throw error;
 }

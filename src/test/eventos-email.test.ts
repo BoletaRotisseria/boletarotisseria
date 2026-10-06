@@ -8,11 +8,7 @@ vi.mock("@/integrations/supabase/client", () => ({
   supabase: { functions: { invoke } },
 }));
 
-import {
-  enviarSolicitacaoEventos,
-  TEMPLATE_PROPOSTA_LOJA,
-  TEMPLATE_CONFIRMACAO_CLIENTE,
-} from "@/lib/eventos";
+import { enviarSolicitacaoEventos, FUNCAO_PROPOSTA_EVENTO } from "@/lib/eventos";
 
 const solicitacao = {
   nome: "Ana Souza",
@@ -27,43 +23,18 @@ beforeEach(() => {
 });
 
 describe("solicitações de orçamento da página de Eventos", () => {
-  it("envia a proposta para a caixa fixa da loja, sem destino vindo do formulário", async () => {
+  it("envia os dados do formulário para o servidor, sem destino escolhido pelo cliente", async () => {
     await enviarSolicitacaoEventos(solicitacao);
-
-    const proposta = invoke.mock.calls[0];
-    expect(proposta[0]).toBe("send-transactional-email");
-    expect(proposta[1].body.templateName).toBe(TEMPLATE_PROPOSTA_LOJA);
-    expect(proposta[1].body.recipientEmail).toBeUndefined();
-    expect(proposta[1].body.templateData.mensagem).toBe(solicitacao.mensagem);
+    const [nome, opts] = invoke.mock.calls[0];
+    expect(nome).toBe(FUNCAO_PROPOSTA_EVENTO);
+    expect(opts.body.email).toBe("ana@exemplo.com.br");
+    expect(opts.body.recipientEmail).toBeUndefined();
+    expect(opts.body.chave).toBeTruthy();
   });
 
-  it("confirma ao cliente no e-mail que ele informou", async () => {
-    await enviarSolicitacaoEventos(solicitacao);
-
-    const confirmacao = invoke.mock.calls[1];
-    expect(confirmacao[0]).toBe("send-transactional-email");
-    expect(confirmacao[1].body.templateName).toBe(TEMPLATE_CONFIRMACAO_CLIENTE);
-    expect(confirmacao[1].body.recipientEmail).toBe("ana@exemplo.com.br");
-  });
-
-  it("usa a mesma chave de evento nas duas cópias, para retries não duplicarem", async () => {
-    await enviarSolicitacaoEventos(solicitacao);
-
-    const [proposta, confirmacao] = invoke.mock.calls;
-    const sufixo = (chave: string) =>
-      chave.replace(/^eventos-(proposta|confirmacao)-/, "");
-    expect(sufixo(proposta[1].body.idempotencyKey)).toBe(
-      sufixo(confirmacao[1].body.idempotencyKey)
-    );
-  });
-
-  it("não manda confirmação ao cliente quando a loja não recebeu", async () => {
+  it("avisa erro quando o envio falha", async () => {
     invoke.mockResolvedValueOnce({ data: null, error: new Error("falhou") });
-
-    await expect(enviarSolicitacaoEventos(solicitacao)).rejects.toThrow(
-      "falhou"
-    );
-    expect(invoke).toHaveBeenCalledTimes(1);
+    await expect(enviarSolicitacaoEventos(solicitacao)).rejects.toThrow("falhou");
   });
 
   it("a proposta da loja tem como destino vendas@boletarotisseria.com.br", () => {
