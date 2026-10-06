@@ -84,7 +84,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
             </p>
             <h2 className="font-courier lowercase text-2xl md:text-4xl font-normal">{specific.title}</h2>
           </div>
-          <div className={`grid ${classeColunasMobile(colunas)} sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-6 md:gap-8 justify-center`}>
+          <div className={`grid ${classeColunasMobile(colunas)} md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-6 md:gap-8 justify-center`}>
             {list.map((product: { node: { id: string } }) => (
               <ProductCard key={product.node.id} product={product as Parameters<typeof ProductCard>[0]['product']} />
             ))}
@@ -115,7 +115,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
           </div>
         ) : (
-          <div className={`grid ${classeColunasMobile(colunas)} sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-6 md:gap-8`}>
+          <div className={`grid ${classeColunasMobile(colunas)} md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-6 md:gap-8`}>
             {filtered.map(product => (
               <ProductCard key={product.node.id} product={product} />
             ))}

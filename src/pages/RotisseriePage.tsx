@@ -73,7 +73,7 @@ export default function RotisseriePage() {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : products && products.length > 0 ? (
-            <div className={`grid ${classeColunasMobile(colunas)} sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-6 sm:gap-y-8`}>
+            <div className={`grid ${classeColunasMobile(colunas)} md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6 md:gap-x-6 md:gap-y-8`}>
               {products.map((product) => (
                 <ProductCard key={product.node.id} product={product} />
               ))}
