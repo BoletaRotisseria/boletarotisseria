@@ -1,0 +1,1 @@
+- App emails send from per-feature edge functions via the shared send-email helper (managed delivery); never add a generic send endpoint or queue — Lovable owns delivery, suppression and unsubscribe.
