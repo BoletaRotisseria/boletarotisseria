@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
+import { useColunasMobile, classeColunasMobile } from "@/hooks/useColunasMobile";
 import { findRecommendationRule, findSpecificRecommendation } from "@/lib/recommendations";
 import { storefrontApiRequest } from "@/lib/shopify";
 import { Loader2 } from "lucide-react";
@@ -38,6 +39,7 @@ const NODES_BY_IDS_QUERY = `
 `;
 
 export function RelatedProducts({ productTags, currentProductId }: RelatedProductsProps) {
+  const [colunas] = useColunasMobile();
   const specific = findSpecificRecommendation(currentProductId);
   const rule = !specific ? findRecommendationRule(productTags || []) : null;
 
@@ -82,7 +84,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
             </p>
             <h2 className="font-courier lowercase text-2xl md:text-4xl font-normal">{specific.title}</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 justify-center">
+          <div className={`grid ${classeColunasMobile(colunas)} md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-6 md:gap-8 justify-center`}>
             {list.map((product: { node: { id: string } }) => (
               <ProductCard key={product.node.id} product={product as Parameters<typeof ProductCard>[0]['product']} />
             ))}
@@ -113,7 +115,7 @@ export function RelatedProducts({ productTags, currentProductId }: RelatedProduc
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className={`grid ${classeColunasMobile(colunas)} md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-6 md:gap-8`}>
             {filtered.map(product => (
               <ProductCard key={product.node.id} product={product} />
             ))}

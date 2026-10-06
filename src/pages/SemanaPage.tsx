@@ -1,10 +1,13 @@
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
+import { ColunasToggle } from "@/components/ColunasToggle";
+import { useColunasMobile, classeColunasMobile } from "@/hooks/useColunasMobile";
 import { Loader2, ShoppingCart } from "lucide-react";
 import semanaBg from "@/assets/semana-bg.jpg";
 
 export default function SemanaPage() {
   const { data: products, isLoading } = useShopifyProducts(50);
+  const [colunas] = useColunasMobile();
 
   return (
     <div>
@@ -24,12 +27,13 @@ export default function SemanaPage() {
 
       <div className="bg-background">
         <div className="container py-10 md:py-16">
+          <ColunasToggle />
           {isLoading ? (
             <div className="flex justify-center py-20">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : products && products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className={`grid ${classeColunasMobile(colunas)} md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6 md:gap-6`}>
               {products.map((product) => (
                 <ProductCard key={product.node.id} product={product} />
               ))}
