@@ -30,7 +30,7 @@ const Email = ({ nome, mensagem }: Props) => (
     <Body style={main}>
       <Container style={container}>
         <Section style={brandBar}>
-          <Img src="https://boletarotisseria.com.br/__l5e/assets-v1/726bdeea-42b1-4a73-be24-09dc6ed7edbd/boleta-email-logo.png" alt="Boleta Rotisseria" width="180" style={{ display: 'block', margin: '0 auto', height: 'auto' }} />
+          <Img src="https://boletarotisseria.com.br/__l5e/assets-v1/726bdeea-42b1-4a73-be24-09dc6ed7edbd/boleta-email-logo.png" alt="BOLETA ROTISSERIA" width="180" style={{ display: 'block', margin: '0 auto', height: 'auto', color: '#1a1a1a', fontSize: '18px', letterSpacing: '0.2em', textAlign: 'center' as const }} />
         </Section>
 
         <Heading style={title}>Recebemos o seu pedido</Heading>
@@ -123,7 +123,7 @@ const card = {
 }
 
 const label = {
-  margin: '0 0 6px',
+  margin: '0 0 2px',
   color: '#8b8b8b',
   fontSize: '11px',
   letterSpacing: '0.14em',

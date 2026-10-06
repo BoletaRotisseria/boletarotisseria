@@ -15,7 +15,7 @@ const corsHeaders = {
 }
 
 // Configuration
-const SITE_NAME = "Boleta Direct"
+const SITE_NAME = "Boleta Rotisseria"
 const SENDER_DOMAIN = "notify.boletarotisseria.com.br"
 const ROOT_DOMAIN = "boletarotisseria.com.br"
 const FROM_DOMAIN = "boletarotisseria.com.br"
