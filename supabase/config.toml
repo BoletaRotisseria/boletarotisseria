@@ -11,3 +11,5 @@ project_id = "yuavzvlynsqrkbuzmcra"
     verify_jwt = false
   [functions.tag-order-by-delivery]
     verify_jwt = false
+  [functions.process-email-queue]
+    verify_jwt = true
