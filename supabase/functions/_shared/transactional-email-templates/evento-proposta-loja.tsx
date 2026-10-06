@@ -33,7 +33,7 @@ const Email = ({ nome, email, telefone, mensagem, enviadoEm }: Props) => (
     <Body style={main}>
       <Container style={container}>
         <Section style={brandBar}>
-          <Img src="https://boletarotisseria.com.br/__l5e/assets-v1/726bdeea-42b1-4a73-be24-09dc6ed7edbd/boleta-email-logo.png" alt="Boleta Rotisseria" width="180" style={{ display: 'block', margin: '0 auto', height: 'auto' }} />
+          <Img src="https://boletarotisseria.com.br/__l5e/assets-v1/726bdeea-42b1-4a73-be24-09dc6ed7edbd/boleta-email-logo.png" alt="BOLETA ROTISSERIA" width="180" style={{ display: 'block', margin: '0 auto', height: 'auto', color: '#1a1a1a', fontSize: '18px', letterSpacing: '0.2em', textAlign: 'center' as const }} />
         </Section>
 
         <Heading style={title}>Novo pedido de orçamento</Heading>
@@ -43,20 +43,20 @@ const Email = ({ nome, email, telefone, mensagem, enviadoEm }: Props) => (
         </Text>
 
         <Section style={card}>
+          <Text style={label}>Nome</Text>
           <Text style={field}>
-            <span style={label}>Nome</span>
             {nome || '—'}
           </Text>
+          <Text style={label}>E-mail</Text>
           <Text style={field}>
-            <span style={label}>E-mail</span>
             {email || '—'}
           </Text>
+          <Text style={label}>Telefone</Text>
           <Text style={field}>
-            <span style={label}>Telefone</span>
             {telefone || 'não informado'}
           </Text>
+          <Text style={label}>Mensagem</Text>
           <Text style={{ ...field, ...message }}>
-            <span style={label}>Mensagem</span>
             {mensagem || '—'}
           </Text>
         </Section>
@@ -138,12 +138,11 @@ const message = {
 }
 
 const label = {
-  display: 'block',
+  margin: '0 0 2px',
   color: '#8b8b8b',
   fontSize: '11px',
   letterSpacing: '0.14em',
   textTransform: 'uppercase' as const,
-  marginBottom: '4px',
 }
 
 const footer = {
