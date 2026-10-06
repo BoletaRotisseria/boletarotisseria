@@ -3,14 +3,30 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { enviarSolicitacaoEventos } from "@/lib/eventos";
 
 export default function EventosPage() {
   const [form, setForm] = useState({ nome: "", email: "", telefone: "", mensagem: "" });
+  const [enviando, setEnviando] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Solicitação enviada!", { description: "Entraremos em contato em breve." });
-    setForm({ nome: "", email: "", telefone: "", mensagem: "" });
+    if (enviando) return;
+    setEnviando(true);
+    try {
+      await enviarSolicitacaoEventos(form);
+      toast.success("Solicitação enviada!", {
+        description: "Recebemos seu pedido e entraremos em contato em breve.",
+      });
+      setForm({ nome: "", email: "", telefone: "", mensagem: "" });
+    } catch {
+      toast.error("Não conseguimos enviar sua solicitação.", {
+        description:
+          "Tente novamente em instantes ou fale com a gente pelo WhatsApp (11) 99895-1900.",
+      });
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -61,8 +77,13 @@ export default function EventosPage() {
             onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
             required
           />
-          <Button type="submit" size="lg" className="cta-text w-full">
-            Solicitar Orçamento
+          <Button
+            type="submit"
+            size="lg"
+            className="cta-text w-full"
+            disabled={enviando}
+          >
+            {enviando ? "Enviando..." : "Solicitar Orçamento"}
           </Button>
         </form>
       </div>

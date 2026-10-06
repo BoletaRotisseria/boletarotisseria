@@ -23,6 +23,7 @@ import RotisseriePage from "./pages/RotisseriePage";
 import EntrarPage from "./pages/EntrarPage";
 import MinhaContaPage from "./pages/MinhaContaPage";
 import ObrigadoPage from "./pages/ObrigadoPage";
+import UnsubscribePage from "./pages/UnsubscribePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -55,6 +56,7 @@ function AppContent() {
         <Route path="/entrar" element={<EntrarPage />} />
         <Route path="/minha-conta" element={<MinhaContaPage />} />
         <Route path="/obrigado" element={<ObrigadoPage />} />
+        <Route path="/unsubscribe" element={<UnsubscribePage />} />
         {/* Legacy redirects */}
         <Route path="/conta" element={<Navigate to="/minha-conta" replace />} />
         <Route path="/login" element={<Navigate to="/entrar" replace />} />
