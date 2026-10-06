@@ -3,8 +3,10 @@ import {
   Body,
   Container,
   Head,
+  Font,
   Heading,
   Html,
+  Img,
   Link,
   Preview,
   Section,
@@ -21,12 +23,14 @@ interface Props {
 
 const Email = ({ nome, mensagem }: Props) => (
   <Html lang="pt-BR" dir="ltr">
-    <Head />
+    <Head>
+      <Font fontFamily="Work Sans" fallbackFontFamily="Arial" webFont={{ url: 'https://fonts.gstatic.com/s/worksans/v19/QGYsz_wNahGAdqQ43Rh_fKDp.woff2', format: 'woff2' }} fontWeight={400} fontStyle="normal" />
+    </Head>
     <Preview>Recebemos o seu pedido. Em breve falamos sobre o seu evento.</Preview>
     <Body style={main}>
       <Container style={container}>
         <Section style={brandBar}>
-          <Text style={brandName}>Boleta Rotisseria</Text>
+          <Img src="https://boletarotisseria.com.br/__l5e/assets-v1/726bdeea-42b1-4a73-be24-09dc6ed7edbd/boleta-email-logo.png" alt="Boleta Rotisseria" width="180" style={{ display: 'block', margin: '0 auto', height: 'auto' }} />
         </Section>
 
         <Heading style={title}>Recebemos o seu pedido</Heading>
@@ -78,7 +82,7 @@ export const template = {
 
 const main = {
   backgroundColor: '#ffffff',
-  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontFamily: '"Work Sans", Arial, Helvetica, sans-serif',
   margin: '0',
   padding: '0',
 }
@@ -94,19 +98,10 @@ const brandBar = {
   padding: '14px 24px',
 }
 
-const brandName = {
-  margin: '0',
-  color: '#1a1a1a',
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: '15px',
-  letterSpacing: '0.18em',
-  textTransform: 'uppercase' as const,
-}
-
 const title = {
   margin: '0 0 14px',
   color: '#1a1a1a',
-  fontFamily: 'Georgia, "Times New Roman", serif',
+  fontFamily: '"Work Sans", Arial, Helvetica, sans-serif',
   fontSize: '24px',
   fontWeight: '400' as const,
   lineHeight: '1.25',
@@ -151,7 +146,7 @@ const link = {
 const signature = {
   margin: '24px 0 2px',
   color: '#1a1a1a',
-  fontFamily: 'Georgia, "Times New Roman", serif',
+  fontFamily: '"Work Sans", Arial, Helvetica, sans-serif',
   fontSize: '16px',
 }
 
