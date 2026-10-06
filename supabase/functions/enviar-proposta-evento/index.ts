@@ -33,9 +33,9 @@ async function log(template: string, recipient: string, status: string, error_me
   if (error) console.error('email_send_log insert failed', { code: error.code, message: error.message })
 }
 
-async function enviar(template: string, to: string, templateData: Record<string, unknown>, key: string) {
+async function enviar(template: string, to: string, templateData: Record<string, unknown>, key: string, replyTo?: string) {
   try {
-    const r = await sendTemplateEmail(template, to, { templateData, idempotencyKey: key })
+    const r = await sendTemplateEmail(template, to, { templateData, idempotencyKey: key, replyTo })
     await log(template, to, r.sent ? 'sent' : 'suppressed')
     return r
   } catch (e) {
@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
 
   try {
     // Destino fixo definido no template (vendas@boletarotisseria.com.br).
-    await enviar('evento-proposta-loja', 'vendas@boletarotisseria.com.br', { ...dados, enviadoEm }, `eventos-proposta-${chave}`)
+    await enviar('evento-proposta-loja', 'vendas@boletarotisseria.com.br', { ...dados, enviadoEm }, `eventos-proposta-${chave}`, dados.email)
   } catch (e) {
     console.error('Falha ao enviar proposta', e instanceof Error ? e.message : e)
     return json({ error: 'Falha ao enviar' }, 500)
@@ -66,7 +66,7 @@ Deno.serve(async (req) => {
 
   // Confirmação ao cliente é secundária.
   try {
-    await enviar('evento-confirmacao-cliente', dados.email, dados, `eventos-confirmacao-${chave}`)
+    await enviar('evento-confirmacao-cliente', dados.email, dados, `eventos-confirmacao-${chave}`, 'vendas@boletarotisseria.com.br')
   } catch (e) {
     console.error('Falha ao enviar confirmação', e instanceof Error ? e.message : e)
   }
