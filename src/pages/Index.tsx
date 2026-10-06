@@ -94,8 +94,8 @@ const Index = () => {
 
       {/* Banner duplo – Peça pelo nosso site */}
       <section className="mobile-screen-split grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
-        <div className="min-h-0 h-full overflow-hidden">
-          <img src={heroImage} alt="Sacolas Boleta" className="w-full h-full object-cover" />
+        <div className="relative min-h-0 h-full overflow-hidden">
+          <img src={heroImage} alt="Sacolas Boleta" className="absolute inset-0 md:static w-full h-full object-cover" />
         </div>
         <div className="bg-stripe flex flex-col justify-center px-6 py-6 md:p-12 lg:p-16">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground leading-[1.1] mb-4">
