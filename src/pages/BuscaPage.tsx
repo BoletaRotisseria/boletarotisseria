@@ -1,6 +1,8 @@
 import { useSearchParams } from "react-router-dom";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { ProductCard } from "@/components/ProductCard";
+import { ColunasToggle } from "@/components/ColunasToggle";
+import { useColunasMobile, classeColunasMobile } from "@/hooks/useColunasMobile";
 import { Loader2, Search } from "lucide-react";
 
 export default function BuscaPage() {
@@ -9,6 +11,7 @@ export default function BuscaPage() {
   // Sanitize: strip Shopify query operators/special chars to prevent filter bypass
   const sanitizedQ = q.replace(/["\\]/g, "").replace(/\b(AND|OR|NOT)\b/gi, "").replace(/[:()*-]/g, " ").replace(/\s+/g, " ").trim();
   const { data: products, isLoading } = useShopifyProducts(250, sanitizedQ ? `title:"${sanitizedQ}" AND -tag:oculto` : undefined);
+  const [colunas] = useColunasMobile();
 
   return (
     <div className="container py-10 md:py-16">
@@ -28,10 +31,11 @@ export default function BuscaPage() {
         </div>
       ) : products && products.length > 0 ? (
         <>
-          <p className="text-sm text-muted-foreground text-center mb-8">
+          <p className="text-sm text-muted-foreground text-center mb-4">
             {products.length} {products.length === 1 ? "produto encontrado" : "produtos encontrados"}
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <ColunasToggle />
+          <div className={`grid ${classeColunasMobile(colunas)} sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6 sm:gap-6`}>
             {products.map((product) => (
               <ProductCard key={product.node.id} product={product} />
             ))}

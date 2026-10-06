@@ -7,6 +7,7 @@ import { ShopifyProduct } from "@/lib/shopify";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useColunasMobile } from "@/hooks/useColunasMobile";
 import { sentenceCase } from "@/lib/text";
 
 
@@ -20,6 +21,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [hoveredVariantId, setHoveredVariantId] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  const [colunas] = useColunasMobile();
+  const compacta = isMobile && colunas === 2;
   const { node } = product;
   const image = node.images.edges[0]?.node;
   const variants = node.variants.edges.map(v => v.node);
@@ -96,7 +99,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div ref={cardRef} className="relative overflow-visible">
       <Link to={`/product/${node.handle}`} className="group flex flex-col h-full">
-        <div className="relative overflow-hidden rounded-md bg-secondary/30 aspect-square mb-4">
+        <div className={`relative overflow-hidden rounded-md bg-secondary/30 aspect-square ${compacta ? "mb-2" : "mb-4"}`}>
           {image ? (
             <img
               src={image.url}
@@ -109,8 +112,8 @@ export function ProductCard({ product }: ProductCardProps) {
               <ShoppingCart className="h-8 w-8" />
             </div>
           )}
-          <div className="absolute inset-x-0 bottom-0 flex justify-center p-4 md:hidden">
-            <Button size="sm" className="cta-text text-xs shadow-md" onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
+          <div className={`absolute inset-x-0 bottom-0 flex justify-center md:hidden ${compacta ? "p-1.5" : "p-4"}`}>
+            <Button size="sm" className={`cta-text shadow-md ${compacta ? "text-[10px] h-6 px-2" : "text-xs"}`} onClick={handleAddToCart} disabled={isAdding || !variant?.availableForSale}>
               {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : "Adicionar"}
             </Button>
           </div>
@@ -150,9 +153,9 @@ export function ProductCard({ product }: ProductCardProps) {
             </Button>
           </div>
         </div>
-        <h3 className="font-sans normal-case text-center text-base md:text-lg leading-snug font-normal mb-3 line-clamp-2">{sentenceCase(node.title)}</h3>
+        <h3 className={`font-sans normal-case text-center leading-snug font-normal line-clamp-2 ${compacta ? "text-[13px] mb-2" : "text-base md:text-lg mb-3"}`}>{sentenceCase(node.title)}</h3>
         <div className="flex items-center justify-center">
-          <span className="text-sm font-normal leading-none">
+          <span className={`font-normal leading-none ${compacta ? "text-[11px]" : "text-sm"}`}>
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
           </span>
         </div>
