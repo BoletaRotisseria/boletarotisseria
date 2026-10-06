@@ -113,6 +113,30 @@
 }
 
 /* Fullpage snap scroll */
+@media (max-width: 767px) {
+  .mobile-page-content {
+    min-height: calc(100svh - 93px);
+  }
+
+  .mobile-screen-section {
+    min-height: 100svh;
+  }
+
+  .mobile-screen-split {
+    min-height: 100svh;
+    grid-template-rows: minmax(15rem, 1fr) minmax(min-content, 1fr);
+  }
+
+  .mobile-screen-split > div {
+    min-width: 0;
+  }
+
+  .mobile-screen-split video {
+    height: 100%;
+    max-height: 50svh;
+  }
+}
+
 .fullpage-snap {
   scroll-snap-type: y mandatory;
   -ms-overflow-style: none;
