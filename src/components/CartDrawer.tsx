@@ -73,7 +73,7 @@ export function CartDrawer() {
   const { minDate, maxDate } = useMemo(() => {
     const now = new Date();
     const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-    const max = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 21);
+    const max = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 14);
     return { minDate: tomorrow, maxDate: max };
   }, []);
 
@@ -357,7 +357,7 @@ export function CartDrawer() {
                       />
                     </PopoverContent>
                   </Popover>
-                  <p className="text-xs text-muted-foreground">A partir de amanhã, até 21 dias. Domingo indisponível.</p>
+                  <p className="text-xs text-muted-foreground">A partir de amanhã, até 14 dias. Domingo indisponível.</p>
                 </div>
 
                 {selectedDate && (
