@@ -51,7 +51,7 @@ const Index = () => {
   return (
     <>
       {/* Capa – hero fixa */}
-      <section className="relative h-[85vh] md:h-screen overflow-hidden">
+      <section className="mobile-screen-section relative h-[100svh] md:h-screen overflow-hidden">
         <img
           src={capaMesaBg}
           alt="Mesa posta com aperitivos e pratos do Boleta"
@@ -93,11 +93,11 @@ const Index = () => {
       </section>
 
       {/* Banner duplo – Peça pelo nosso site */}
-      <section className="grid grid-cols-1 md:grid-cols-2 h-[85vh] md:h-[90vh]">
-        <div className="h-full overflow-hidden">
+      <section className="mobile-screen-split grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
+        <div className="min-h-0 h-full overflow-hidden">
           <img src={heroImage} alt="Sacolas Boleta" className="w-full h-full object-cover" />
         </div>
-        <div className="bg-stripe flex flex-col justify-center p-8 md:p-12 lg:p-16">
+        <div className="bg-stripe flex flex-col justify-center px-6 py-6 md:p-12 lg:p-16">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground leading-[1.1] mb-4">
             Peça pelo<br />nosso <span className="normal-case">Site</span>!
           </h2>
@@ -116,9 +116,9 @@ const Index = () => {
       <section ref={preparoSectionRef} className="relative bg-background">
         <div className="absolute inset-0 w-1/2 hidden md:block" style={{ backgroundImage: `url(${preparoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.55 }} />
         <div className="absolute inset-0 md:hidden" style={{ backgroundImage: `url(${preparoBgAsset.url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.55 }} />
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 h-[85vh] md:h-[90vh]">
+        <div className="mobile-screen-split relative z-10 grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
           {/* Texto à esquerda */}
-          <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
+          <div className="flex flex-col justify-center px-6 py-6 md:p-12 lg:p-16">
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Preparo fácil e rápido
             </span>
@@ -130,7 +130,7 @@ const Index = () => {
             </p>
           </div>
           {/* Vídeo à direita */}
-          <div className="min-h-[40vh] md:min-h-full bg-muted flex items-center justify-center overflow-hidden">
+          <div className="min-h-0 md:min-h-full bg-muted flex items-center justify-center overflow-hidden">
             <video
               ref={preparoVideoRef}
               src="/videos/preparo.mp4"
@@ -145,7 +145,7 @@ const Index = () => {
       </section>
 
       {/* Na Mídia */}
-      <section id="na-midia" className="relative py-10 md:py-14 bg-primary scroll-mt-20">
+      <section id="na-midia" className="mobile-screen-section relative flex flex-col justify-center py-8 md:py-14 bg-primary scroll-mt-20">
         <div className="relative z-10 container">
           <div className="mb-6">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Na mídia</h2>
