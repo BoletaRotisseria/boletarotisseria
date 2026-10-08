@@ -67,8 +67,27 @@ export default function ProductDetailPage() {
         <ArrowLeft className="h-4 w-4" /> Voltar
       </button>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="aspect-square rounded-lg overflow-hidden bg-secondary/30">
-          {image && <img src={image.url} alt={image.altText || product.title} className="w-full h-full object-cover" />}
+        <div>
+          <div className="aspect-square rounded-lg overflow-hidden bg-secondary/30">
+            {image && <img src={image.url} alt={image.altText || product.title} className="w-full h-full object-cover" />}
+          </div>
+          {images.length > 1 && (
+            <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
+              {images.map((img: { url: string; altText: string | null }, i: number) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setSelectedImageIdx(i)}
+                  className={`w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-md overflow-hidden border-2 transition-colors ${
+                    i === selectedImageIdx ? "border-primary" : "border-transparent hover:border-border"
+                  }`}
+                  aria-label={`Foto ${i + 1} de ${product.title}`}
+                >
+                  <img src={img.url} alt={img.altText || `${product.title} - foto ${i + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex flex-col justify-center">
           <h1 className="font-sans normal-case text-3xl md:text-4xl font-normal mb-4">{sentenceCase(product.title)}</h1>
