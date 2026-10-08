@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useColunasMobile } from "@/hooks/useColunasMobile";
-import { sentenceCase } from "@/lib/text";
 
 
 interface ProductCardProps {
@@ -48,7 +47,7 @@ export function ProductCard({ product }: ProductCardProps) {
         quantity: 1,
         selectedOptions: v.selectedOptions || [],
       });
-      toast.success("Adicionado ao carrinho", { description: sentenceCase(node.title) });
+      toast.success("Adicionado ao carrinho", { description: node.title });
     } finally {
       setIsAdding(false);
       setPickerOpen(false);
@@ -89,7 +88,7 @@ export function ProductCard({ product }: ProductCardProps) {
           onClick={() => addVariant(v)}
           className="justify-between h-auto py-3 px-4 hover:bg-primary hover:text-primary-foreground active:bg-primary active:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground"
         >
-          <span className="lowercase">{v.title}</span>
+          <span className="normal-case">{v.title}</span>
           <span>{formatPrice(parseFloat(v.price.amount))}</span>
         </Button>
       ))}
@@ -153,7 +152,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </Button>
           </div>
         </div>
-        <h3 className={`font-sans normal-case text-center leading-snug font-normal line-clamp-2 ${compacta ? "text-[13px] mb-2" : "text-base md:text-lg mb-3"}`}>{sentenceCase(node.title)}</h3>
+        <h3 className={`font-sans normal-case text-center leading-snug font-normal line-clamp-2 ${compacta ? "text-[13px] mb-2" : "text-base md:text-lg mb-3"}`}>{node.title}</h3>
         <div className="flex items-center justify-center">
           <span className={`font-normal leading-none ${compacta ? "text-[11px]" : "text-sm"}`}>
             {hasMultiplePrices ? `a partir de ${formatPrice(price)}` : formatPrice(price)}
@@ -165,7 +164,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Sheet open={pickerOpen} onOpenChange={setPickerOpen}>
           <SheetContent side="bottom" className="rounded-t-lg">
             <SheetHeader>
-              <SheetTitle className="font-sans normal-case text-xl text-left">{sentenceCase(node.title)}</SheetTitle>
+              <SheetTitle className="font-sans normal-case text-xl text-left">{node.title}</SheetTitle>
               <p className="text-sm text-muted-foreground text-left">Escolha o tamanho:</p>
             </SheetHeader>
             {VariantButtons}
@@ -176,7 +175,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="absolute bottom-full left-0 right-0 mb-2 z-50 bg-background border border-border rounded-md shadow-lg p-4">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <div className="font-sans text-xl">{sentenceCase(node.title)}</div>
+                <div className="font-sans normal-case text-xl">{node.title}</div>
                 <p className="text-sm text-muted-foreground">Escolha o tamanho:</p>
               </div>
               <button

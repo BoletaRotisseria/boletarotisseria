@@ -7,7 +7,6 @@ import { Loader2, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { RelatedProducts } from "@/components/RelatedProducts";
-import { sentenceCase } from "@/lib/text";
 
 export default function ProductDetailPage() {
   const { handle } = useParams<{ handle: string }>();
@@ -54,7 +53,7 @@ export default function ProductDetailPage() {
       quantity: 1,
       selectedOptions: variant.selectedOptions || [],
     });
-    toast.success("Adicionado ao carrinho", { description: sentenceCase(product.title) });
+    toast.success("Adicionado ao carrinho", { description: product.title });
   };
 
   return (
@@ -110,7 +109,7 @@ export default function ProductDetailPage() {
           )}
         </div>
         <div className="flex flex-col justify-center">
-          <h1 className="font-sans normal-case text-3xl md:text-4xl font-normal mb-4">{sentenceCase(product.title)}</h1>
+          <h1 className="font-sans normal-case text-3xl md:text-4xl font-normal mb-4">{product.title}</h1>
           {descriptionWithoutWeight && descriptionWithoutWeight.replace(/\.$/, "").toLowerCase() !== "item do empório" && (
             <p className="text-muted-foreground mb-6">{descriptionWithoutWeight}</p>
           )}
