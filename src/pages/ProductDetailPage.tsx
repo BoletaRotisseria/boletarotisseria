@@ -15,6 +15,7 @@ export default function ProductDetailPage() {
   const addItem = useCartStore(state => state.addItem);
   const isCartLoading = useCartStore(state => state.isLoading);
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
+  const [selectedImageIdx, setSelectedImageIdx] = useState(0);
 
   const handleBack = () => {
     if (window.history.length > 1) navigate(-1);
@@ -34,7 +35,8 @@ export default function ProductDetailPage() {
   if (!product) return <div className="container py-20 text-center"><h2 className="font-serif text-2xl">Produto não encontrado</h2></div>;
 
   const variant = product.variants.edges[selectedVariantIdx]?.node;
-  const image = product.images.edges[0]?.node;
+  const images = product.images.edges.map((e: { node: { url: string; altText: string | null } }) => e.node);
+  const image = images[selectedImageIdx] || images[0];
   const price = parseFloat(variant?.price.amount || "0");
   const currency = variant?.price.currencyCode || "BRL";
   const formatPrice = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency }).format(v);
