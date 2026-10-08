@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { storefrontApiRequest, STOREFRONT_PRODUCT_BY_HANDLE_QUERY } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { Button } from "@/components/ui/button";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { RelatedProducts } from "@/components/RelatedProducts";
@@ -68,8 +68,28 @@ export default function ProductDetailPage() {
       </button>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
-          <div className="aspect-square rounded-lg overflow-hidden bg-secondary/30">
+          <div className="relative aspect-square rounded-lg overflow-hidden bg-secondary/30">
             {image && <img src={image.url} alt={image.altText || product.title} className="w-full h-full object-cover" />}
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setSelectedImageIdx((selectedImageIdx - 1 + images.length) % images.length)}
+                  aria-label="Foto anterior"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 grid place-items-center h-8 w-8 md:h-9 md:w-9 rounded-full bg-background/70 text-foreground/70 border border-border/40 backdrop-blur-sm hover:bg-background hover:text-foreground transition-colors"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedImageIdx((selectedImageIdx + 1) % images.length)}
+                  aria-label="Próxima foto"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 grid place-items-center h-8 w-8 md:h-9 md:w-9 rounded-full bg-background/70 text-foreground/70 border border-border/40 backdrop-blur-sm hover:bg-background hover:text-foreground transition-colors"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </>
+            )}
           </div>
           {images.length > 1 && (
             <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
