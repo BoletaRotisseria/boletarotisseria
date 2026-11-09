@@ -130,7 +130,7 @@ export const CATEGORIAS_ROTISSERIA: CategoriaRotisseria[] = [
     handles: ["massa-para-pizza"],
   },
   {
-    label: "Tortas e Quiches",
+    label: "Quiches e Tortas",
     slug: "tortas-e-quiches",
     handles: [
       "torta-de-frango",
