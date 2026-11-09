@@ -32,12 +32,13 @@ export default function EventosPage() {
 
   return (
     <>
-    <div className="container py-10 md:py-16">
+    <section className="relative overflow-hidden bg-foreground">
+    <img src={eventosFoto.url} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-[75%_center]" />
+    <div className="absolute inset-0 bg-foreground/65" />
+    <div className="container relative py-10 md:py-16">
       <div className="grid gap-10 md:grid-cols-2 md:gap-14 lg:gap-20">
-        <div className="relative overflow-hidden text-left p-6 md:p-10 bg-foreground">
-          <img src={eventosFoto.url} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-[75%_center]" />
-          <div className="absolute inset-0 bg-foreground/65" />
-          <div className="relative">
+        <div className="text-left">
+          <div>
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 text-background">Eventos</h1>
           <div className="space-y-5 text-background/90 text-sm md:text-base leading-relaxed">
             <p>
@@ -56,7 +57,7 @@ export default function EventosPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="w-full space-y-4 md:pt-2">
+        <form onSubmit={handleSubmit} className="w-full space-y-4 md:pt-2 [&_input]:bg-background [&_textarea]:bg-background">
           <Input
             placeholder="Seu nome"
             value={form.nome}
@@ -94,6 +95,7 @@ export default function EventosPage() {
         </form>
       </div>
     </div>
+    </section>
     </>
   );
 }
