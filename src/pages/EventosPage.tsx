@@ -32,17 +32,14 @@ export default function EventosPage() {
 
   return (
     <>
-    <section className="relative h-[45vh] min-h-[280px] md:h-[60vh] overflow-hidden bg-foreground">
-      <img src={eventosFoto.url} alt="Chef Roberto Eid Philipp com bolo de nozes" className="absolute inset-0 w-full h-full object-cover object-[70%_30%]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/20 to-transparent" />
-      <div className="container relative h-full flex items-end pb-8 md:pb-12">
-        <h1 className="font-serif text-5xl md:text-7xl font-bold text-background">Eventos</h1>
-      </div>
-    </section>
     <div className="container py-10 md:py-16">
       <div className="grid gap-10 md:grid-cols-2 md:gap-14 lg:gap-20">
-        <div className="text-left">
-          <div className="space-y-5 text-muted-foreground text-sm md:text-base leading-relaxed">
+        <div className="relative overflow-hidden text-left p-6 md:p-10 bg-foreground">
+          <img src={eventosFoto.url} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-[75%_center]" />
+          <div className="absolute inset-0 bg-foreground/65" />
+          <div className="relative">
+          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 text-background">Eventos</h1>
+          <div className="space-y-5 text-background/90 text-sm md:text-base leading-relaxed">
             <p>
               Seja para um jantar entre amigos ou uma grande festa, adoraríamos fazer parte do seu evento. Queremos levar a alegria e os sabores da Boleta até você, onde quer que esteja.
             </p>
@@ -55,6 +52,7 @@ export default function EventosPage() {
             <p>
               Conte um pouco sobre o seu evento no formulário abaixo. Entraremos em contato para pensar todos os detalhes com você.
             </p>
+          </div>
           </div>
         </div>
 
