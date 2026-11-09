@@ -10,11 +10,11 @@ Deno.serve(async (req) => {
 
   const url = new URL(req.url);
   const stateSecret = Deno.env.get("BLING_CLIENT_SECRET");
-  if (!stateSecret) return new Response("Connection unavailable", { status: 503, headers: corsHeaders });
   // Initiation is an authenticated POST; callbacks carry a signed, expiring state.
   if (req.method === "POST") {
     const user = await authenticatedUser(req);
     if (!user || !await isAdmin(user.id)) return new Response("Unauthorized", { status: 403, headers: corsHeaders });
+    if (!stateSecret) return new Response("Connection unavailable", { status: 503, headers: corsHeaders });
     const clientId = Deno.env.get("BLING_CLIENT_ID");
     if (!clientId) return new Response("Connection unavailable", { status: 503, headers: corsHeaders });
     const state = await createOAuthState(user.id, stateSecret);
@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ url: authorization.toString() }), { headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "no-store" } });
   }
   if (req.method !== "GET") return new Response("Method not allowed", { status: 405, headers: corsHeaders });
-  const stateUserId = await verifyOAuthState(url.searchParams.get("state") ?? "", stateSecret);
+  const stateUserId = stateSecret ? await verifyOAuthState(url.searchParams.get("state") ?? "", stateSecret) : null;
   if (!stateUserId || !await isAdmin(stateUserId)) return new Response("Unauthorized connection", { status: 403, headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } });
   const code = url.searchParams.get("code");
   const error = url.searchParams.get("error");
