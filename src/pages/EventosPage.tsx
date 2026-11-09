@@ -57,7 +57,7 @@ export default function EventosPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="w-full space-y-4 md:pt-2 [&_input]:bg-background [&_textarea]:bg-background">
+        <form onSubmit={handleSubmit} className="w-full space-y-4 md:self-end [&_input]:bg-background [&_textarea]:bg-background">
           <Input
             placeholder="Seu nome"
             value={form.nome}
