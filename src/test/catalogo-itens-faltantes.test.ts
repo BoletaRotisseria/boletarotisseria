@@ -9,6 +9,7 @@ describe("Itens solicitados para publicação", () => {
     ["kit-carpaccio", "carne-peixe-e-frango"],
     ["brownie-no-pote-300g", "sobremesas"],
     ["melaco-de-cana-adicional", "aperitivos"],
+    ["pao-sueco", "paes-e-torradas"],
   ])("includes %s in the active catalog and %s category", (handle, category) => {
     expect(CATALOGO_ATIVO.has(handle)).toBe(true);
     expect(handlesDaCategoria(category)).toContain(handle);

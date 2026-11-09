@@ -1,3 +1,3 @@
 - [x] Incluir Roastbeef (incluindo individual), Kit Carpaccio, Brownie no Pote e Melaço de Cana nas categorias do site.
 - [x] Verificar os produtos na prévia e solicitar a publicação das mudanças autorizadas.
-- [ ] Torrada de Pão Sueco: aguardando produto cadastrado ou identificação na Shopify.
+- [ ] Incluir o produto identificado como Pão Sueco (200g, R$25) em Pães e Torradas, verificar e publicar.
