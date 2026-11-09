@@ -42,7 +42,6 @@ export const CATALOGO_ATIVO = new Set<string>([
   "molho-pomodoro",
   "molho-roti",
   "panelinha-de-cookies",
-  "panelinha-de-cookies-individual",
   "panelinha-de-palha-italiana",
   "pao-campagne",
   "pao-multigraos",
