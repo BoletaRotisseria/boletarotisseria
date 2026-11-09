@@ -1,4 +1,6 @@
 - [x] Incluir Roastbeef (incluindo individual), Kit Carpaccio, Brownie no Pote e Melaço de Cana nas categorias do site.
 - [x] Verificar os produtos na prévia e solicitar a publicação das mudanças autorizadas.
 - [x] Incluir o produto identificado como Pão Sueco (200g, R$25) em Pães e Torradas e verificar.
-- [ ] Publicar o Pão Sueco: aguardando decisão sobre avisos críticos de segurança existentes (alteração de datas de pedidos e conexão Bling).
+- [ ] Proteger alterações de pedidos com sessão válida, verificação do proprietário e dados de entrega já registrados na Shopify.
+- [ ] Proteger conexão e sincronização Bling com autorização administrativa; remover exposição de erros e CPF.
+- [ ] Testar as proteções, implantar as funções e revisar a segurança antes de publicar o Pão Sueco.

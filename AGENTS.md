@@ -1,2 +1,4 @@
 - App emails send from per-feature edge functions via the shared send-email helper (managed delivery); never add a generic send endpoint or queue — Lovable owns delivery, suppression and unsubscribe.
 - Use shared mobile viewport-height classes for homepage sections and the layout content area; minimum heights allow long content to grow without clipping.
+- Validate delivery-tag requests against the authenticated order owner's verified email and use only Shopify-recorded delivery attributes, never client dates, to prevent unauthorized order changes.
+- Bling operations require server-validated administrators or internal service credentials; OAuth state is administrator-issued, signed and short-lived to prevent unauthorized reconnection.
