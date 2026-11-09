@@ -33,7 +33,7 @@ export default function EventosPage() {
   return (
     <>
     <section className="relative overflow-hidden bg-foreground">
-    <img src={eventosFoto.url} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-[75%_center]" />
+    <img src={eventosFoto.url} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-[75%_15%]" />
     <div className="absolute inset-0 bg-foreground/65" />
     <div className="container relative py-10 md:py-16">
       <div className="grid gap-10 md:grid-cols-2 md:gap-14 lg:gap-20">
