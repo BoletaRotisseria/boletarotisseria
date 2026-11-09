@@ -6,7 +6,7 @@ import { Loader2, ShoppingCart } from "lucide-react";
 import togoBg from "@/assets/togo-bg.jpg";
 
 export default function ToGoPage() {
-  const { data: products, isLoading } = useShopifyProducts(50, "(product_type:'To Go' OR handle:panelinha-de-cookies-individual) AND -tag:oculto");
+  const { data: products, isLoading } = useShopifyProducts(50, "(product_type:'To Go' OR tag:ir) AND -tag:oculto");
   const [colunas] = useColunasMobile();
 
   return (
