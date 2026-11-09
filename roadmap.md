@@ -1,3 +1,4 @@
 - [x] Incluir Roastbeef (incluindo individual), Kit Carpaccio, Brownie no Pote e Melaço de Cana nas categorias do site.
 - [x] Verificar os produtos na prévia e solicitar a publicação das mudanças autorizadas.
-- [ ] Incluir o produto identificado como Pão Sueco (200g, R$25) em Pães e Torradas, verificar e publicar.
+- [x] Incluir o produto identificado como Pão Sueco (200g, R$25) em Pães e Torradas e verificar.
+- [ ] Publicar o Pão Sueco: aguardando decisão sobre avisos críticos de segurança existentes (alteração de datas de pedidos e conexão Bling).
