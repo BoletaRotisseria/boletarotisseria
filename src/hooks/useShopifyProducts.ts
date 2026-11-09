@@ -7,7 +7,7 @@ export function useShopifyProducts(count = 250, searchQuery?: string) {
     queryKey: ['shopify-products', count, searchQuery],
     queryFn: async () => {
       // busca ampla: apenas produtos marcados com a tag 'site' e não ocultos
-      const query = searchQuery || 'tag:site AND -tag:oculto';
+      const query = searchQuery || '(tag:site OR handle:panelinha-de-cookies-individual) AND -tag:oculto';
       const data = await storefrontApiRequest(STOREFRONT_PRODUCTS_QUERY, { first: 250, query });
       const edges: ShopifyProduct[] = data?.data?.products?.edges || [];
       return edges.filter((e) => CATALOGO_ATIVO.has(e.node.handle));
