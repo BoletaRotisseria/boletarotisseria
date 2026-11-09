@@ -1,0 +1,3 @@
+- [ ] Incluir Roastbeef (incluindo individual), Kit Carpaccio, Brownie no Pote e Melaço de Cana nas categorias do site.
+- [ ] Verificar os produtos na prévia e publicar as mudanças autorizadas.
+- [ ] Torrada de Pão Sueco: aguardando produto cadastrado ou identificação na Shopify.
