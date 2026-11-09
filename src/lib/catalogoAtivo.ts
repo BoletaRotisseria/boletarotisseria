@@ -28,6 +28,7 @@ export const CATALOGO_ATIVO = new Set<string>([
   "esfiha-aberta-de-carne",
   "farofa-crocante",
   "focaccia-de-alecrim",
+  "grand-gateau-de-chocolate",
   "kibe",
   "lasanha-bolonhesa",
   "lasanha-de-alcachofra",
