@@ -42,7 +42,7 @@ const navItems: NavItem[] = [
           { label: "Acompanhamentos", path: "/rotisserie?categoria=acompanhamentos" },
           { label: "Massas e Molhos", path: "/rotisserie?categoria=massas" },
           { label: "Pizza", path: "/rotisserie?categoria=pizza" },
-          { label: "Tortas e Quiches", path: "/rotisserie?categoria=tortas-e-quiches" },
+          { label: "Quiches e Tortas", path: "/rotisserie?categoria=tortas-e-quiches" },
           { label: "Sopas e Caldos", path: "/rotisserie?categoria=sopas-e-caldos" },
           { label: "Sobremesas", path: "/rotisserie?categoria=sobremesas" },
         ],
