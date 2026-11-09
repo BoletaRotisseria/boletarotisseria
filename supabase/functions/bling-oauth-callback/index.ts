@@ -1,5 +1,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { authenticatedUser, isAdmin } from "../_shared/request-auth.ts";
+import { createOAuthState, verifyOAuthState } from "../_shared/oauth-state.ts";
 
 const BLING_TOKEN_URL = "https://www.bling.com.br/Api/v3/oauth/token";
 
@@ -7,15 +9,34 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   const url = new URL(req.url);
+  const stateSecret = Deno.env.get("BLING_CLIENT_SECRET");
+  // Initiation is an authenticated POST; callbacks carry a signed, expiring state.
+  if (req.method === "POST") {
+    const user = await authenticatedUser(req);
+    if (!user || !await isAdmin(user.id)) return new Response("Unauthorized", { status: 403, headers: corsHeaders });
+    if (!stateSecret) return new Response("Connection unavailable", { status: 503, headers: corsHeaders });
+    const clientId = Deno.env.get("BLING_CLIENT_ID");
+    if (!clientId) return new Response("Connection unavailable", { status: 503, headers: corsHeaders });
+    const state = await createOAuthState(user.id, stateSecret);
+    const authorization = new URL("https://www.bling.com.br/Api/v3/oauth/authorize");
+    authorization.searchParams.set("response_type", "code");
+    authorization.searchParams.set("client_id", clientId);
+    authorization.searchParams.set("redirect_uri", `${url.origin}${url.pathname}`);
+    authorization.searchParams.set("state", state);
+    return new Response(JSON.stringify({ url: authorization.toString() }), { headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "no-store" } });
+  }
+  if (req.method !== "GET") return new Response("Method not allowed", { status: 405, headers: corsHeaders });
+  const stateUserId = stateSecret ? await verifyOAuthState(url.searchParams.get("state") ?? "", stateSecret) : null;
+  if (!stateUserId || !await isAdmin(stateUserId)) return new Response("Unauthorized connection", { status: 403, headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } });
   const code = url.searchParams.get("code");
   const error = url.searchParams.get("error");
 
   if (error) {
-    return new Response(`<h1>Falha ao conectar Bling</h1><pre>${error}</pre>`, {
+    return new Response(`<h1>Falha ao conectar Bling</h1>`, {
       status: 400, headers: { "Content-Type": "text/html; charset=utf-8" },
     });
   }
-  if (!code) {
+  if (!code || code.length > 2048) {
     return new Response(`<h1>Faltou ?code</h1>`, {
       status: 400, headers: { "Content-Type": "text/html; charset=utf-8" },
     });
@@ -48,9 +69,9 @@ Deno.serve(async (req) => {
 
   const tokenJson = await tokenRes.json().catch(() => ({}));
   if (!tokenRes.ok || !tokenJson.access_token) {
-    console.error("Bling token exchange failed", tokenRes.status, tokenJson);
+    console.error("Bling token exchange failed", tokenRes.status);
     return new Response(
-      `<h1>Falha ao obter token</h1><pre>${JSON.stringify(tokenJson, null, 2)}</pre>`,
+      `<h1>Falha ao conectar Bling</h1><p>Tente iniciar a conexão novamente.</p>`,
       { status: 500, headers: { "Content-Type": "text/html; charset=utf-8" } },
     );
   }
@@ -74,7 +95,7 @@ Deno.serve(async (req) => {
 
   if (upsertErr) {
     console.error("Failed to save bling tokens", upsertErr);
-    return new Response(`Erro ao salvar tokens: ${upsertErr.message}`, { status: 500 });
+    return new Response("Erro ao concluir conexão", { status: 500 });
   }
 
   return new Response(

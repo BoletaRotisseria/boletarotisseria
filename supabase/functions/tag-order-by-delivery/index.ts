@@ -1,16 +1,21 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { authenticatedUser } from '../_shared/request-auth.ts';
+import { ownsOrder, recordedDelivery } from '../_shared/security-policy.ts';
 
 const SHOP_DOMAIN = 'boleta-direct-8l7a1.myshopify.com';
 const API_VERSION = '2025-07';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+  if (req.method !== 'POST') return new Response('Method not allowed', { status: 405, headers: corsHeaders });
+  const user = await authenticatedUser(req);
+  if (!user?.email) return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
   try {
-    const { orderId, fulfillmentDate, fulfillmentTime } = await req.json();
+    const { orderId } = await req.json();
 
-    if (!orderId || !fulfillmentDate) {
-      return new Response(JSON.stringify({ error: 'orderId and fulfillmentDate are required' }), {
+    if (typeof orderId !== 'string' || !/^(?:gid:\/\/shopify\/Order\/)?\d{1,20}$/.test(orderId)) {
+      return new Response(JSON.stringify({ error: 'Invalid orderId' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -25,21 +30,28 @@ Deno.serve(async (req) => {
     }
 
     const numericId = String(orderId).replace(/\D/g, '');
-    const deliveryTag = `entrega-${fulfillmentDate}`;
 
     // Fetch existing tags first
     const getResp = await fetch(
-      `https://${SHOP_DOMAIN}/admin/api/${API_VERSION}/orders/${numericId}.json?fields=id,tags`,
+      `https://${SHOP_DOMAIN}/admin/api/${API_VERSION}/orders/${numericId}.json?fields=id,tags,email,note_attributes`,
       { headers: { 'X-Shopify-Access-Token': token, 'Content-Type': 'application/json' } }
     );
     if (!getResp.ok) {
-      const text = await getResp.text();
-      return new Response(JSON.stringify({ error: 'Failed to fetch order', details: text }), {
-        status: getResp.status,
+      await getResp.text();
+      return new Response(JSON.stringify({ error: 'Unable to access order' }), {
+        status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
     const getData = await getResp.json();
+    if (!getData?.order || !ownsOrder(user.email, getData.order)) {
+      return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
+    const delivery = recordedDelivery(getData.order.note_attributes ?? []);
+    if (!delivery) return new Response(JSON.stringify({ error: 'Recorded delivery information unavailable' }), { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    const fulfillmentDate = delivery.date;
+    const fulfillmentTime = delivery.time;
+    const deliveryTag = `entrega-${fulfillmentDate}`;
     const existingTags: string = getData?.order?.tags ?? '';
     const tagList = existingTags.split(',').map((t: string) => t.trim()).filter(Boolean);
     if (!tagList.includes(deliveryTag)) tagList.push(deliveryTag);
@@ -58,9 +70,9 @@ Deno.serve(async (req) => {
     );
 
     if (!putResp.ok) {
-      const text = await putResp.text();
-      return new Response(JSON.stringify({ error: 'Failed to update order', details: text }), {
-        status: putResp.status,
+      await putResp.text();
+      return new Response(JSON.stringify({ error: 'Failed to update order' }), {
+        status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -92,7 +104,7 @@ Deno.serve(async (req) => {
             }
           );
           const rrText = await rr.text();
-          results.push({ foId, status: rr.status, body: rrText.slice(0, 200) });
+          results.push({ foId, status: rr.status });
         }
         rescheduleResult = { newFulfillAt, results };
       } else {
@@ -100,14 +112,14 @@ Deno.serve(async (req) => {
         await foResp.text();
       }
     } catch (e) {
-      rescheduleResult = { error: (e as Error).message };
+      rescheduleResult = { error: 'Unable to reschedule fulfillment' };
     }
 
     return new Response(JSON.stringify({ success: true, tags: putData?.order?.tags, reschedule: rescheduleResult }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: (err as Error).message }), {
+    return new Response(JSON.stringify({ error: 'Unable to process request' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

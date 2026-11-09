@@ -1,5 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { authorizedOperator } from "../_shared/request-auth.ts";
 
 const BLING_API = "https://www.bling.com.br/Api/v3";
 const TOKEN_URL = `${BLING_API}/oauth/token`;
@@ -81,6 +82,8 @@ async function patchObservacoes(token: string, pedidoId: string, observacoes: st
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  if (req.method !== "POST") return new Response("Method not allowed", { status: 405, headers: corsHeaders });
+  if (!await authorizedOperator(req)) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,

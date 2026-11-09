@@ -372,7 +372,7 @@ Deno.serve(async (req) => {
             }).catch(() => {});
           }
 
-          console.log(`Dedup CPF ${cpf}: canônico=${canonical.legacyResourceId}, duplicados=${duplicates.map(d => d.legacyResourceId).join(",") || "nenhum"}`);
+          console.log(`Dedup concluída: duplicados=${duplicates.length}`);
         }
       }
     }
