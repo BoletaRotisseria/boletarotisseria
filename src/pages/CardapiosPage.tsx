@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 const categories = [
   {
     title: "Rotisseria",
-    description: "Aperitivos, pratos principais, massas, saladas e sobremesas da casa.",
+    description: "Aperitivos, pratos principais, massas, saladas e sobremesas.",
     path: "/rotisserie",
   },
   /*
