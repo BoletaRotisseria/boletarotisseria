@@ -143,6 +143,7 @@ export const CATEGORIAS_ROTISSERIA: CategoriaRotisseria[] = [
     label: "Sobremesas",
     slug: "sobremesas",
     handles: [
+      "grand-gateau-de-chocolate",
       "quiche-de-chocolate-rotisseria",
       "panelinha-de-palha-italiana",
       "panelinha-de-cookies",
