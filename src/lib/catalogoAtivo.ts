@@ -49,6 +49,7 @@ export const CATALOGO_ATIVO = new Set<string>([
   "panelinha-de-palha-italiana",
   "pao-campagne",
   "pao-multigraos",
+  "pao-sueco",
   "pate-de-foie",
   "pate-de-gorgonzola",
   "pate-de-salmao-mini",

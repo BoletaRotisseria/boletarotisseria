@@ -48,6 +48,7 @@ export const CATEGORIAS_ROTISSERIA: CategoriaRotisseria[] = [
       "focaccia-de-alecrim",
       "pao-campagne",
       "pao-multigraos",
+      "pao-sueco",
       "torrada-pao-sirio",
       "torrada-crackers",
       "torrada-focaccia",
