@@ -4,5 +4,5 @@
 - [x] Proteger alterações de pedidos com sessão válida, verificação do proprietário e dados de entrega já registrados na Shopify.
 - [x] Proteger conexão e sincronização Bling com autorização administrativa; remover exposição de erros e CPF.
 - [x] Testar as regras e confirmar bloqueios anônimos nas funções implantadas (401/403).
-- [ ] Validar operações autorizadas reais: depende das credenciais Shopify de pedidos e Bling disponíveis.
+- [ ] Validar pedidos reais: sessão indisponível para a conta solicitante; aguardando login na prévia. Os 12 testes de catálogo e regras de segurança passaram, mas não confirmam pagamento ou processamento real. Bling não possui credenciais configuradas.
 - [ ] Revisar os avisos críticos com análise atualizada do código salvo antes de publicar o Pão Sueco.
