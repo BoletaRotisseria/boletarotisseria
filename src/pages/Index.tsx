@@ -74,12 +74,34 @@ const Index = () => {
         <div className="relative z-10 h-full flex flex-col justify-end">
           <div className="container pb-10 md:pb-20">
             <div className="max-w-2xl">
-              <span className="block text-[10px] md:text-xs font-medium tracking-[0.2em] md:tracking-[0.25em] uppercase text-background/90 mb-2 md:mb-4">
-                Rotisseria & Empório
+              <span
+                className={
+                  emClimaNatal
+                    ? "inline-flex items-center gap-3 text-[10px] md:text-xs font-medium tracking-[0.24em] uppercase text-primary mb-2 md:mb-4"
+                    : "block text-[10px] md:text-xs font-medium tracking-[0.2em] md:tracking-[0.25em] uppercase text-background/90 mb-2 md:mb-4"
+                }
+              >
+                {emClimaNatal ? (
+                  <>
+                    <span className="inline-block w-6 h-px bg-primary" aria-hidden="true" />
+                    Natal Boleta · 2026
+                  </>
+                ) : (
+                  "Rotisseria & Empório"
+                )}
               </span>
               <h1 className="font-perfectly-nineties text-[26px] sm:text-3xl md:text-4xl lg:text-5xl font-light text-background leading-[1.2] md:leading-[1.15] mb-6 md:mb-8 drop-shadow-md">
-                <span className="block lg:whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
-                <span className="block lg:whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
+                {emClimaNatal ? (
+                  <>
+                    <span className="block lg:whitespace-nowrap">A ceia de Natal com a nossa cozinha na sua mesa.</span>
+                    <span className="block lg:whitespace-nowrap">Pronta para aquecer, servir e celebrar.</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="block lg:whitespace-nowrap">Comida de verdade, feita para compartilhar.</span>
+                    <span className="block lg:whitespace-nowrap">Pronta para aquecer, servir e aproveitar.</span>
+                  </>
+                )}
               </h1>
 
               <Link to="/cardapios">
@@ -88,7 +110,7 @@ const Index = () => {
                   variant="outline"
                   className="cta-text rounded-none border border-background/90 bg-transparent text-background tracking-[0.2em] uppercase px-5 py-2 h-auto text-[11px] md:px-10 md:py-3 md:text-sm hover:bg-background/10"
                 >
-                  Pedir Agora
+                  {emClimaNatal ? "Encomendar a Ceia" : "Pedir Agora"}
                 </Button>
               </Link>
             </div>
@@ -106,6 +128,29 @@ const Index = () => {
           }
         />
       </section>
+
+      {emClimaNatal && (
+        <section className="bg-foreground text-background border-t border-primary/40">
+          <div className="container py-10 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="max-w-xl">
+              <h2 className="font-perfectly-nineties text-2xl md:text-4xl font-light text-background leading-tight mb-2">
+                Encomendas de Natal abertas
+              </h2>
+              <p className="text-sm md:text-base text-background/80 leading-relaxed">
+                Dos aperitivos às sobremesas, escolha seus pratos online e agende a entrega ou a retirada na loja.
+              </p>
+            </div>
+            <Link to="/rotisserie" className="shrink-0">
+              <Button
+                size="lg"
+                className="cta-text rounded-none bg-primary text-foreground hover:bg-primary/90 tracking-[0.18em] uppercase px-8 py-3 h-auto text-xs md:text-sm font-semibold"
+              >
+                Montar minha ceia
+              </Button>
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* Banner duplo – Peça pelo nosso site */}
       <section className="mobile-screen-split grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
