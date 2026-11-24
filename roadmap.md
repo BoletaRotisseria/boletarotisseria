@@ -6,3 +6,4 @@
 - [x] Testar as regras e confirmar bloqueios anônimos nas funções implantadas (401/403).
 - [ ] Validar pedidos reais: sessão indisponível para a conta solicitante; aguardando login na prévia. Os 12 testes de catálogo e regras de segurança passaram, mas não confirmam pagamento ou processamento real. Bling não possui credenciais configuradas.
 - [ ] Revisar os avisos críticos com análise atualizada do código salvo antes de publicar o Pão Sueco.
+- [ ] Capa de Natal: trocar a foto da capa pela foto enviada pela cliente e voltar à original automaticamente na data escolhida.
