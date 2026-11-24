@@ -24,6 +24,7 @@ import EntrarPage from "./pages/EntrarPage";
 import MinhaContaPage from "./pages/MinhaContaPage";
 import ObrigadoPage from "./pages/ObrigadoPage";
 import UnsubscribePage from "./pages/UnsubscribePage";
+import NatalPage from "./pages/NatalPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ function AppContent() {
         <Route path="/eventos" element={<EventosPage />} />
         <Route path="/semana" element={<SemanaPage />} />
         <Route path="/rotisserie" element={<RotisseriePage />} />
+        <Route path="/natal" element={<NatalPage />} />
         <Route path="/product/:handle" element={<ProductDetailPage />} />
         <Route path="/busca" element={<BuscaPage />} />
         {/* Auth (Shopify Storefront Customer API) */}

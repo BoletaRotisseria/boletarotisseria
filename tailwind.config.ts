@@ -25,10 +25,6 @@ export default {
         foreground: "hsl(var(--foreground))",
         footer: "hsl(var(--footer))",
         stripe: "hsl(var(--stripe))",
-        natal: {
-          DEFAULT: "hsl(var(--natal))",
-          foreground: "hsl(var(--natal-foreground))",
-        },
 
         primary: {
           DEFAULT: "hsl(var(--primary))",

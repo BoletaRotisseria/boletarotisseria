@@ -104,13 +104,13 @@ const Index = () => {
                 )}
               </h1>
 
-              <Link to="/cardapios">
+              <Link to={emClimaNatal ? "/natal" : "/cardapios"}>
                 <Button
                   size="lg"
                   variant="outline"
                   className="cta-text rounded-none border border-background/90 bg-transparent text-background tracking-[0.2em] uppercase px-5 py-2 h-auto text-[11px] md:px-10 md:py-3 md:text-sm hover:bg-background/10"
                 >
-                  {emClimaNatal ? "Encomendar a Ceia" : "Pedir Agora"}
+                  {emClimaNatal ? "Montar minha ceia" : "Pedir Agora"}
                 </Button>
               </Link>
             </div>
@@ -128,29 +128,6 @@ const Index = () => {
           }
         />
       </section>
-
-      {emClimaNatal && (
-        <section className="bg-natal text-natal-foreground border-t border-natal-foreground/15">
-          <div className="container py-10 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div className="max-w-xl">
-              <h2 className="font-perfectly-nineties text-2xl md:text-4xl font-light text-natal-foreground leading-tight mb-2">
-                Encomendas de Natal abertas
-              </h2>
-              <p className="text-sm md:text-base text-natal-foreground/85 leading-relaxed">
-                Dos aperitivos às sobremesas, escolha seus pratos online e agende a entrega ou a retirada na loja.
-              </p>
-            </div>
-            <Link to="/rotisserie" className="shrink-0">
-              <Button
-                size="lg"
-                className="cta-text rounded-none bg-natal-foreground text-natal hover:bg-natal-foreground/90 tracking-[0.18em] uppercase px-8 py-3 h-auto text-xs md:text-sm font-semibold"
-              >
-                Montar minha ceia
-              </Button>
-            </Link>
-          </div>
-        </section>
-      )}
 
       {/* Banner duplo – Peça pelo nosso site */}
       <section className="mobile-screen-split grid grid-cols-1 md:grid-cols-2 md:h-[90vh]">
