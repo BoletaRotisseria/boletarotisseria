@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/boleta-cestas.jpg";
 import capaMesaBg from "@/assets/hero-home-bg-2.jpg";
+import capaNatalAsset from "@/assets/capa-natal-2026.jpg.asset.json";
 import seloAsset from "@/assets/selo-comer-beber-transp.png.asset.json";
 import papelSedaBg from "@/assets/papel-seda-boleta.jpg";
 import preparoBgAsset from "@/assets/padronagem-preparo.png.asset.json";
 import { NOTICIAS } from "@/lib/noticias";
 import { NoticiasGrid } from "@/components/NoticiasGrid";
+import { capaNatalAtiva } from "@/lib/capaNatal";
 
 const Index = () => {
+  const emClimaNatal = capaNatalAtiva();
   const location = useLocation();
   const preparoSectionRef = useRef<HTMLElement>(null);
   const preparoVideoRef = useRef<HTMLVideoElement>(null);
@@ -53,9 +56,17 @@ const Index = () => {
       {/* Capa – hero fixa */}
       <section className="mobile-screen-section relative h-[100svh] md:h-screen overflow-hidden">
         <img
-          src={capaMesaBg}
-          alt="Mesa posta com aperitivos e pratos do Boleta"
-          className="absolute inset-0 w-full h-full object-cover"
+          src={emClimaNatal ? capaNatalAsset.url : capaMesaBg}
+          alt={
+            emClimaNatal
+              ? "Chef Roberto Eid Philipp preparando a mesa de Natal do Boleta"
+              : "Mesa posta com aperitivos e pratos do Boleta"
+          }
+          className={
+            emClimaNatal
+              ? "absolute inset-0 w-full h-full object-cover object-[70%_top] md:object-top"
+              : "absolute inset-0 w-full h-full object-cover"
+          }
         />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/10 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/35 via-transparent to-transparent" />
@@ -88,7 +99,11 @@ const Index = () => {
         <img
           src={seloAsset.url}
           alt="Selo Veja Comer & Beber 2026/2027 — Boleta, melhor rotisseria de São Paulo"
-          className="absolute top-24 right-3 md:top-[84px] md:right-8 lg:top-auto lg:bottom-20 z-10 w-36 md:w-36 lg:w-48 h-auto"
+          className={
+            emClimaNatal
+              ? "absolute top-24 left-3 md:top-[84px] md:left-8 lg:left-auto lg:right-8 lg:top-auto lg:bottom-20 z-10 w-36 md:w-36 lg:w-48 h-auto"
+              : "absolute top-24 right-3 md:top-[84px] md:right-8 lg:top-auto lg:bottom-20 z-10 w-36 md:w-36 lg:w-48 h-auto"
+          }
         />
       </section>
 
